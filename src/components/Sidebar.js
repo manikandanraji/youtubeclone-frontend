@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 import Subscriptions from "./Subscriptions";
 import {
 	HomeIcon,
@@ -10,7 +11,7 @@ import {
 	VidIcon,
 	WatchIcon,
 	LikeIcon,
-	MoreIcon,
+	MoreIcon
 } from "./Icons";
 
 const SidebarWrapper = styled.div`
@@ -41,6 +42,15 @@ const SidebarWrapper = styled.div`
 		cursor: pointer;
 	}
 
+	.active div {
+		background: ${props => props.theme.darkGrey};
+		cursor: pointer;
+	}
+
+	.active svg {
+		fill: #fff;
+	}
+
 	.icon span {
 		padding-left: 1rem;
 		position: relative;
@@ -61,18 +71,26 @@ const SidebarWrapper = styled.div`
 const Sidebar = () => {
 	return (
 		<SidebarWrapper>
-			<div className="icon">
-				<HomeIcon />
-				<span>Home</span>
-			</div>
-			<div className="icon">
-				<TrendingIcon />
-				<span>Trending</span>
-			</div>
-			<div className="icon">
-				<SubIcon />
-				<span>Subscriptions</span>
-			</div>
+			<NavLink exact to="/" activeClassName="active">
+				<div className="icon">
+					<HomeIcon />
+					<span>Home</span>
+				</div>
+			</NavLink>
+
+			<NavLink to="/feed/trending" activeClassName="active">
+				<div className="icon">
+					<TrendingIcon />
+					<span>Trending</span>
+				</div>
+			</NavLink>
+
+			<NavLink to="/feed/subscriptions" activeClassName="active">
+				<div className="icon">
+					<SubIcon />
+					<span>Subscriptions</span>
+				</div>
+			</NavLink>
 
 			<div className="ruler"></div>
 
