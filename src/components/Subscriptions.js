@@ -2,19 +2,25 @@ import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-	padding-left: 1.5rem;
-
 	h4 {
 		text-transform: uppercase;
 		margin-bottom: 0.5rem;
 		letter-spacing: 1.2px;
 		color: ${props => props.theme.secondaryColor};
+		padding-left: 1.5rem;
 	}
 
 	.sub {
 		display: flex;
 		align-items: center;
+		padding: 0.2rem 0;
 		margin-bottom: 0.5rem;
+		padding-left: 1.5rem;
+	}
+
+	.sub:hover {
+		cursor: pointer;
+		background: ${props => props.theme.darkGrey};
 	}
 
 	.sub img {
@@ -27,12 +33,12 @@ const Wrapper = styled.div`
 
 const Subscriptions = () => {
 	const URL =
-		"https://yt3.ggpht.com/a/AATXAJw6qBlNzbAweKz7UlC44hYLoEtdoXGmzN8IJno3mg=s88-c-k-c0xffffffff-no-rj-mo";
+		"https://yt3.ggpht.com/a/AATXAJyeCBlH8r_5nWD3JlwBeeDW6F9W8CD82axJiBWQ=s100-c-k-c0xffffffff-no-rj-mo";
 
 	const subs = [
-		{ img: URL, channel: "Brad Travery" },
-		{ img: URL, channel: "Wes Bos" },
-		{ img: URL, channel: "Scott Tolinski" },
+		{ img: URL, channel: "Cody Ko" },
+		{ img: URL, channel: "Pewdipie" },
+		{ img: URL, channel: "Kelsey Krepel" }
 	];
 
 	return (

@@ -4,6 +4,8 @@ import VideoCard from '../components/VideoCard'
 import subs from '../data';
 
 const Wrapper = styled.div`
+	padding: 1.3rem;
+
 	.subs {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);

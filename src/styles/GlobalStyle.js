@@ -38,8 +38,35 @@ const GlobalStyle = createGlobalStyle`
 			outline: none;
 	}
 
+	button {
+		font-family: 'Fira Sans', sans-serif;
+		font-size: 1rem;
+	}
+
 	.secondary {
 		color: ${props => props.theme.secondaryColor};
+	}
+
+	.avatar {
+		height: 22px;
+		width: 22px;
+		border-radius: 11px;
+		objec-fit: cover;
+	}
+
+	.lg {
+		height: 60px;
+		width: 60px;
+		border-radius: 30px;
+	}
+
+	.flex-row {
+		display: flex;
+		align-items: center;
+	}
+
+	.flex-row img {
+		margin-right: 0.6rem;
 	}
 `
 

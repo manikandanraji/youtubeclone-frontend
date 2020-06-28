@@ -4,6 +4,8 @@ import VideoCard from '../components/VideoCard';
 import recommended from '../data';
 
 const Wrapper = styled.div`
+	padding: 1.3rem;
+
 	.recommended {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);

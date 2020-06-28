@@ -4,6 +4,7 @@ import TrendingCard from '../components/TrendingCard'
 import trending from '../data';
 
 const Wrapper = styled.div`
+	padding: 1.3rem;
 `
 
 const Trending = () => {
