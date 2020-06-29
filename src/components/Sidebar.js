@@ -10,8 +10,7 @@ import {
 	HistoryIcon,
 	VidIcon,
 	WatchIcon,
-	LikeIcon,
-	MoreIcon
+	LikeIcon
 } from "./Icons";
 
 const SidebarWrapper = styled.div`
@@ -57,12 +56,6 @@ const SidebarWrapper = styled.div`
 		top: 1px;
 	}
 
-	.ruler {
-		height: 1px;
-		background: ${props => props.theme.darkGrey};
-		margin: 1rem 0;
-	}
-
 	@media screen and (max-width: 1093px) {
 		display: none;
 	}
@@ -94,30 +87,40 @@ const Sidebar = () => {
 
 			<div className="ruler"></div>
 
-			<div className="icon">
-				<LibIcon />
-				<span>Library</span>
-			</div>
-			<div className="icon">
-				<HistoryIcon />
-				<span>History</span>
-			</div>
-			<div className="icon">
-				<VidIcon />
-				<span>Your videos</span>
-			</div>
-			<div className="icon">
-				<WatchIcon />
-				<span>Watch Later</span>
-			</div>
-			<div className="icon">
-				<LikeIcon />
-				<span>Liked videos</span>
-			</div>
-			<div className="icon">
-				<MoreIcon />
-				<span>Show more</span>
-			</div>
+			<NavLink to="/feed/library" activeClassName="active">
+				<div className="icon">
+					<LibIcon />
+					<span>Library</span>
+				</div>
+			</NavLink>
+
+			<NavLink to="/feed/history" activeClassName="active">
+				<div className="icon">
+					<HistoryIcon />
+					<span>History</span>
+				</div>
+			</NavLink>
+
+			<NavLink to="/feed/my_videos" activeClassName="active">
+				<div className="icon">
+					<VidIcon />
+					<span>Your videos</span>
+				</div>
+			</NavLink>
+
+			<NavLink to="/feed/watch_later" activeClassName="active">
+				<div className="icon">
+					<WatchIcon />
+					<span>Watch Later</span>
+				</div>
+			</NavLink>
+
+			<NavLink to="/feed/liked_videos" activeClassName="active">
+				<div className="icon">
+					<LikeIcon />
+					<span>Liked videos</span>
+				</div>
+			</NavLink>
 
 			<div className="ruler"></div>
 

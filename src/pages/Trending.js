@@ -5,6 +5,8 @@ import trending from '../data';
 
 const Wrapper = styled.div`
 	padding: 1.3rem;
+	width: 80%;
+	margin: 0 auto;
 `
 
 const Trending = () => {

@@ -68,6 +68,12 @@ const GlobalStyle = createGlobalStyle`
 	.flex-row img {
 		margin-right: 0.6rem;
 	}
+
+	.ruler {
+		height: 1px;
+		background: ${props => props.theme.darkGrey};
+		margin: 1rem 0;
+	}
 `
 
 export default GlobalStyle;
