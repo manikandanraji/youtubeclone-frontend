@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
+import UploadVideoModal from "./UploadVideoModal";
 import { HamburgerIcon, NotificationIcon, UploadIcon } from "./Icons";
-import avatar from "../assets/avatar.jpg";
 
 const FlexCenter = styled.div`
 	display: flex;
@@ -42,7 +43,7 @@ const Wrapper = styled.div`
 		width: 26px;
 	}
 
-	input {
+	input.search {
 		background: ${props => props.theme.black};
 		padding: 0.4rem 1rem;
 		border: 1px solid ${props => props.theme.darkGrey};
@@ -68,7 +69,9 @@ const Wrapper = styled.div`
 	}
 `;
 
-const Navbar = () => {
+const Navbar = ({ logoutUser, user }) => {
+	const [showModal, setShowModal] = useState(true);
+
 	return (
 		<Wrapper>
 			<FlexCenter className="logo">
@@ -76,21 +79,24 @@ const Navbar = () => {
 				<span>YouTube Clone</span>
 			</FlexCenter>
 
-			<input type="text" placeholder="Search" />
+			<input className="search" type="text" placeholder="Search" />
 
 			<ul>
-				<li>
+				<li onClick={() => setShowModal(true)}>
 					<UploadIcon />
+					{showModal && <UploadVideoModal show={showModal}/>}
 				</li>
 				<li>
 					<NotificationIcon />
 				</li>
 				<li>
-					<Avatar src={avatar} alt="user-avatar" />
+					<Avatar className="pointer" src={user.avatar} alt="user-avatar" />
 				</li>
 			</ul>
 		</Wrapper>
 	);
 };
 
-export default Navbar;
+const mapStateToProps = state => ({ user: state.user });
+
+export default connect(mapStateToProps)(Navbar);

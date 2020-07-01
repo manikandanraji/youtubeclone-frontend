@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Avatar = styled.img`
 	width: 30px;
 	height: 30px;
-	border-radius: 13px;
+	border-radius: 15px;
 	object-fit: cover;
 `;
 

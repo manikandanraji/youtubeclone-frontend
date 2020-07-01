@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -31,27 +32,39 @@ const Wrapper = styled.div`
 	}
 `;
 
-const Subscriptions = () => {
-	const URL =
-		"https://yt3.ggpht.com/a/AATXAJyeCBlH8r_5nWD3JlwBeeDW6F9W8CD82axJiBWQ=s100-c-k-c0xffffffff-no-rj-mo";
-
-	const subs = [
-		{ img: URL, channel: "Cody Ko" },
-		{ img: URL, channel: "Pewdipie" },
-		{ img: URL, channel: "Kelsey Krepel" }
-	];
-
+const Subscriptions = ({ subs }) => {
 	return (
 		<Wrapper>
 			<h4>Subscriptions</h4>
-			{subs.map(sub => (
-				<div key={sub.channel} className="sub">
-					<img src={sub.img} alt="avatar" />
-					<span>{sub.channel}</span>
+			{subs?.map(sub => (
+				<div key={sub.User.id} className="sub">
+					<img src={sub.User.avatar} alt="avatar" />
+					<span>{sub.User.username}</span>
 				</div>
 			))}
 		</Wrapper>
 	);
 };
 
-export default Subscriptions;
+const mapStateToProps = state => {
+	const duplicateSubs = state.feed.filter(
+		video => video.userId !== state.user.id
+	);
+
+	let subs = [];
+
+	duplicateSubs.forEach(duplicateSub => {
+		const exists = subs.filter(sub => sub.userId === duplicateSub.userId);
+
+		if (exists.length) {
+			console.log(subs);
+			console.log("duplicated found");
+		} else {
+			subs.push(duplicateSub);
+		}
+	});
+
+	return { subs };
+};
+
+export default connect(mapStateToProps)(Subscriptions);

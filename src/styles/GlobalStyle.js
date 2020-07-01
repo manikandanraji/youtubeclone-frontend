@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
 		color: inherit;
 	}
 
-	input {
+	input, textarea {
 		font-family: ${props => props.theme.font}, sans-serif;
 		font-size: 1rem;
 	}
@@ -41,13 +41,14 @@ const GlobalStyle = createGlobalStyle`
 	button {
 		font-family: 'Fira Sans', sans-serif;
 		font-size: 1rem;
+		cursor: pointer;
 	}
 
 	.secondary {
 		color: ${props => props.theme.secondaryColor};
 	}
 
-	.pointer {
+	svg, .pointer {
 		cursor: pointer;
 	}
 

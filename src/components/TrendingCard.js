@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { timeSince } from "../utils";
 
 const Wrapper = styled.div`
 	margin: 1rem 0;
@@ -14,9 +15,12 @@ const Wrapper = styled.div`
 		margin-left: 1.2rem;
 	}
 
+	h3 {
+		width: 90%;
+	}
+
 	p {
 		font-size: 0.9rem;
-		width: 77%;
 	}
 
 	p:last-child {
@@ -31,15 +35,23 @@ const Wrapper = styled.div`
 const TrendingCard = ({ video }) => {
 	return (
 		<Wrapper>
-			<img className="thumb" src={video.thumb} alt="thumbnail" />
+			<img className="thumb" src={video.thumbnail} alt="thumbnail" />
 			<div className="video-info-container">
 				<h3>{video.title}</h3>
 				<p className="secondary">
-					<span>{video.channelName}</span>
+					<span>{video.User.username}</span>
+
 					<span>•</span>
-					<span>{video.views}</span>
+					{video.views === 0 && <span>No views</span>}
+
+					{video.views !== 0 && (
+						<span>
+							{video.views > 1 ? `${video.views} views` : `${video.views} view`}
+						</span>
+					)}
 					<span>•</span>
-					<span>{video.createdAt}</span>
+
+					<span>{timeSince(video.createdAt)} ago</span>
 				</p>
 				<p className="secondary">{video.description.substr(0, 170)}</p>
 			</div>

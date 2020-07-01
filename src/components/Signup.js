@@ -61,10 +61,10 @@ export const StyledAuth = styled.div`
 `;
 
 const Signup = ({ login, signupUser }) => {
-	const firstname = useInput("Manikandan");
-	const lastname = useInput("Raji");
-	const username = useInput("manikandan");
-	const email = useInput("manikandan@gmail.com");
+	const firstname = useInput("Redux");
+	const lastname = useInput("Thunk");
+	const username = useInput("reduxthunk");
+	const email = useInput("reduxthunk@gmail.com");
 	const password1 = useInput("123456");
 	const password2 = useInput("123456");
 
@@ -75,7 +75,8 @@ const Signup = ({ login, signupUser }) => {
 			username: username.value,
 			firstname: firstname.value,
 			lastname: lastname.value,
-			email: email.value
+			email: email.value,
+			password: password1.value,
 		};
 
 		signupUser(payload);
@@ -100,16 +101,16 @@ const Signup = ({ login, signupUser }) => {
 					/>
 				</div>
 				<input
-					type="email"
-					placeholder="email"
-					value={email.value}
-					onChange={email.onChange}
-				/>
-				<input
 					type="text"
 					placeholder="username"
 					value={username.value}
 					onChange={username.onChange}
+				/>
+				<input
+					type="email"
+					placeholder="email"
+					value={email.value}
+					onChange={email.onChange}
 				/>
 				<div className="input-group">
 					<input

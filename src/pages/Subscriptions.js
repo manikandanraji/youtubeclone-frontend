@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from "react";
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import VideoCard from '../components/VideoCard'
-import subs from '../data';
+import { getFeed } from "../actions";
 
 const Wrapper = styled.div`
 	padding: 1.3rem;
@@ -14,17 +15,21 @@ const Wrapper = styled.div`
 	}
 `
 
-const Subscriptions = () => {
+const Subscriptions = ({ feed, getFeed }) => {
+	useEffect(() => {
+		getFeed()
+	}, [getFeed]);
+
 	return (
 		<Wrapper>
 			<h2>Today</h2>
 			<div className="subs">
-				{subs.map(sub => <VideoCard hideavatar={true} video={sub}/>)}
-				{subs.map(sub => <VideoCard hideavatar={true} video={sub}/>)}
-				{subs.map(sub => <VideoCard hideavatar={true} video={sub}/>)}
+				{feed.map(sub => <VideoCard key={sub.id} hideavatar={true} video={sub}/>)}
 			</div>
 		</Wrapper>
   )
 }
 
-export default Subscriptions;
+const mapStateToProps = state => ({ feed: state.feed });
+
+export default connect(mapStateToProps, { getFeed })(Subscriptions);

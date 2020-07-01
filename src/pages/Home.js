@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import VideoCard from "../components/VideoCard";
-import recommended from "../data";
+import { getFeed } from "../actions";
 
 const Wrapper = styled.div`
 	padding: 1.3rem;
@@ -14,23 +15,24 @@ const Wrapper = styled.div`
 	}
 `;
 
-const Home = () => {
+const Home = ({ feed, getFeed }) => {
+	console.log(feed);
+	useEffect(() => {
+		getFeed()
+	}, [getFeed]);
+
 	return (
 		<Wrapper>
 			<h2>Recommended</h2>
 			<div className="recommended">
-				{recommended.map(video => (
-					<VideoCard key={video.title} video={video} />
-				))}
-				{recommended.map(video => (
-					<VideoCard key={video.title} video={video} />
-				))}
-				{recommended.map(video => (
-					<VideoCard key={video.title} video={video} />
+				{feed.map(video => (
+					<VideoCard key={video.id} video={video} />
 				))}
 			</div>
 		</Wrapper>
 	);
 };
 
-export default Home;
+const mapStateToProps = state => ({ feed: state.feed });
+
+export default connect(mapStateToProps, { getFeed })(Home);
