@@ -1,16 +1,22 @@
-import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import GlobalStyle from './styles/GlobalStyle';
-import { darkTheme } from './styles/theme';
-import Router from './Router';
+import React from "react";
+import { connect } from "react-redux";
+import { ThemeProvider } from "styled-components";
+import GlobalStyle from "./styles/GlobalStyle";
+import { darkTheme } from "./styles/theme";
+import Router from "./Router";
+import Auth from "./components/Auth";
 
-const App = () => {
+const App = ({ user }) => {
+	const loggedIn = user.token;
+
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<GlobalStyle />
-			<Router />
+			{loggedIn ? <Router /> : <Auth />}
 		</ThemeProvider>
-  )
-}
+	);
+};
 
-export default App;
+const mapStateToProps = state => ({ user: state.user });
+
+export default connect(mapStateToProps)(App);

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 	html {
@@ -47,6 +47,10 @@ const GlobalStyle = createGlobalStyle`
 		color: ${props => props.theme.secondaryColor};
 	}
 
+	.pointer {
+		cursor: pointer;
+	}
+
 	.avatar {
 		height: 22px;
 		width: 22px;
@@ -74,6 +78,6 @@ const GlobalStyle = createGlobalStyle`
 		background: ${props => props.theme.darkGrey};
 		margin: 1rem 0;
 	}
-`
+`;
 
 export default GlobalStyle;
