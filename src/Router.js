@@ -12,8 +12,9 @@ import Container from "./styles/Container";
 import Home from "./pages/Home";
 import Trending from "./pages/Trending";
 import Subscriptions from "./pages/Subscriptions";
-import WatchVideo from "./pages/WatchVideo";
 import Channel from "./pages/Channel";
+import WatchVideo from "./pages/WatchVideo";
+import SearchResults from './pages/SearchResults';
 import Library from "./pages/Library";
 import History from "./pages/History";
 import YourVideos from "./pages/YourVideos";
@@ -28,6 +29,7 @@ const AppRouter = () => (
 			<Switch>
 				<Route path="/watch/:videoId" component={WatchVideo} />
 				<Route path="/channel/:userId" component={Channel} />
+				<Route path="/results/:searchterm" component={SearchResults} />
 				<Route path="/feed/trending" component={Trending} />
 				<Route path="/feed/subscriptions" component={Subscriptions} />
 				<Route path="/feed/library" component={Library} />

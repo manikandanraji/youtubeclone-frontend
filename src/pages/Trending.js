@@ -5,7 +5,7 @@ import styled from "styled-components";
 import TrendingCard from "../components/TrendingCard";
 import { getFeed } from "../actions";
 
-const Wrapper = styled.div`
+export const StyledTrending = styled.div`
 	padding: 1.3rem;
 	width: 85%;
 	margin: 0 auto;
@@ -25,7 +25,7 @@ const Trending = ({ feed, getFeed }) => {
 	}, [getFeed]);
 
 	return (
-		<Wrapper>
+		<StyledTrending>
 			<h2>Trending</h2>
 			<div className="trending">
 				{feed.map(video => (
@@ -34,7 +34,7 @@ const Trending = ({ feed, getFeed }) => {
 					</Link>
 				))}
 			</div>
-		</Wrapper>
+		</StyledTrending>
 	);
 };
 

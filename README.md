@@ -14,3 +14,4 @@ Youtube clone using PERN stack (Postgres, Express, React, Node). This is the fro
 3. like/dislike 
 4. subscribe
 5. channel recommendations
+6. loader (skeleton loader)

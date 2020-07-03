@@ -21,7 +21,9 @@ import {
 	CANCEL_DISLIKE,
 	SUBSCRIBE_FROM_PROFILE,
 	UNSUBSCRIBE_FROM_PROFILE,
+	GET_SEARCH_RESULTS
 } from "./types";
+
 import api from "../services/api";
 import { authenticate } from "../utils";
 
@@ -149,17 +151,41 @@ export const updateProfile = data => async dispatch => {
 	}
 };
 
-export const subscribeFromVideo = () => ({ type: SUBSCRIBE_FROM_VIDEO })
-export const unsubscribeFromVideo = () => ({ type: UNSUBSCRIBE_FROM_VIDEO })
+export const getSearchResults = searchterm => async dispatch => {
+	try {
+		let payload = {};
 
-export const subscribeFromProfile = () => ({ type: SUBSCRIBE_FROM_PROFILE })
-export const unsubscribeFromProfile = () => ({ type: UNSUBSCRIBE_FROM_PROFILE })
+		const userRes = await api.get(`users/search?searchterm=${searchterm}`);
 
-export const likeVideo = () => ({ type: LIKE })
-export const cancelLike = () => ({ type: CANCEL_LIKE })
-export const dislikeVideo = () => ({ type: DISLIKE })
-export const cancelDislike = () => ({ type: CANCEL_DISLIKE })
+		payload.users = userRes.data.data;
+
+		const videoRes = await api.get(`videos/search?searchterm=${searchterm}`);
+
+		payload.videos = videoRes.data.data;
+
+		dispatch({
+			type: GET_SEARCH_RESULTS,
+			payload
+		});
+	} catch (err) {
+		console.error(err.response);
+	}
+};
+
+// TODO
+export const subscribeFromVideo = () => ({ type: SUBSCRIBE_FROM_VIDEO });
+export const unsubscribeFromVideo = () => ({ type: UNSUBSCRIBE_FROM_VIDEO });
+
+export const subscribeFromProfile = () => ({ type: SUBSCRIBE_FROM_PROFILE });
+export const unsubscribeFromProfile = () => ({
+	type: UNSUBSCRIBE_FROM_PROFILE
+});
+
+// TODO
+export const likeVideo = () => ({ type: LIKE });
+export const cancelLike = () => ({ type: CANCEL_LIKE });
+export const dislikeVideo = () => ({ type: DISLIKE });
+export const cancelDislike = () => ({ type: CANCEL_DISLIKE });
 
 export const openSidebar = () => ({ type: OPEN_SIDEBAR });
 export const closeSidebar = () => ({ type: CLOSE_SIDEBAR });
-

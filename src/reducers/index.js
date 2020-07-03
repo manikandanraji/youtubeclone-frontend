@@ -6,6 +6,7 @@ import profile from "./profile";
 import sidebar from "./sidebar";
 import recommendation from "./recommendation";
 import channelRecommendation from "./channelRecommendation";
+import searchResult from "./searchResult";
 
 export default combineReducers({
 	user,
@@ -14,5 +15,6 @@ export default combineReducers({
 	profile,
 	sidebar,
 	recommendation,
-	channelRecommendation
+	channelRecommendation,
+	searchResult
 });

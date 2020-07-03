@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import UploadVideo from "./UploadVideo";
 import Avatar from "../styles/Avatar";
+import Search from "./Search";
 import { HamburgerIcon, NotificationIcon } from "./Icons";
 import { openSidebar, closeSidebar } from "../actions";
 
@@ -11,15 +12,17 @@ const Wrapper = styled.div`
 	position: fixed;
 	top: 0;
 	left: 0;
-
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-
 	width: 100%;
 	background: ${props => props.theme.grey};
 	z-index: 99;
 	padding: 0.7rem 1.5rem;
+
+	input {
+		width: 500px;
+	}
 
 	.toggle-navhandler {
 		display: none;
@@ -30,18 +33,11 @@ const Wrapper = styled.div`
 		top: 1px;
 	}
 
-	input.search {
-		background: ${props => props.theme.black};
-		padding: 0.4rem 1rem;
-		border: 1px solid ${props => props.theme.darkGrey};
-		width: 37.48%; /* 500 / 1334 */
-		height: 31px;
-		color: ${props => props.theme.primaryColor};
-	}
-
 	ul {
 		list-style: none;
 		display: flex;
+		position: relative;
+		top: 2px;
 	}
 
 	li svg {
@@ -61,9 +57,15 @@ const Wrapper = styled.div`
 		}
 	}
 
-	@media screen and (max-width: 600px) {
-		input.search {
-			display: none;
+	@media screen and (max-width: 1000px) {
+		input {
+			width: 400px;
+		}
+	}
+
+	@media screen and (max-width: 850px) {
+		input {
+			width: 280px;
 		}
 	}
 `;
@@ -87,7 +89,7 @@ const Navbar = ({ logoutUser, user, open, openSidebar, closeSidebar }) => {
 				<span>YouTube Clone</span>
 			</div>
 
-			<input className="search" type="text" placeholder="Search" />
+			<Search />
 
 			<ul>
 				<li>
