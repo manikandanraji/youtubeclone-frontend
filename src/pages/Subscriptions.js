@@ -1,34 +1,29 @@
 import React, { useEffect } from "react";
-import { connect } from 'react-redux';
-import styled from 'styled-components';
-import VideoCard from '../components/VideoCard'
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { Wrapper } from "./Home";
+import VideoCard from "../components/VideoCard";
+import VideoGrid from "../styles/VideoGrid";
 import { getFeed } from "../actions";
-
-const Wrapper = styled.div`
-	padding: 1.3rem;
-
-	.subs {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		grid-gap: 2rem;
-		margin: 1rem 0;
-	}
-`
 
 const Subscriptions = ({ feed, getFeed }) => {
 	useEffect(() => {
-		getFeed()
+		getFeed();
 	}, [getFeed]);
 
 	return (
 		<Wrapper>
-			<h2>Today</h2>
-			<div className="subs">
-				{feed.map(sub => <VideoCard key={sub.id} hideavatar={true} video={sub}/>)}
-			</div>
+			<h2>Subscriptions</h2>
+			<VideoGrid>
+				{feed.map(sub => (
+					<Link key={sub.id} to={`/watch/${sub.id}`}>
+						<VideoCard key={sub.id} hideavatar={true} video={sub} />
+					</Link>
+				))}
+			</VideoGrid>
 		</Wrapper>
-  )
-}
+	);
+};
 
 const mapStateToProps = state => ({ feed: state.feed });
 

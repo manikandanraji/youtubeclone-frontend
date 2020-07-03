@@ -1,23 +1,11 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
+import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import UploadVideoModal from "./UploadVideoModal";
-import { HamburgerIcon, NotificationIcon, UploadIcon } from "./Icons";
-
-const FlexCenter = styled.div`
-	display: flex;
-	align-items: center;
-
-	svg {
-		margin-right: 0.5rem;
-	}
-`;
-
-const Avatar = styled.img`
-	width: 26px;
-	height: 26px;
-	border-radius: 13px;
-`;
+import { connect } from "react-redux";
+import UploadVideo from "./UploadVideo";
+import Avatar from "../styles/Avatar";
+import { HamburgerIcon, NotificationIcon } from "./Icons";
+import { openSidebar, closeSidebar } from "../actions";
 
 const Wrapper = styled.div`
 	position: fixed;
@@ -33,14 +21,13 @@ const Wrapper = styled.div`
 	z-index: 99;
 	padding: 0.7rem 1.5rem;
 
+	.toggle-navhandler {
+		display: none;
+	}
+
 	.logo span {
 		position: relative;
 		top: 1px;
-	}
-
-	svg {
-		height: 26px;
-		width: 26px;
 	}
 
 	input.search {
@@ -67,36 +54,58 @@ const Wrapper = styled.div`
 		position: relative;
 		top: 3px;
 	}
+
+	@media screen and (max-width: 1093px) {
+		.toggle-navhandler {
+			display: block;
+		}
+	}
+
+	@media screen and (max-width: 600px) {
+		input.search {
+			display: none;
+		}
+	}
 `;
 
-const Navbar = ({ logoutUser, user }) => {
-	const [showModal, setShowModal] = useState(true);
+const Navbar = ({ logoutUser, user, open, openSidebar, closeSidebar }) => {
+	const handleToggleSidebar = () => {
+		if (open) {
+			closeSidebar();
+		} else {
+			openSidebar();
+		}
+	};
 
 	return (
 		<Wrapper>
-			<FlexCenter className="logo">
-				<HamburgerIcon />
+			<div className="logo flex-row">
+				<HamburgerIcon
+					className="toggle-navhandler"
+					onClick={handleToggleSidebar}
+				/>
 				<span>YouTube Clone</span>
-			</FlexCenter>
+			</div>
 
 			<input className="search" type="text" placeholder="Search" />
 
 			<ul>
-				<li onClick={() => setShowModal(true)}>
-					<UploadIcon />
-					{showModal && <UploadVideoModal show={showModal}/>}
+				<li>
+					<UploadVideo />
 				</li>
 				<li>
 					<NotificationIcon />
 				</li>
 				<li>
-					<Avatar className="pointer" src={user.avatar} alt="user-avatar" />
+					<Link to={`/channel/${user.id}`}>
+						<Avatar className="pointer" src={user.avatar} alt="user-avatar" />
+					</Link>
 				</li>
 			</ul>
 		</Wrapper>
 	);
 };
 
-const mapStateToProps = state => ({ user: state.user });
+const mapStateToProps = state => ({ open: state.sidebar, user: state.user });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, { openSidebar, closeSidebar })(Navbar);

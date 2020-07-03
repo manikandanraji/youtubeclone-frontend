@@ -5,6 +5,8 @@ export const darkTheme = {
 	grey: "#202020",
 	darkGrey: "#383838",
 	black: "#121212",
-	red: "#cc0000",
-	font: "Fira Sans"
+	red: "#CC0000",
+	blue: "#3EA6FF",
+	white: "#FFF",
+	font: "Fira Sans",
 };

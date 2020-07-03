@@ -3,12 +3,14 @@ import styled from "styled-components";
 import { timeSince } from "../utils";
 
 const Wrapper = styled.div`
-	margin: 1rem 0;
+	margin: 1.4rem 0;
 	display: flex;
 
 	.thumb {
 		width: 250px;
-		height: 150px;
+		height: 140px;
+		box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2);
+		border-radius: 4px;
 	}
 
 	.video-info-container {
@@ -29,6 +31,42 @@ const Wrapper = styled.div`
 
 	p span {
 		padding-right: 0.3rem;
+	}
+
+	@media screen and (max-width: 750px) {
+		margin: 1.2rem 0;
+
+		.video-info-container {
+			margin-left: 1.5rem;
+		}
+	}
+
+	@media screen and (max-width: 645px) {
+		flex-direction: column;
+
+		.thumb {
+			width: 100%;
+			height: 300px;
+		}
+
+		.video-info-container {
+			margin-left: 0;
+			margin-top: 1rem;
+		}
+	}
+
+	@media screen and (max-width: 530px) {
+		.thumb {
+			width: 100%;
+			height: 250px;
+		}
+	}
+
+	@media screen and (max-width: 420px) {
+		.thumb {
+			width: 100%;
+			height: 200px;
+		}
 	}
 `;
 
@@ -53,7 +91,7 @@ const TrendingCard = ({ video }) => {
 
 					<span>{timeSince(video.createdAt)} ago</span>
 				</p>
-				<p className="secondary">{video.description.substr(0, 170)}</p>
+				<p className="secondary">{video.description.substr(0, 130)}</p>
 			</div>
 		</Wrapper>
 	);

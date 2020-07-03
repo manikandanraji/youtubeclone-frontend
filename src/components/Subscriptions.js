@@ -1,6 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { closeSidebar } from '../actions';
 
 const Wrapper = styled.div`
 	h4 {
@@ -32,15 +34,17 @@ const Wrapper = styled.div`
 	}
 `;
 
-const Subscriptions = ({ subs }) => {
+const Subscriptions = ({ subs, closeSidebar }) => {
 	return (
 		<Wrapper>
 			<h4>Subscriptions</h4>
 			{subs?.map(sub => (
-				<div key={sub.User.id} className="sub">
-					<img src={sub.User.avatar} alt="avatar" />
-					<span>{sub.User.username}</span>
-				</div>
+				<Link key={sub.userId} onClick={() => closeSidebar()} to={`/channel/${sub.userId}`}>
+					<div className="sub">
+						<img src={sub.User.avatar} alt="avatar" />
+						<span>{sub.User.username}</span>
+					</div>
+				</Link>
 			))}
 		</Wrapper>
 	);
@@ -56,10 +60,7 @@ const mapStateToProps = state => {
 	duplicateSubs.forEach(duplicateSub => {
 		const exists = subs.filter(sub => sub.userId === duplicateSub.userId);
 
-		if (exists.length) {
-			console.log(subs);
-			console.log("duplicated found");
-		} else {
+		if (!exists.length) {
 			subs.push(duplicateSub);
 		}
 	});
@@ -67,4 +68,4 @@ const mapStateToProps = state => {
 	return { subs };
 };
 
-export default connect(mapStateToProps)(Subscriptions);
+export default connect(mapStateToProps, { closeSidebar })(Subscriptions);

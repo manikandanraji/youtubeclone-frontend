@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
+import EditProfile from "../components/EditProfile";
+import ChannelTabVideo from "../components/ChannelTabVideo";
+import ChannelTabAbout from "../components/ChannelTabAbout";
+import ChannelTabChannels from "../components/ChannelTabChannels";
+import Button from "../styles/Button";
+import {
+	clearProfile,
+	getProfile,
+	subscribeFromProfile,
+	unsubscribeFromProfile
+} from "../actions";
+
+const activeTabStyle = {
+	borderBottom: "2px solid white",
+	color: "white"
+};
 
 const Wrapper = styled.div`
 	background: ${props => props.theme.black};
 	min-height: 100vh;
+	padding-bottom: 2rem;
 
 	.cover {
 		height: 170px;
@@ -28,15 +47,8 @@ const Wrapper = styled.div`
 		align-items: center;
 	}
 
-	button {
-		padding: 0.4rem 1rem;
-		background: ${props => props.theme.darkGrey};
-		border: 1px solid ${props => props.theme.darkGrey};
-		color: ${props => props.theme.secondaryColor};
-		border-radius: 4px;
-	}
-
-	.tabs {
+	.tabs,
+	.tab {
 		margin: 0 auto;
 		margin-top: 1.5rem;
 		width: 80%;
@@ -49,7 +61,7 @@ const Wrapper = styled.div`
 	}
 
 	li {
-		padding-right: 2rem;
+		margin-right: 2rem;
 		text-transform: uppercase;
 		letter-spacing: 1.1px;
 	}
@@ -57,42 +69,113 @@ const Wrapper = styled.div`
 	li:hover {
 		cursor: pointer;
 	}
+
+	@media screen and (max-width: 860px) {
+		.header,
+		.tabs,
+		.tab {
+			width: 90%;
+		}
+	}
+
+	@media screen and (max-width: 450px) {
+		.header {
+			width: 100%;
+		}
+	}
 `;
 
-const Channel = () => {
-	const COVER =
-		"https://res.cloudinary.com/douy56nkf/image/upload/v1593254711/instaclone/eavdoktvaz46jb1aazw2.jpg";
+const Channel = ({
+	clearProfile,
+	getProfile,
+	profile,
+	loggedInUserId,
+	subscribeFromProfile,
+	unsubscribeFromProfile
+}) => {
+	const { userId } = useParams();
+	console.log(userId);
 
-	const AVATAR =
-		"https://yt3.ggpht.com/a/AATXAJyeCBlH8r_5nWD3JlwBeeDW6F9W8CD82axJiBWQ=s100-c-k-c0xffffffff-no-rj-mo";
+	const [tab, setTab] = useState("VIDEOS");
+
+	useEffect(() => {
+		clearProfile();
+		getProfile(userId || loggedInUserId);
+	}, [userId, loggedInUserId, clearProfile, getProfile]);
 
 	return (
 		<Wrapper>
 			<div className="cover">
-				<img src={COVER} alt="channel-cover" />
+				<img src={profile.cover} alt="channel-cover" />
 			</div>
+
 			<div className="header-tabs">
 				<div className="header">
 					<div className="flex-row">
-						<img className="avatar lg" src={AVATAR} alt="channel avatar" />
+						<img
+							className="avatar lg"
+							src={profile.avatar}
+							alt="channel avatar"
+						/>
 						<div>
-							<h3>Cody Ko</h3>
-							<span className="secondary">811K subscribers</span>
+							<h3>{profile.username}</h3>
+							<span className="secondary">
+								{profile.subscribersCount} subscribers
+							</span>
 						</div>
 					</div>
-					<button>Subscribe</button>
+
+					{profile.isMe && <EditProfile />}
+
+					{!profile.isMe && profile.isSubscribed && (
+						<Button grey onClick={() => unsubscribeFromProfile()}>
+							Subscribed
+						</Button>
+					)}
+
+					{!profile.isMe && !profile.isSubscribed && (
+						<Button onClick={() => subscribeFromProfile()}>Subscribe</Button>
+					)}
 				</div>
+
 				<div className="tabs">
 					<ul className="secondary">
-						<li>Home</li>
-						<li>Videos</li>
-						<li>Playlists</li>
-						<li>About</li>
+						<li
+							style={tab === "VIDEOS" ? activeTabStyle : {}}
+							onClick={() => setTab("VIDEOS")}
+						>
+							Videos
+						</li>
+						<li
+							style={tab === "CHANNELS" ? activeTabStyle : {}}
+							onClick={() => setTab("CHANNELS")}
+						>
+							Channels
+						</li>
+						<li
+							style={tab === "ABOUT" ? activeTabStyle : {}}
+							onClick={() => setTab("ABOUT")}
+						>
+							About
+						</li>
 					</ul>
 				</div>
+			</div>
+
+			<div className="tab">
+				{tab === "VIDEOS" && <ChannelTabVideo />}
+				{tab === "ABOUT" && <ChannelTabAbout />}
+				{tab === "CHANNELS" && <ChannelTabChannels />}
 			</div>
 		</Wrapper>
 	);
 };
 
-export default Channel;
+const mapStateToProps = state => ({ profile: state.profile });
+
+export default connect(mapStateToProps, {
+	clearProfile,
+	getProfile,
+	subscribeFromProfile,
+	unsubscribeFromProfile
+})(Channel);

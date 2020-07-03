@@ -12,6 +12,7 @@ import Container from "./styles/Container";
 import Home from "./pages/Home";
 import Trending from "./pages/Trending";
 import Subscriptions from "./pages/Subscriptions";
+import WatchVideo from "./pages/WatchVideo";
 import Channel from "./pages/Channel";
 import Library from "./pages/Library";
 import History from "./pages/History";
@@ -25,7 +26,8 @@ const AppRouter = () => (
 		<Sidebar />
 		<Container>
 			<Switch>
-				<Route path="/channel/:channelId" component={Channel} />
+				<Route path="/watch/:videoId" component={WatchVideo} />
+				<Route path="/channel/:userId" component={Channel} />
 				<Route path="/feed/trending" component={Trending} />
 				<Route path="/feed/subscriptions" component={Subscriptions} />
 				<Route path="/feed/library" component={Library} />

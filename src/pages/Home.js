@@ -1,38 +1,64 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import VideoCard from "../components/VideoCard";
-import { getFeed } from "../actions";
+import VideoGrid from "../styles/VideoGrid";
+import { getRecommendations } from "../actions";
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
 	padding: 1.3rem;
+	width: 90%;
+	margin: 0 auto;
 
-	.recommended {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		grid-gap: 2rem;
-		margin: 1rem 0;
+	h2 {
+		margin-bottom: 1rem;
+	}
+
+	@media screen and (max-width: 1093px) {
+		width: 95%;
+	}
+
+	@media screen and (max-width: 1090px) {
+		width: 99%;
+	}
+
+	@media screen and (max-width: 870px) {
+		width: 90%;
+	}
+
+	@media screen and (max-width: 670px) {
+		width: 99%;
+	}
+
+	@media screen and (max-width: 600px) {
+		width: 90%;
+	}
+
+	@media screen and (max-width: 530px) {
+		width: 100%;
 	}
 `;
 
-const Home = ({ feed, getFeed }) => {
-	console.log(feed);
+const Home = ({ recommendation, getRecommendations }) => {
 	useEffect(() => {
-		getFeed()
-	}, [getFeed]);
+		getRecommendations();
+	}, [getRecommendations]);
 
 	return (
 		<Wrapper>
 			<h2>Recommended</h2>
-			<div className="recommended">
-				{feed.map(video => (
-					<VideoCard key={video.id} video={video} />
+			<VideoGrid>
+				{recommendation.map(video => (
+					<Link key={video.id} to={`/watch/${video.id}`}>
+						<VideoCard video={video} />
+					</Link>
 				))}
-			</div>
+			</VideoGrid>
 		</Wrapper>
 	);
 };
 
-const mapStateToProps = state => ({ feed: state.feed });
+const mapStateToProps = state => ({ recommendation: state.recommendation });
 
-export default connect(mapStateToProps, { getFeed })(Home);
+export default connect(mapStateToProps, { getRecommendations })(Home);

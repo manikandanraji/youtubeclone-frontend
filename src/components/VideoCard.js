@@ -4,12 +4,12 @@ import Avatar from "../styles/Avatar";
 import { timeSince } from "../utils";
 
 const Wrapper = styled.div`
-	margin-bottom: 1rem;
-
 	.thumb {
 		width: 100%;
-		height: 150px;
+		height: 180px;
 		object-fit: cover;
+		box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2);
+		border-radius: 4px;
 	}
 
 	.video-info-container {
@@ -22,29 +22,36 @@ const Wrapper = styled.div`
 		top: 5px;
 	}
 
-	.video-info {
-		margin-left: 1rem;
-		line-height: 1.5;
-	}
-
-	.video-info h4 {
-		margin-bottom: 0.3rem;
-	}
-
 	.video-info span {
 		font-size: 0.9rem;
 		padding-right: 0.1rem;
 	}
+
+	@media screen and (max-width: 600px) {
+		.thumb {
+			height: 250px;
+		}
+	}
+
+	@media screen and (max-width: 420px) {
+		.thumb {
+			height: 200px;
+		}
+	}
 `;
 
-const VideoCard = ({ hideavatar, video }) => {
+const VideoCard = ({ nousername, hideavatar, video }) => {
 	return (
 		<Wrapper>
 			<img className="thumb" src={video.thumbnail} alt="thumbnail" />
 			<div className="video-info-container">
 				<div className="channel-avatar">
 					{!hideavatar && (
-						<Avatar src={video.User.avatar} alt="channel avatar" />
+						<Avatar
+							style={{ marginRight: "0.8rem" }}
+							src={video.User.avatar}
+							alt="channel avatar"
+						/>
 					)}
 				</div>
 				<div className="video-info">
@@ -53,14 +60,16 @@ const VideoCard = ({ hideavatar, video }) => {
 							? video.title.substring(0, 40) + "..."
 							: video.title}
 					</h4>
-					<span className="secondary">{video.User.username}</span>
+					{!nousername && (
+						<span className="secondary">{video.User.username}</span>
+					)}
 					<p className="secondary">
-						{video.views === 0 && <span>No views</span>}
-						{video.views !== 0 && (
+						{video && video.views === 0 && <span>No views</span>}
+						{video && video.views !== 0 && (
 							<span>
-								{video.views > 1
-									? `${video.views} views`
-									: `${video.views} view`}
+								{video && video.views > 1
+									? `${video && video.views} views`
+									: `${video && video.views} view`}
 							</span>
 						)}{" "}
 						<span>•</span> <span>{timeSince(video.createdAt)} ago</span>

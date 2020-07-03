@@ -1,7 +1,9 @@
 import React from "react";
-import styled from "styled-components";
+import { connect } from "react-redux";
+import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
 import Subscriptions from "./Subscriptions";
+import { closeSidebar } from "../actions";
 import {
 	HomeIcon,
 	TrendingIcon,
@@ -19,10 +21,12 @@ const SidebarWrapper = styled.div`
 	left: 0;
 	height: 100vh;
 	width: 240px;
+	z-index: 300;
 	background: ${props => props.theme.grey};
 	padding-top: 1rem;
 	overflow: auto;
 	padding-bottom: 1.5rem;
+	transition: all 0.3s;
 
 	&::-webkit-scrollbar {
 		width: 0;
@@ -57,28 +61,47 @@ const SidebarWrapper = styled.div`
 	}
 
 	@media screen and (max-width: 1093px) {
-		display: none;
+		transform: translateX(-100%);
+
+	${props =>
+		props.open &&
+		css`
+			transform: translateX(0);
+		`}
 	}
 `;
 
-const Sidebar = () => {
+const Sidebar = ({ open, closeSidebar }) => {
 	return (
-		<SidebarWrapper>
-			<NavLink exact to="/" activeClassName="active">
+		<SidebarWrapper open={open}>
+			<NavLink
+				onClick={() => closeSidebar()}
+				exact
+				to="/"
+				activeClassName="active"
+			>
 				<div className="icon">
 					<HomeIcon />
 					<span>Home</span>
 				</div>
 			</NavLink>
 
-			<NavLink to="/feed/trending" activeClassName="active">
+			<NavLink
+				onClick={() => closeSidebar()}
+				to="/feed/trending"
+				activeClassName="active"
+			>
 				<div className="icon">
 					<TrendingIcon />
 					<span>Trending</span>
 				</div>
 			</NavLink>
 
-			<NavLink to="/feed/subscriptions" activeClassName="active">
+			<NavLink
+				onClick={() => closeSidebar()}
+				to="/feed/subscriptions"
+				activeClassName="active"
+			>
 				<div className="icon">
 					<SubIcon />
 					<span>Subscriptions</span>
@@ -87,35 +110,55 @@ const Sidebar = () => {
 
 			<div className="ruler"></div>
 
-			<NavLink to="/feed/library" activeClassName="active">
+			<NavLink
+				onClick={() => closeSidebar()}
+				to="/feed/library"
+				activeClassName="active"
+			>
 				<div className="icon">
 					<LibIcon />
 					<span>Library</span>
 				</div>
 			</NavLink>
 
-			<NavLink to="/feed/history" activeClassName="active">
+			<NavLink
+				onClick={() => closeSidebar()}
+				to="/feed/history"
+				activeClassName="active"
+			>
 				<div className="icon">
 					<HistoryIcon />
 					<span>History</span>
 				</div>
 			</NavLink>
 
-			<NavLink to="/feed/my_videos" activeClassName="active">
+			<NavLink
+				onClick={() => closeSidebar()}
+				to="/feed/my_videos"
+				activeClassName="active"
+			>
 				<div className="icon">
 					<VidIcon />
 					<span>Your videos</span>
 				</div>
 			</NavLink>
 
-			<NavLink to="/feed/watch_later" activeClassName="active">
+			<NavLink
+				onClick={() => closeSidebar()}
+				to="/feed/watch_later"
+				activeClassName="active"
+			>
 				<div className="icon">
 					<WatchIcon />
 					<span>Watch Later</span>
 				</div>
 			</NavLink>
 
-			<NavLink to="/feed/liked_videos" activeClassName="active">
+			<NavLink
+				onClick={() => closeSidebar()}
+				to="/feed/liked_videos"
+				activeClassName="active"
+			>
 				<div className="icon">
 					<LikeIcon />
 					<span>Liked videos</span>
@@ -129,4 +172,6 @@ const Sidebar = () => {
 	);
 };
 
-export default Sidebar;
+const mapStateToProps = state => ({ open: state.sidebar });
+
+export default connect(mapStateToProps, { closeSidebar })(Sidebar);

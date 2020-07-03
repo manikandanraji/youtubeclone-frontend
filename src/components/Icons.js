@@ -113,22 +113,6 @@ export const WatchIcon = props => (
 	</svg>
 );
 
-export const LikeIcon = props => (
-	<svg
-		{...props}
-		viewBox="0 0 24 24"
-		preserveAspectRatio="xMidYMid meet"
-		focusable="false"
-		height="22"
-		width="22"
-		fill="#AAAAAA"
-	>
-		<g>
-			<path d="M3.75 18.75h3v-9h-3v9zm16.5-8.25c0-.83-.68-1.5-1.5-1.5h-4.73l.7-3.43.03-.24c0-.3-.13-.6-.33-.8l-.8-.78L8.7 8.7c-.3.26-.45.64-.45 1.05v7.5c0 .82.67 1.5 1.5 1.5h6.75c.62 0 1.15-.38 1.38-.9l2.27-5.3c.06-.18.1-.36.1-.55v-1.5z"></path>
-		</g>
-	</svg>
-);
-
 export const MoreIcon = props => (
 	<svg
 		{...props}
@@ -166,8 +150,8 @@ export const UploadIcon = props => (
 		{...props}
 		viewBox="0 0 24 24"
 		preserveAspectRatio="xMidYMid meet"
-		height="22"
-		width="22"
+		height="27"
+		width="27"
 		fill="#FFF"
 		focusable="false"
 	>
@@ -183,9 +167,9 @@ export const NotificationIcon = props => (
 		viewBox="0 0 24 24"
 		preserveAspectRatio="xMidYMid meet"
 		focusable="false"
-		height="22"
+		height="27"
 		fill="#FFF"
-		width="22"
+		width="27"
 	>
 		<g>
 			<path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"></path>
@@ -202,6 +186,48 @@ export const CloseIcon = props => (
 	>
 		<g>
 			<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+		</g>
+	</svg>
+);
+
+export const SignoutIcon = props => (
+	<svg
+		{...props}
+		viewBox="0 0 24 24"
+		preserveAspectRatio="xMidYMid meet"
+		fill=""
+	>
+		<path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5a2 2 0 00-2 2v4h2V5h14v14H5v-4H3v4a2 2 0 002 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path>
+	</svg>
+);
+
+export const LikeIcon = props => (
+	<svg
+		{...props}
+		viewBox="0 0 24 24"
+		preserveAspectRatio="xMidYMid meet"
+		focusable="false"
+		fill="#AAAAAA"
+		width="22"
+		height="22"
+	>
+		<g>
+			<path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z"></path>
+		</g>
+	</svg>
+);
+
+export const DislikeIcon = props => (
+	<svg
+		{...props}
+		viewBox="0 0 24 24"
+		preserveAspectRatio="xMidYMid meet"
+		focusable="false"
+		width="22"
+		height="22"
+	>
+		<g>
+			<path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v1.91l.01.01L1 14c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"></path>
 		</g>
 	</svg>
 );

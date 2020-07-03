@@ -34,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
 		font-size: 1rem;
 	}
 
-	input:focus, textarea:focus, button:focus {
+	input:focus, textarea:focus, button:focus, video:focus {
 			outline: none;
 	}
 
@@ -44,19 +44,34 @@ const GlobalStyle = createGlobalStyle`
 		cursor: pointer;
 	}
 
-	.secondary {
-		color: ${props => props.theme.secondaryColor};
+	textarea {
+		resize: none;
 	}
 
 	svg, .pointer {
 		cursor: pointer;
 	}
 
+	.secondary {
+		color: ${props => props.theme.secondaryColor};
+	}
+
 	.avatar {
 		height: 22px;
 		width: 22px;
-		border-radius: 11px;
-		objec-fit: cover;
+		border-radius: 10px;
+		object-fit: cover;
+	}
+
+
+	.md {
+		height: 50px;
+		width: 50px;
+		border-radius: 25px;
+	}
+
+	.small {
+		font-size: 0.9rem;
 	}
 
 	.lg {
@@ -70,14 +85,24 @@ const GlobalStyle = createGlobalStyle`
 		align-items: center;
 	}
 
-	.flex-row img {
-		margin-right: 0.6rem;
+	.flex-row img, .flex-row svg {
+		margin-right: 0.8rem;
 	}
 
 	.ruler {
 		height: 1px;
 		background: ${props => props.theme.darkGrey};
 		margin: 1rem 0;
+	}
+
+	@media screen and (max-width: 530px) {
+		body {
+			font-size: 0.95rem;
+		}
+
+		button {
+			font-size: 0.9rem;
+	  }
 	}
 `;
 

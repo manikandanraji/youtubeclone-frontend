@@ -41,9 +41,9 @@ export const StyledAuth = styled.div`
 
 	button {
 		padding: 0.4rem 1rem;
-		background: red;
-		color: white;
-		border: 1px solid red;
+		background: ${props => props.theme.red};
+		color: ${props => props.theme.white};
+		border: 1px solid ${props => props.theme.red};
 		border-radius: 3px;
 		text-transform: uppercase;
 		letter-spacing: 1.1px;
@@ -76,7 +76,7 @@ const Signup = ({ login, signupUser }) => {
 			firstname: firstname.value,
 			lastname: lastname.value,
 			email: email.value,
-			password: password1.value,
+			password: password1.value
 		};
 
 		signupUser(payload);
