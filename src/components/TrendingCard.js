@@ -4,6 +4,7 @@ import { timeSince } from "../utils";
 
 const Wrapper = styled.div`
 	margin: 1.4rem 0;
+	margin-top: 1rem;
 	display: flex;
 
 	.thumb {

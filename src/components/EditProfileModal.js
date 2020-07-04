@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import styled, { keyframes } from "styled-components";
 import { connect } from "react-redux";
 import Button from "../styles/Button";
 import { CloseIcon } from "./Icons";
 import useInput from "../hooks/useInput";
 import { upload } from "../utils";
-import { updateProfile } from "../actions";
+import { updateUser, updateProfile } from "../actions";
 
 const openModal = keyframes`
 	from {
@@ -92,7 +93,12 @@ const Wrapper = styled.div`
 	}
 `;
 
-const EditProfileModal = ({ updateProfile, closeModal, profile }) => {
+const EditProfileModal = ({
+	updateUser,
+	updateProfile,
+	closeModal,
+	profile
+}) => {
 	const firstname = useInput(profile?.firstname);
 	const lastname = useInput(profile?.lastname);
 	const channelDesc = useInput(profile?.channelDescription || "");
@@ -106,7 +112,7 @@ const EditProfileModal = ({ updateProfile, closeModal, profile }) => {
 		const file = e.target.files[0];
 
 		if (file) {
-			setCover(await upload('image', file));
+			setCover(await upload("image", file));
 		}
 	};
 
@@ -114,7 +120,7 @@ const EditProfileModal = ({ updateProfile, closeModal, profile }) => {
 		const file = e.target.files[0];
 
 		if (file) {
-			setAvatar(await upload('image', file));
+			setAvatar(await upload("image", file));
 		}
 	};
 
@@ -128,6 +134,8 @@ const EditProfileModal = ({ updateProfile, closeModal, profile }) => {
 		if (cover) data.cover = cover;
 
 		updateProfile(data);
+		updateUser(data);
+		toast.dark("Profile updated");
 		closeModal();
 	};
 
@@ -189,7 +197,7 @@ const EditProfileModal = ({ updateProfile, closeModal, profile }) => {
 						type="text"
 						placeholder="lastname"
 						value={lastname.value}
-						onChange={firstname.onChange}
+						onChange={lastname.onChange}
 					/>
 					<textarea
 						type="text"
@@ -205,4 +213,6 @@ const EditProfileModal = ({ updateProfile, closeModal, profile }) => {
 
 const mapStateToProps = state => ({ profile: state.profile });
 
-export default connect(mapStateToProps, { updateProfile })(EditProfileModal);
+export default connect(mapStateToProps, { updateProfile, updateUser })(
+	EditProfileModal
+);

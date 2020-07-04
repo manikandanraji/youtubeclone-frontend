@@ -1,5 +1,6 @@
 import axios from "axios";
 import api from "../services/api";
+import { toast } from "react-toastify";
 
 export const timeSince = timestamp => {
 	const seconds = Math.floor((new Date() - new Date(timestamp)) / 1000);
@@ -38,12 +39,29 @@ export const upload = async (resourceType, file) => {
 	formData.append("upload_preset", "youtubeclone");
 	formData.append("file", file);
 
-	console.log(process.env.REACT_APP_CLOUDINARY_ENDPOINT);
+	let toastId = null;
+	const config = {
+		onUploadProgress: p => {
+			const progress = p.loaded / p.total;
+			if (toastId === null) {
+				toastId = toast("Upload in Progress", {
+					progress
+				});
+			} else {
+				toast.update(toastId, {
+					progress
+				});
+			}
+		}
+	};
 
 	const { data } = await axios.post(
 		`${process.env.REACT_APP_CLOUDINARY_ENDPOINT}/${resourceType}/upload`,
-		formData
+		formData,
+		config
 	);
+
+	toast.dismiss(toastId);
 
 	return data.secure_url;
 };
@@ -54,15 +72,11 @@ export const authenticate = async (endpoint, data) => {
 	try {
 		const tokenRes = await axios.post(`${backendUrl}auth/${endpoint}`, data);
 
-		console.log(tokenRes);
-
 		const headers = {
 			headers: { Authorization: `Bearer ${tokenRes.data.data}` }
 		};
 
 		const userRes = await axios.get(`${backendUrl}auth/me`, headers);
-
-		console.log(userRes);
 
 		const user = { ...userRes.data.data, token: tokenRes.data.data };
 		api.defaults.headers.common[
@@ -73,6 +87,7 @@ export const authenticate = async (endpoint, data) => {
 		return user;
 	} catch (err) {
 		console.error(err.response.data);
+		toast.error(err.response.data.message);
 	}
 };
 
@@ -85,7 +100,6 @@ export const removeChannelLocalSt = channelId => {
 	};
 
 	localStorage.setItem("user", JSON.stringify(updated));
-	console.log(localStorage.getItem("user"));
 };
 
 export const addChannelLocalSt = channel => {
@@ -97,5 +111,4 @@ export const addChannelLocalSt = channel => {
 	};
 
 	localStorage.setItem("user", JSON.stringify(updated));
-	console.log(localStorage.getItem("user"));
 };

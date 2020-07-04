@@ -8,7 +8,7 @@ import Button from "../styles/Button";
 import Player from "../components/Player";
 import { LikeIcon, DislikeIcon } from "../components/Icons";
 import {
-	getFeed,
+	getRecommendations,
 	clearVideo,
 	getVideo,
 	unsubscribeFromVideo,
@@ -25,8 +25,6 @@ const Wrapper = styled.div`
 	grid-template-columns: 70% 1fr;
 	grid-gap: 2rem;
 	padding: 1.3rem;
-	width: 99%;
-	margin: auto;
 
 	.video-container .video-info {
 		margin-top: 1rem;
@@ -120,7 +118,7 @@ const WatchVideo = ({
 	video,
 	clearVideo,
 	getVideo,
-	getFeed,
+	getRecommendations,
 	subscribeFromVideo,
 	unsubscribeFromVideo,
 	likeVideo,
@@ -134,7 +132,7 @@ const WatchVideo = ({
 		if (video.isLiked) {
 			cancelLike(videoId);
 		} else {
-			likeVideo(videoId);
+			likeVideo(video);
 
 			if (video.isDisliked) {
 				cancelDislike(videoId);
@@ -157,8 +155,8 @@ const WatchVideo = ({
 	useEffect(() => {
 		clearVideo();
 		getVideo(videoId);
-		getFeed();
-	}, [videoId, clearVideo, getFeed, getVideo]);
+		getRecommendations();
+	}, [videoId, clearVideo, getRecommendations, getVideo]);
 
 	return (
 		<Wrapper
@@ -167,18 +165,7 @@ const WatchVideo = ({
 		>
 			<div className="video-container">
 				<div className="video">
-					<Player
-						playerOptions={{
-							autoplay: true,
-							controls: true,
-							sources: [
-								{
-									type: "video/mp4",
-									src: video.url
-								}
-							]
-						}}
-					/>
+					<Player src={video?.url} poster={video?.thumbnai} />
 				</div>
 
 				<div className="video-info">
@@ -253,19 +240,24 @@ const WatchVideo = ({
 					next
 						.filter(vid => vid.id !== video.id)
 						.map(video => (
-							<VideoCard key={video.id} hideavatar={true} video={video} />
+							<Link key={video.id} to={`/watch/${video.id}`}>
+								<VideoCard key={video.id} hideavatar={true} video={video} />
+							</Link>
 						))}
 			</div>
 		</Wrapper>
 	);
 };
 
-const mapStateToProps = state => ({ next: state.feed, video: state.video });
+const mapStateToProps = state => ({
+	next: state.recommendation,
+	video: state.video
+});
 
 export default connect(mapStateToProps, {
 	clearVideo,
 	getVideo,
-	getFeed,
+	getRecommendations,
 	subscribeFromVideo,
 	unsubscribeFromVideo,
 	likeVideo,

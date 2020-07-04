@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-toastify";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import useInput from "../hooks/useInput";
@@ -29,8 +30,8 @@ export const StyledAuth = styled.div`
 		border-radius: 3px;
 		width: 100%;
 		padding: 0.6rem 1.2rem;
-		background: ${props => props.theme.darkGrey};
-		border: 1px solid ${props => props.theme.darkGrey};
+		background: ${props => props.theme.black};
+		border: 1px solid ${props => props.theme.black};
 		margin-bottom: 1.5rem;
 		color: ${props => props.theme.primaryColor};
 	}
@@ -61,15 +62,41 @@ export const StyledAuth = styled.div`
 `;
 
 const Signup = ({ login, signupUser }) => {
-	const firstname = useInput("Redux");
-	const lastname = useInput("Thunk");
-	const username = useInput("reduxthunk");
-	const email = useInput("reduxthunk@gmail.com");
+	const firstname = useInput("John");
+	const lastname = useInput("Wick");
+	const username = useInput("John Wick");
+	const email = useInput("johnwick@gmail.com");
 	const password1 = useInput("123456");
 	const password2 = useInput("123456");
 
 	const handleSubmit = e => {
 		e.preventDefault();
+
+		if (
+			!firstname.value ||
+			!lastname.value ||
+			!username.value ||
+			!email.value ||
+			!password1.value ||
+			!password2.value
+		) {
+			return toast.error("Please fill in all the fields");
+		}
+
+		if (password1.value !== password2.value) {
+			return toast.error("Password does not match");
+		}
+
+		if (username.value.length <= 3) {
+			return toast.error("Username should be atleast four characters long");
+		}
+
+		const re = /^[a-z0-9\x20]+$/i;
+		if (!re.exec(username.value)) {
+			return toast.error(
+				"Choose a better username"
+			);
+		}
 
 		const payload = {
 			username: username.value,
@@ -79,7 +106,16 @@ const Signup = ({ login, signupUser }) => {
 			password: password1.value
 		};
 
-		signupUser(payload);
+		const clearForm = () => {
+			username.setValue('');
+			firstname.setValue('');
+			lastname.setValue('');
+			email.setValue('');
+			password1.setValue('');
+			password2.setValue('');
+		}
+
+		signupUser(payload, clearForm);
 	};
 
 	return (

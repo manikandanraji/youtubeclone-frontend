@@ -8,7 +8,7 @@ import TrendingCard from "../components/TrendingCard";
 import ChannelInfo from "../components/ChannelInfo";
 
 const StyledChannels = styled.div`
-	margin-top: 2rem;
+	margin-top: 1rem;
 `;
 
 const SearchResults = ({ results, getSearchResults }) => {
@@ -31,7 +31,9 @@ const SearchResults = ({ results, getSearchResults }) => {
 			</StyledChannels>
 			{results &&
 				results?.videos?.map(video => (
-					<TrendingCard key={video.id} video={video} />
+					<Link key={video.id} to={`/watch/${video.id}`}>
+						<TrendingCard video={video} />
+					</Link>
 				))}
 		</StyledTrending>
 	);

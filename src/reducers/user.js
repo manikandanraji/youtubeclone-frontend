@@ -3,7 +3,8 @@ import {
 	SIGNUP,
 	LOGOUT,
 	ADD_CHANNEL,
-	REMOVE_CHANNEL
+	REMOVE_CHANNEL,
+	UPDATE_USER
 } from "../actions/types";
 
 const localSt = JSON.parse(localStorage.getItem("user"));
@@ -23,7 +24,14 @@ const user = (state = initialState, action) => {
 		case REMOVE_CHANNEL:
 			return {
 				...state,
-				channels: state.channels.filter(channel => channel.id !== action.payload)
+				channels: state.channels.filter(
+					channel => channel.id !== action.payload
+				)
+			};
+		case UPDATE_USER:
+			return {
+				...state,
+				...action.payload
 			};
 		case LOGOUT:
 			return {};

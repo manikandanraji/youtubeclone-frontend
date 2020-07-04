@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { toast } from 'react-toastify';
 import { UploadIcon } from "./Icons";
 import UploadVideoModal from "./UploadVideoModal";
-import { upload } from '../utils';
+import { upload } from "../utils";
 
 const UploadVideo = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -13,24 +14,21 @@ const UploadVideo = () => {
 	const [thumbnail, setThumbnail] = useState("");
 
 	const handleVideoUpload = async e => {
-		if (e.target.files[0]) {
-			const url = URL.createObjectURL(e.target.files[0]);
+		const file = e.target.files[0];
+		if (file) {
+			const size = file.size / 1000000;
+
+			if(size > 30) {
+				return toast.error('Sorry, the file should be less than 30MB');
+			}
+
+			const url = URL.createObjectURL(file);
 			setPreviewVideo(url);
 			setShowModal(true);
 
-			const formData = new FormData()
-			formData.append('upload_preset', 'youtubeclone');
-			formData.append('file', e.target.files[0]);
-
-			const data = await upload('video', e.target.files[0]);
+			const data = await upload("video", file);
 			setUrl(data);
-			setThumbnail(data.replace('.mp4', '.jpg'));
-
-			// axios.post("https://api.cloudinary.com/v1_1/douy56nkf/video/upload", formData).then(res => {
-			// 	console.log(res);
-			// 	setUrl(res.data.secure_url);
-			// 	setThumbnail(res.data.secure_url.replace(".mp4", ".jpg"));
-			// });
+			setThumbnail(data.replace(".mp4", ".jpg"));
 		}
 	};
 

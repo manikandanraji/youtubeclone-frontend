@@ -1,15 +1,20 @@
 import React from "react";
+import { toast } from 'react-toastify';
 import { connect } from "react-redux";
 import useInput from "../hooks/useInput";
 import { loginUser } from "../actions";
 import { StyledAuth } from "./Signup";
 
 const Login = ({ signup, loginUser }) => {
-	const email = useInput("reduxthunk@gmail.com");
-	const password = useInput("123456");
+	const email = useInput("");
+	const password = useInput("");
 
 	const handleLogin = e => {
 		e.preventDefault();
+
+		if(!email.value || !password.value) {
+			return toast.error("Please fill in all the fields");
+		}
 
 		const payload = {
 			email: email.value,
@@ -17,6 +22,9 @@ const Login = ({ signup, loginUser }) => {
 		};
 
 		loginUser(payload);
+
+		email.setValue('');
+		password.setValue('');
 	};
 
 	return (

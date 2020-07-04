@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 import styled from "styled-components";
 import useInput from "../hooks/useInput";
@@ -25,7 +26,10 @@ const Search = () => {
 
 	const handleSearch = e => {
 		if (e.keyCode === 13) {
-			console.log(searchterm.value);
+			if(!searchterm.value.trim()) {
+				return toast.dark('Please enter the searchterm')
+			}
+
 			history.push(`/results/${searchterm.value}`);
 			searchterm.setValue('');
 		}

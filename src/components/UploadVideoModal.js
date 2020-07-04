@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { toast } from "react-toastify";
+import { connect } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import Button from "../styles/Button";
 import useInput from "../hooks/useInput";
 import { CloseIcon } from "./Icons";
+import { uploadVideo } from "../actions";
 
 const openModal = keyframes`
 	from {
@@ -106,16 +108,25 @@ const Wrapper = styled.div`
 	}
 `;
 
-const UploadVideoModal = ({ previewVideo, closeModal, url, thumbnail }) => {
+const UploadVideoModal = ({
+	previewVideo,
+	closeModal,
+	url,
+	thumbnail,
+	uploadVideo
+}) => {
 	const title = useInput("");
 	const description = useInput("");
-
 	const [tab, setTab] = useState("PREVIEW");
 
 	const handleTab = () => {
 		if (tab === "PREVIEW") {
 			setTab("FORM");
 		} else {
+			if (!title.value.trim() || !description.value.trim()) {
+				return toast.error("Please fill in all the fields");
+			}
+
 			const newVideo = {
 				title: title.value,
 				description: description.value,
@@ -123,14 +134,7 @@ const UploadVideoModal = ({ previewVideo, closeModal, url, thumbnail }) => {
 				thumbnail
 			};
 
-			const { token } = JSON.parse(localStorage.getItem("user"));
-
-			axios
-				.post("http://localhost:5000/api/v1/videos", newVideo, {
-					headers: { Authorization: `Bearer ${token}` }
-				})
-				.then(res => console.log(res))
-				.catch(err => console.log(err.response.data));
+			uploadVideo(newVideo);
 
 			closeModal();
 		}
@@ -188,4 +192,4 @@ const UploadVideoModal = ({ previewVideo, closeModal, url, thumbnail }) => {
 	);
 };
 
-export default UploadVideoModal;
+export default connect(null, { uploadVideo })(UploadVideoModal);

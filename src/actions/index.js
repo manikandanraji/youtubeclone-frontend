@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import {
 	SIGNUP,
 	LOGIN,
@@ -25,7 +26,11 @@ import {
 	GET_TRENDING,
 	ADD_CHANNEL,
 	REMOVE_CHANNEL,
-	GET_LIKED_VIDEOS
+	GET_LIKED_VIDEOS,
+	UPDATE_USER,
+	ADD_TO_LIKED_VIDEOS,
+	REMOVE_FROM_LIKED_VIDEOS,
+	ADD_TO_RECOMMENDATIONS
 } from "./types";
 
 import api from "../services/api";
@@ -35,11 +40,13 @@ import {
 	authenticate
 } from "../utils";
 
-export const signupUser = payload => async dispatch => {
+export const signupUser = (payload, clearForm) => async dispatch => {
 	const user = await authenticate("signup", payload);
 
 	if (user) {
+		clearForm();
 		dispatch({ type: SIGNUP, payload: user });
+		toast.dark("Signup successful");
 	}
 };
 
@@ -48,6 +55,7 @@ export const loginUser = payload => async dispatch => {
 
 	if (user) {
 		dispatch({ type: LOGIN, payload: user });
+		toast.dark("Login successful");
 	}
 };
 
@@ -57,6 +65,8 @@ export const logoutUser = () => dispatch => {
 	dispatch({
 		type: LOGOUT
 	});
+
+	toast.dark("You are logged out");
 };
 
 export const getRecommendations = () => async dispatch => {
@@ -78,7 +88,6 @@ export const getTrending = () => async dispatch => {
 
 		const videos = res.data.data;
 		videos.sort((a, b) => b.views - a.views);
-		console.log(videos);
 
 		dispatch({
 			type: GET_TRENDING,
@@ -252,17 +261,27 @@ export const unsubscribeFromProfile = userId => async dispatch => {
 	await api.get(`users/${userId}/togglesubscribe`);
 };
 
-export const likeVideo = videoId => async dispatch => {
+export const likeVideo = video => async dispatch => {
 	dispatch({
 		type: LIKE
 	});
 
-	await api.get(`videos/${videoId}/like`);
+	dispatch({
+		type: ADD_TO_LIKED_VIDEOS,
+		payload: video
+	});
+
+	await api.get(`videos/${video.id}/like`);
 };
 
 export const cancelLike = videoId => async dispatch => {
 	dispatch({
 		type: CANCEL_LIKE
+	});
+
+	dispatch({
+		type: REMOVE_FROM_LIKED_VIDEOS,
+		payload: videoId
 	});
 
 	await api.get(`videos/${videoId}/like`);
@@ -292,6 +311,35 @@ export const getLikedVideos = () => async dispatch => {
 			type: GET_LIKED_VIDEOS,
 			payload: res.data.data
 		});
+	} catch (err) {
+		console.error(err.response.data);
+	}
+};
+
+export const updateUser = data => async dispatch => {
+	const user = JSON.parse(localStorage.getItem("user"));
+
+	const updatedUser = { ...user, ...data };
+
+	localStorage.setItem("user", JSON.stringify(updatedUser));
+
+	dispatch({
+		type: UPDATE_USER,
+		payload: data
+	});
+};
+
+export const uploadVideo = video => async dispatch => {
+	try {
+		const res = await api.post("videos", video);
+
+		const { id, avatar, username } = JSON.parse(localStorage.getItem("user"));
+
+		const newVideo = res.data.data;
+		newVideo.views = 0;
+		newVideo.User = { id, avatar, username };
+
+		dispatch({ type: ADD_TO_RECOMMENDATIONS, payload: newVideo });
 	} catch (err) {
 		console.error(err.response.data);
 	}

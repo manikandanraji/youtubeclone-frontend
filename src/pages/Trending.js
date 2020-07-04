@@ -6,7 +6,7 @@ import TrendingCard from "../components/TrendingCard";
 import { getTrending } from "../actions";
 
 export const StyledTrending = styled.div`
-	padding: 1.3rem;
+	padding: 1rem 1.3rem;
 	width: 85%;
 	margin: 0 auto;
 

@@ -95,6 +95,20 @@ const GlobalStyle = createGlobalStyle`
 		margin: 1rem 0;
 	}
 
+	.Toastify__toast {
+		font-family: ${props => props.theme.font}, sans-serif;
+		border-radius: 4px;
+	}
+
+	.Toastify__toast--error {
+		background: ${props => props.theme.darkGrey};
+	}
+
+	.Toastify__toast--dark, .Toastify__toast--default {
+		background: ${props => props.theme.purple};
+    color: #fff;
+	}
+
 	@media screen and (max-width: 530px) {
 		body {
 			font-size: 0.95rem;
