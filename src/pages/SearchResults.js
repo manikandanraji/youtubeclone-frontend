@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getSearchResults } from "../actions";
 import { StyledTrending } from "./Trending";
 import TrendingCard from "../components/TrendingCard";
@@ -24,7 +24,9 @@ const SearchResults = ({ results, getSearchResults }) => {
 			<StyledChannels>
 				{results &&
 					results?.users?.map(channel => (
-						<ChannelInfo key={channel.id} channel={channel} />
+						<Link key={channel.id} to={`/channel/${channel.id}`}>
+							<ChannelInfo channel={channel} />
+						</Link>
 					))}
 			</StyledChannels>
 			{results &&

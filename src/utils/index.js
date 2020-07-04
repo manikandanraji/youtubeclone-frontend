@@ -1,5 +1,5 @@
 import axios from "axios";
-import api from '../services/api';
+import api from "../services/api";
 
 export const timeSince = timestamp => {
 	const seconds = Math.floor((new Date() - new Date(timestamp)) / 1000);
@@ -65,11 +65,37 @@ export const authenticate = async (endpoint, data) => {
 		console.log(userRes);
 
 		const user = { ...userRes.data.data, token: tokenRes.data.data };
-		api.defaults.headers.common["Authorization"] = `Bearer ${tokenRes.data.data}`;
+		api.defaults.headers.common[
+			"Authorization"
+		] = `Bearer ${tokenRes.data.data}`;
 		localStorage.setItem("user", JSON.stringify(user));
 
 		return user;
 	} catch (err) {
 		console.error(err.response.data);
 	}
+};
+
+export const removeChannelLocalSt = channelId => {
+	const user = JSON.parse(localStorage.getItem("user"));
+
+	const updated = {
+		...user,
+		channels: user.channels.filter(channel => channel.id !== channelId)
+	};
+
+	localStorage.setItem("user", JSON.stringify(updated));
+	console.log(localStorage.getItem("user"));
+};
+
+export const addChannelLocalSt = channel => {
+	const user = JSON.parse(localStorage.getItem("user"));
+
+	const updated = {
+		...user,
+		channels: [channel, ...user.channels]
+	};
+
+	localStorage.setItem("user", JSON.stringify(updated));
+	console.log(localStorage.getItem("user"));
 };

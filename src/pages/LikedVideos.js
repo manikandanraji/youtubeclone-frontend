@@ -1,28 +1,29 @@
-import React from 'react';
-import styled from 'styled-components';
-import { LikeIcon } from '../components/Icons'
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { StyledTrending } from "./Trending";
+import TrendingCard from "../components/TrendingCard";
+import { LikeIcon } from "../components/Icons";
+import { getLikedVideos } from "../actions";
 
-const Wrapper = styled.div`
-	padding: 1.3rem;
-	width: 80%;
-	margin: 0 auto;
+const LikedVideos = ({ videos, getLikedVideos }) => {
+	console.log(videos);
 
-	p {
-		margin-top: 0.4rem;
-	}
+	useEffect(() => {
+		if (!videos.length) {
+			getLikedVideos();
+		}
+	}, [videos, getLikedVideos]);
 
-	svg {
-		margin-right: 0.3rem;
-	}
-`
-
-const LikedVideos = () => {
 	return (
-		<Wrapper>
-			<h3 className="flex-row"><LikeIcon/> Liked Videos</h3>
-			<p className="secondary">Videos that you watch will show up here</p>
-		</Wrapper>
-  )
-}
+		<StyledTrending>
+			<h2>Liked Videos</h2>
+			{videos.map(video => (
+				<TrendingCard key={video.id} video={video} />
+			))}
+		</StyledTrending>
+	);
+};
 
-export default LikedVideos;
+const mapStateToProps = state => ({ videos: state.likedVideo });
+
+export default connect(mapStateToProps, { getLikedVideos })(LikedVideos);

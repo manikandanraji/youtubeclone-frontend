@@ -21,11 +21,19 @@ import {
 	CANCEL_DISLIKE,
 	SUBSCRIBE_FROM_PROFILE,
 	UNSUBSCRIBE_FROM_PROFILE,
-	GET_SEARCH_RESULTS
+	GET_SEARCH_RESULTS,
+	GET_TRENDING,
+	ADD_CHANNEL,
+	REMOVE_CHANNEL,
+	GET_LIKED_VIDEOS
 } from "./types";
 
 import api from "../services/api";
-import { authenticate } from "../utils";
+import {
+	addChannelLocalSt,
+	removeChannelLocalSt,
+	authenticate
+} from "../utils";
 
 export const signupUser = payload => async dispatch => {
 	const user = await authenticate("signup", payload);
@@ -61,6 +69,23 @@ export const getRecommendations = () => async dispatch => {
 		});
 	} catch (err) {
 		console.error(err.response.data);
+	}
+};
+
+export const getTrending = () => async dispatch => {
+	try {
+		const res = await api.get("videos");
+
+		const videos = res.data.data;
+		videos.sort((a, b) => b.views - a.views);
+		console.log(videos);
+
+		dispatch({
+			type: GET_TRENDING,
+			payload: videos
+		});
+	} catch (err) {
+		console.error(err.response);
 	}
 };
 
@@ -120,9 +145,7 @@ export const addComment = ({ videoId, text }) => async dispatch => {
 
 export const getProfile = userId => async dispatch => {
 	try {
-		console.log("i");
 		const res = await api.get(`users/${userId}`);
-		console.log(res);
 
 		dispatch({
 			type: GET_PROFILE,
@@ -137,15 +160,12 @@ export const clearProfile = () => ({ type: CLEAR_PROFILE });
 
 export const updateProfile = data => async dispatch => {
 	try {
-		console.log(data);
-
 		dispatch({
 			type: UPDATE_PROFILE,
 			payload: data
 		});
 
-		const res = await api.put("users", data);
-		console.log(res);
+		await api.put("users", data);
 	} catch (err) {
 		console.error(err.response.data);
 	}
@@ -172,20 +192,110 @@ export const getSearchResults = searchterm => async dispatch => {
 	}
 };
 
-// TODO
-export const subscribeFromVideo = () => ({ type: SUBSCRIBE_FROM_VIDEO });
-export const unsubscribeFromVideo = () => ({ type: UNSUBSCRIBE_FROM_VIDEO });
+export const subscribeFromVideo = channel => async dispatch => {
+	dispatch({
+		type: SUBSCRIBE_FROM_VIDEO
+	});
 
-export const subscribeFromProfile = () => ({ type: SUBSCRIBE_FROM_PROFILE });
-export const unsubscribeFromProfile = () => ({
-	type: UNSUBSCRIBE_FROM_PROFILE
-});
+	addChannelLocalSt(channel);
 
-// TODO
-export const likeVideo = () => ({ type: LIKE });
-export const cancelLike = () => ({ type: CANCEL_LIKE });
-export const dislikeVideo = () => ({ type: DISLIKE });
-export const cancelDislike = () => ({ type: CANCEL_DISLIKE });
+	dispatch({
+		type: ADD_CHANNEL,
+		payload: channel
+	});
+
+	await api.get(`users/${channel.id}/togglesubscribe`);
+};
+
+export const unsubscribeFromVideo = userId => async dispatch => {
+	dispatch({
+		type: UNSUBSCRIBE_FROM_VIDEO
+	});
+
+	removeChannelLocalSt(userId);
+
+	dispatch({
+		type: REMOVE_CHANNEL,
+		payload: userId
+	});
+
+	await api.get(`users/${userId}/togglesubscribe`);
+};
+
+export const subscribeFromProfile = channel => async dispatch => {
+	dispatch({
+		type: SUBSCRIBE_FROM_PROFILE
+	});
+
+	addChannelLocalSt(channel);
+
+	dispatch({
+		type: ADD_CHANNEL,
+		payload: channel
+	});
+
+	await api.get(`users/${channel.id}/togglesubscribe`);
+};
+
+export const unsubscribeFromProfile = userId => async dispatch => {
+	dispatch({
+		type: UNSUBSCRIBE_FROM_PROFILE
+	});
+
+	removeChannelLocalSt(userId);
+
+	dispatch({
+		type: REMOVE_CHANNEL,
+		payload: userId
+	});
+
+	await api.get(`users/${userId}/togglesubscribe`);
+};
+
+export const likeVideo = videoId => async dispatch => {
+	dispatch({
+		type: LIKE
+	});
+
+	await api.get(`videos/${videoId}/like`);
+};
+
+export const cancelLike = videoId => async dispatch => {
+	dispatch({
+		type: CANCEL_LIKE
+	});
+
+	await api.get(`videos/${videoId}/like`);
+};
+
+export const dislikeVideo = videoId => async dispatch => {
+	dispatch({
+		type: DISLIKE
+	});
+
+	await api.get(`videos/${videoId}/dislike`);
+};
+
+export const cancelDislike = videoId => async dispatch => {
+	dispatch({
+		type: CANCEL_DISLIKE
+	});
+
+	await api.get(`videos/${videoId}/dislike`);
+};
+
+export const getLikedVideos = () => async dispatch => {
+	try {
+		const res = await api.get("users/likedVideos");
+
+		dispatch({
+			type: GET_LIKED_VIDEOS,
+			payload: res.data.data
+		});
+	} catch (err) {
+		console.error(err.response.data);
+	}
+};
 
 export const openSidebar = () => ({ type: OPEN_SIDEBAR });
 export const closeSidebar = () => ({ type: CLOSE_SIDEBAR });

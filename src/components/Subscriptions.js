@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { closeSidebar } from '../actions';
+import { closeSidebar } from "../actions";
 
 const Wrapper = styled.div`
 	h4 {
@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 		padding-left: 1.5rem;
 	}
 
-	.sub {
+	.channel {
 		display: flex;
 		align-items: center;
 		padding: 0.2rem 0;
@@ -21,28 +21,33 @@ const Wrapper = styled.div`
 		padding-left: 1.5rem;
 	}
 
-	.sub:hover {
+	.channel:hover {
 		cursor: pointer;
 		background: ${props => props.theme.darkGrey};
 	}
 
-	.sub img {
+	.channel img {
 		margin-right: 1rem;
 		width: 22px;
 		height: 22px;
+		object-fit: cover;
 		border-radius: 11px;
 	}
 `;
 
-const Subscriptions = ({ subs, closeSidebar }) => {
+const Subscriptions = ({ channels, closeSidebar }) => {
 	return (
 		<Wrapper>
-			<h4>Subscriptions</h4>
-			{subs?.map(sub => (
-				<Link key={sub.userId} onClick={() => closeSidebar()} to={`/channel/${sub.userId}`}>
-					<div className="sub">
-						<img src={sub.User.avatar} alt="avatar" />
-						<span>{sub.User.username}</span>
+			{channels.length > 0 && <h4>Subscriptions</h4>}
+			{channels?.map(channel => (
+				<Link
+					key={channel.id}
+					onClick={() => closeSidebar()}
+					to={`/channel/${channel.id}`}
+				>
+					<div className="channel">
+						<img src={channel.avatar} alt="avatar" />
+						<span>{channel.username}</span>
 					</div>
 				</Link>
 			))}
@@ -50,22 +55,6 @@ const Subscriptions = ({ subs, closeSidebar }) => {
 	);
 };
 
-const mapStateToProps = state => {
-	const duplicateSubs = state.feed.filter(
-		video => video.userId !== state.user.id
-	);
-
-	let subs = [];
-
-	duplicateSubs.forEach(duplicateSub => {
-		const exists = subs.filter(sub => sub.userId === duplicateSub.userId);
-
-		if (!exists.length) {
-			subs.push(duplicateSub);
-		}
-	});
-
-	return { subs };
-};
+const mapStateToProps = state => ({ channels: state.user.channels });
 
 export default connect(mapStateToProps, { closeSidebar })(Subscriptions);

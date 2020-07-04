@@ -7,6 +7,8 @@ import sidebar from "./sidebar";
 import recommendation from "./recommendation";
 import channelRecommendation from "./channelRecommendation";
 import searchResult from "./searchResult";
+import trending from "./trending";
+import likedVideo from "./likedVideo";
 
 export default combineReducers({
 	user,
@@ -16,5 +18,7 @@ export default combineReducers({
 	sidebar,
 	recommendation,
 	channelRecommendation,
-	searchResult
+	searchResult,
+	trending,
+	likedVideo
 });

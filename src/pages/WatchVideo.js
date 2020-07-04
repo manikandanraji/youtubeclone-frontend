@@ -132,24 +132,24 @@ const WatchVideo = ({
 
 	const handleLike = () => {
 		if (video.isLiked) {
-			cancelLike();
+			cancelLike(videoId);
 		} else {
-			likeVideo();
+			likeVideo(videoId);
 
 			if (video.isDisliked) {
-				cancelDislike();
+				cancelDislike(videoId);
 			}
 		}
 	};
 
 	const handleDislike = () => {
 		if (video.isDisliked) {
-			cancelDislike();
+			cancelDislike(videoId);
 		} else {
-			dislikeVideo();
+			dislikeVideo(videoId);
 
 			if (video.isLiked) {
-				cancelLike();
+				cancelLike(videoId);
 			}
 		}
 	};
@@ -223,10 +223,20 @@ const WatchVideo = ({
 							</div>
 						</div>
 						{!video.isVideoMine && !video.isSubscribed && (
-							<Button onClick={() => unsubscribeFromVideo()}>Subscribe</Button>
+							<Button
+								onClick={() =>
+									subscribeFromVideo({
+										id: video.User.id,
+										avatar: video.User.avatar,
+										username: video.User.username
+									})
+								}
+							>
+								Subscribe
+							</Button>
 						)}
 						{!video.isVideoMine && video.isSubscribed && (
-							<Button grey onClick={() => subscribeFromVideo()}>
+							<Button grey onClick={() => unsubscribeFromVideo(video.userId)}>
 								Subscribed
 							</Button>
 						)}

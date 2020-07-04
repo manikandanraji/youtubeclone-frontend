@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import TrendingCard from "../components/TrendingCard";
-import { getFeed } from "../actions";
+import { getTrending } from "../actions";
 
 export const StyledTrending = styled.div`
 	padding: 1.3rem;
@@ -19,16 +19,19 @@ export const StyledTrending = styled.div`
 	}
 `;
 
-const Trending = ({ feed, getFeed }) => {
+const Trending = ({ trending, getTrending }) => {
 	useEffect(() => {
-		getFeed();
-	}, [getFeed]);
+		if (!trending.length) {
+			console.log('dispatching...')
+			getTrending();
+		}
+	}, [getTrending, trending]);
 
 	return (
 		<StyledTrending>
 			<h2>Trending</h2>
 			<div className="trending">
-				{feed.map(video => (
+				{trending.map(video => (
 					<Link to={`/watch/${video.id}`} key={video.id}>
 						<TrendingCard key={video.id} video={video} />
 					</Link>
@@ -38,6 +41,6 @@ const Trending = ({ feed, getFeed }) => {
 	);
 };
 
-const mapStateToProps = state => ({ feed: state.feed });
+const mapStateToProps = state => ({ trending: state.trending });
 
-export default connect(mapStateToProps, { getFeed })(Trending);
+export default connect(mapStateToProps, { getTrending })(Trending);

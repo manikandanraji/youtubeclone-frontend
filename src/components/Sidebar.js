@@ -11,7 +11,6 @@ import {
 	LibIcon,
 	HistoryIcon,
 	VidIcon,
-	WatchIcon,
 	LikeIcon
 } from "./Icons";
 
@@ -140,17 +139,6 @@ const Sidebar = ({ open, closeSidebar }) => {
 				<div className="icon">
 					<VidIcon />
 					<span>Your videos</span>
-				</div>
-			</NavLink>
-
-			<NavLink
-				onClick={() => closeSidebar()}
-				to="/feed/watch_later"
-				activeClassName="active"
-			>
-				<div className="icon">
-					<WatchIcon />
-					<span>Watch Later</span>
 				</div>
 			</NavLink>
 

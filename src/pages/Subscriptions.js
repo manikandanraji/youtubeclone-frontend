@@ -6,14 +6,13 @@ import VideoCard from "../components/VideoCard";
 import VideoGrid from "../styles/VideoGrid";
 import { getFeed } from "../actions";
 
-const Subscriptions = ({ feed, getFeed }) => {
+const Subscriptions = ({ feed, getFeed, clearFeed }) => {
 	useEffect(() => {
 		getFeed();
 	}, [getFeed]);
 
 	return (
 		<Wrapper>
-			<h2>Subscriptions</h2>
 			<VideoGrid>
 				{feed.map(sub => (
 					<Link key={sub.id} to={`/watch/${sub.id}`}>

@@ -128,13 +128,23 @@ const Channel = ({
 					{profile.isMe && <EditProfile />}
 
 					{!profile.isMe && profile.isSubscribed && (
-						<Button grey onClick={() => unsubscribeFromProfile()}>
+						<Button grey onClick={() => unsubscribeFromProfile(profile.id)}>
 							Subscribed
 						</Button>
 					)}
 
 					{!profile.isMe && !profile.isSubscribed && (
-						<Button onClick={() => subscribeFromProfile()}>Subscribe</Button>
+						<Button
+							onClick={() =>
+								subscribeFromProfile({
+									id: profile.id,
+									avatar: profile.avatar,
+									username: profile.username
+								})
+							}
+						>
+							Subscribe
+						</Button>
 					)}
 				</div>
 

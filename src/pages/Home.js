@@ -42,8 +42,10 @@ export const Wrapper = styled.div`
 
 const Home = ({ recommendation, getRecommendations }) => {
 	useEffect(() => {
-		getRecommendations();
-	}, [getRecommendations]);
+		if (!recommendation.length) {
+			getRecommendations();
+		}
+	}, [recommendation.length, getRecommendations]);
 
 	return (
 		<Wrapper>

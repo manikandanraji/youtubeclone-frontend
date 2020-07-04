@@ -80,11 +80,11 @@ const TrendingCard = ({ video }) => {
 					<span>{video.User.username}</span>
 
 					<span>•</span>
-					{video.views === 0 && <span>No views</span>}
+					{video && video.views === 0 && <span>No views</span>}
 
-					{video.views !== 0 && (
+					{video && video.views !== 0 && (
 						<span>
-							{video.views > 1 ? `${video.views} views` : `${video.views} view`}
+							{video && video.views > 1 ? `${video && video.views} views` : `${video && video.views} view`}
 						</span>
 					)}
 					<span>•</span>
