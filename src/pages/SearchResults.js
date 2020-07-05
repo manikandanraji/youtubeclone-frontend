@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { getSearchResults, clearSearchResults } from "../actions";
 import { StyledTrending } from "./Trending";
 import TrendingCard from "../components/TrendingCard";
+import NoResults from '../components/NoResults';
 import ChannelInfo from "../components/ChannelInfo";
 
 const StyledChannels = styled.div`
@@ -30,6 +31,10 @@ const SearchResults = ({
 
 	if (isFetching) {
 		return <p>loader</p>;
+	}
+
+	if(!isFetching && !videos.length && !users.length) {
+		return <NoResults title="No results found" text="Try different keywords"/>
 	}
 
 	return (

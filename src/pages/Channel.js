@@ -6,12 +6,14 @@ import EditProfile from "../components/EditProfile";
 import ChannelTabVideo from "../components/ChannelTabVideo";
 import ChannelTabAbout from "../components/ChannelTabAbout";
 import ChannelTabChannels from "../components/ChannelTabChannels";
+import NoResults from "../components/NoResults";
 import Button from "../styles/Button";
 import {
 	clearProfile,
 	getProfile,
 	subscribeChannel,
-	unsubscribeChannel
+	unsubscribeChannel,
+	clearNotFound
 } from "../actions";
 import {
 	SUBSCRIBE_FROM_PROFILE,
@@ -96,7 +98,9 @@ const Channel = ({
 	profile,
 	loggedInUserId,
 	subscribeChannel,
-	unsubscribeChannel
+	unsubscribeChannel,
+	notfound,
+	clearNotFound
 }) => {
 	const { userId } = useParams();
 	const [tab, setTab] = useState("VIDEOS");
@@ -106,8 +110,18 @@ const Channel = ({
 
 		return () => {
 			clearProfile();
+			clearNotFound();
 		};
-	}, [userId, loggedInUserId, clearProfile, getProfile]);
+	}, [userId, loggedInUserId, clearProfile, getProfile, clearNotFound]);
+
+	if (notfound) {
+		return (
+			<NoResults
+				title="Page not found"
+				text="The page you are looking for is not found or it may have been removed"
+			/>
+		);
+	}
 
 	if (isFetching) {
 		return <p>loader</p>;
@@ -202,14 +216,16 @@ const Channel = ({
 	);
 };
 
-const mapStateToProps = ({ profile }) => ({
+const mapStateToProps = ({ notfound, profile }) => ({
 	isFetching: profile.isFetching,
-	profile
+	profile,
+	notfound
 });
 
 export default connect(mapStateToProps, {
 	clearProfile,
 	getProfile,
 	subscribeChannel,
-	unsubscribeChannel
+	unsubscribeChannel,
+	clearNotFound
 })(Channel);

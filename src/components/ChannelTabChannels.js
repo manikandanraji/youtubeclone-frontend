@@ -21,11 +21,21 @@ const Wrapper = styled.div`
 		flex-direction: column;
 		justify-content: center;
 	}
+
+	@media screen and (max-width: 700px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	@media screen and (max-width: 500px) {
+		width: 90%;
+		margin: 0 auto;
+		grid-template-columns: repeat(2, 1fr);
+	}
 `;
 
-const ChannelTabChannels = ({ channels }) => {
-	if(!channels?.length) {
-		return <p>Not subscribed to any channels yet</p>
+const ChannelTabChannels = ({ isFetching, channels }) => {
+	if (!isFetching && !channels.length) {
+		return <p>Not subscribed to any channels yet</p>;
 	}
 
 	return (
@@ -43,6 +53,9 @@ const ChannelTabChannels = ({ channels }) => {
 	);
 };
 
-const mapStateToProps = state => ({ channels: state.profile.channels });
+const mapStateToProps = ({ profile }) => ({
+	isFetching: profile.isFetching,
+	channels: profile.channels
+});
 
 export default connect(mapStateToProps)(ChannelTabChannels);

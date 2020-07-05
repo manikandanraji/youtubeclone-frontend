@@ -9,6 +9,8 @@ import channelRecommendation from "./channelRecommendation";
 import searchResult from "./searchResult";
 import trending from "./trending";
 import likedVideo from "./likedVideo";
+import history from "./history";
+import notfound from './notfound';
 
 export default combineReducers({
 	user,
@@ -20,5 +22,7 @@ export default combineReducers({
 	channelRecommendation,
 	searchResult,
 	trending,
-	likedVideo
+	likedVideo,
+	history,
+	notfound,
 });

@@ -42,20 +42,19 @@ export const Wrapper = styled.div`
 
 const Home = ({ isFetching, videos, getRecommendations }) => {
 	useEffect(() => {
-		if (!videos.length) {
-			getRecommendations();
-		}
+		getRecommendations();
 	}, [videos.length, getRecommendations]);
 
 	return (
 		<Wrapper>
 			<h2>Recommended</h2>
 			<VideoGrid>
-				{!isFetching && videos.map(video => (
-					<Link key={video.id} to={`/watch/${video.id}`}>
-						<VideoCard video={video} />
-					</Link>
-				))}
+				{!isFetching &&
+					videos.map(video => (
+						<Link key={video.id} to={`/watch/${video.id}`}>
+							<VideoCard video={video} />
+						</Link>
+					))}
 			</VideoGrid>
 		</Wrapper>
 	);

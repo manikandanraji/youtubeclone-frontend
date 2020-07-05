@@ -73,12 +73,12 @@ const Signup = ({ login, signupUser }) => {
 		e.preventDefault();
 
 		if (
-			!firstname.value ||
-			!lastname.value ||
-			!username.value ||
-			!email.value ||
-			!password1.value ||
-			!password2.value
+			!firstname.value.trim() ||
+			!lastname.value.trim() ||
+			!username.value.trim() ||
+			!email.value.trim() ||
+			!password1.value.trim() ||
+			!password2.value.trim()
 		) {
 			return toast.error("Please fill in all the fields");
 		}
@@ -93,9 +93,7 @@ const Signup = ({ login, signupUser }) => {
 
 		const re = /^[a-z0-9\x20]+$/i;
 		if (!re.exec(username.value)) {
-			return toast.error(
-				"Choose a better username"
-			);
+			return toast.error("Choose a better username");
 		}
 
 		const payload = {
@@ -107,13 +105,13 @@ const Signup = ({ login, signupUser }) => {
 		};
 
 		const clearForm = () => {
-			username.setValue('');
-			firstname.setValue('');
-			lastname.setValue('');
-			email.setValue('');
-			password1.setValue('');
-			password2.setValue('');
-		}
+			username.setValue("");
+			firstname.setValue("");
+			lastname.setValue("");
+			email.setValue("");
+			password1.setValue("");
+			password2.setValue("");
+		};
 
 		signupUser(payload, clearForm);
 	};

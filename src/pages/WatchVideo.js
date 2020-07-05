@@ -6,6 +6,7 @@ import Comments from "../components/Comments";
 import VideoCard from "../components/VideoCard";
 import Button from "../styles/Button";
 import Player from "../components/Player";
+import NoResults from "../components/NoResults";
 import { LikeIcon, DislikeIcon } from "../components/Icons";
 import {
 	getRecommendations,
@@ -16,7 +17,8 @@ import {
 	likeVideo,
 	dislikeVideo,
 	cancelLike,
-	cancelDislike
+	cancelDislike,
+	clearNotFound
 } from "../actions";
 import { SUBSCRIBE_FROM_VIDEO, UNSUBSCRIBE_FROM_VIDEO } from "../actions/types";
 import { timeSince } from "../utils";
@@ -126,7 +128,9 @@ const WatchVideo = ({
 	likeVideo,
 	cancelLike,
 	dislikeVideo,
-	cancelDislike
+	cancelDislike,
+	notfound,
+	clearNotFound
 }) => {
 	const { videoId } = useParams();
 
@@ -159,9 +163,14 @@ const WatchVideo = ({
 		getRecommendations();
 
 		return () => {
+			clearNotFound();
 			clearVideo();
 		};
-	}, [videoId, clearVideo, getRecommendations, getVideo]);
+	}, [videoId, clearVideo, getRecommendations, getVideo, clearNotFound]);
+
+	if (notfound) {
+		return <NoResults title="Page not found" text="The page you are looking for is not found or it may have been removed"/>;
+	}
 
 	if (isFetching) {
 		return <p>loader</p>;
@@ -173,16 +182,14 @@ const WatchVideo = ({
 			filledDislike={video && video.isDisliked}
 		>
 			<div className="video-container">
-				<div className="video">
-					{!isFetching && <Player src={video?.url} poster={video?.thumbnai} />}
-				</div>
+				<div className="video">{!isFetching && <Player />}</div>
 
 				<div className="video-info">
 					<h3>{video.title}</h3>
 
 					<div className="video-info-stats">
 						<p>
-							<span>{video.viewsCount} views</span> <span>•</span>{" "}
+							<span>{video.views} views</span> <span>•</span>{" "}
 							<span>{timeSince(video.createdAt)} ago</span>
 						</p>
 
@@ -270,10 +277,11 @@ const WatchVideo = ({
 	);
 };
 
-const mapStateToProps = ({ video, recommendation }) => ({
+const mapStateToProps = ({ notfound, video, recommendation }) => ({
 	isFetching: video.isFetching || recommendation.isFetching,
 	video,
-	next: recommendation.videos
+	next: recommendation.videos,
+	notfound
 });
 
 export default connect(mapStateToProps, {
@@ -285,5 +293,6 @@ export default connect(mapStateToProps, {
 	likeVideo,
 	dislikeVideo,
 	cancelLike,
-	cancelDislike
+	cancelDislike,
+	clearNotFound
 })(WatchVideo);

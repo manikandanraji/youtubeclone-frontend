@@ -45,6 +45,10 @@ const Wrapper = styled.div`
 	@media screen and (max-width: 645px) {
 		flex-direction: column;
 
+		.video-info-container {
+			padding-bottom: 1rem;
+		}
+
 		.thumb {
 			width: 100%;
 			height: 300px;

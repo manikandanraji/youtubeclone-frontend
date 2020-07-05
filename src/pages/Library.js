@@ -1,14 +1,11 @@
 import React from "react";
-import { StyledTrending } from './Trending'
-import LikedVideos from './LikedVideos';
+import LikedVideos from "./LikedVideos";
+import History from "./History";
 
-const Library = () => {
+const Library = ({ isFetching }) => {
 	return (
 		<>
-			<StyledTrending>
-				<h2>History</h2>
-				<p className="secondary">Videos that you have watched will show up here</p>
-			</StyledTrending>
+			<History />
 			<LikedVideos />
 		</>
 	);

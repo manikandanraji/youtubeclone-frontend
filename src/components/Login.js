@@ -12,7 +12,7 @@ const Login = ({ signup, loginUser }) => {
 	const handleLogin = e => {
 		e.preventDefault();
 
-		if (!email.value || !password.value) {
+		if (!email.value.trim() || !password.value.trim()) {
 			return toast.error("Please fill in all the fields");
 		}
 

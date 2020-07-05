@@ -7,13 +7,11 @@ import { getLikedVideos } from "../actions";
 
 const LikedVideos = ({ isFetching, videos, getLikedVideos }) => {
 	useEffect(() => {
-		if (!videos.length) {
-			getLikedVideos();
-		}
-	}, [videos, getLikedVideos]);
+		getLikedVideos();
+	}, [videos.length, getLikedVideos]);
 
-	if(isFetching) {
-		return <p>loader</p>
+	if (isFetching) {
+		return <p>loader</p>;
 	}
 
 	return (

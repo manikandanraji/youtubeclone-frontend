@@ -27,7 +27,10 @@ import {
 	UPDATE_USER,
 	ADD_TO_LIKED_VIDEOS,
 	REMOVE_FROM_LIKED_VIDEOS,
-	ADD_TO_RECOMMENDATIONS
+	ADD_TO_RECOMMENDATIONS,
+	GET_HISTORY,
+	SHOW_NOT_FOUND,
+	CLEAR_NOT_FOUND
 } from "./types";
 
 import api from "../services/api";
@@ -147,6 +150,9 @@ export const getVideo = videoId => async dispatch => {
 		});
 	} catch (err) {
 		console.error(err.response.data);
+		dispatch({
+			type: SHOW_NOT_FOUND
+		});
 	}
 };
 
@@ -178,6 +184,9 @@ export const getProfile = userId => async dispatch => {
 		});
 	} catch (err) {
 		console.error(err.response);
+		dispatch({
+			type: SHOW_NOT_FOUND
+		});
 	}
 };
 
@@ -333,6 +342,25 @@ export const uploadVideo = video => async dispatch => {
 		console.error(err.response.data);
 	}
 };
+
+export const getHistory = () => async dispatch => {
+	try {
+		const res = await api.get("users/history");
+		console.log(res.data);
+
+		dispatch({
+			type: GET_HISTORY,
+			payload: {
+				isFetching: false,
+				videos: res.data.data
+			}
+		});
+	} catch (err) {
+		console.error(err.data);
+	}
+};
+
+export const clearNotFound = () => ({ type: CLEAR_NOT_FOUND });
 
 export const openSidebar = () => ({ type: OPEN_SIDEBAR });
 export const closeSidebar = () => ({ type: CLOSE_SIDEBAR });

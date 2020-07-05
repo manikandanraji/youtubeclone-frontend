@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import Button from "../styles/Button";
@@ -94,7 +95,7 @@ const ChannelInfo = ({
 
 	return (
 		<Wrapper>
-			<div className="avatar-channel">
+			<Link to={`/channel/${channel.id}`} className="avatar-channel">
 				<img src={channel.avatar} alt="avatar" />
 				<div className="channel-info-meta">
 					<h3>{channel.username}</h3>
@@ -110,7 +111,7 @@ const ChannelInfo = ({
 						</p>
 					)}
 				</div>
-			</div>
+			</Link>
 
 			{!channel.isSubscribed && (
 				<Button onClick={handleSubscribe}>Subscribe</Button>

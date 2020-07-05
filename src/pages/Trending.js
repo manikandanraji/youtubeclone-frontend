@@ -21,20 +21,19 @@ export const StyledTrending = styled.div`
 
 const Trending = ({ isFetching, videos, getTrending }) => {
 	useEffect(() => {
-		if (!videos.length) {
-			getTrending();
-		}
+		getTrending();
 	}, [getTrending, videos.length]);
 
 	return (
 		<StyledTrending>
 			<h2>Trending</h2>
 			<div className="trending">
-				{!isFetching && videos.map(video => (
-					<Link to={`/watch/${video.id}`} key={video.id}>
-						<TrendingCard key={video.id} video={video} />
-					</Link>
-				))}
+				{!isFetching &&
+					videos.map(video => (
+						<Link to={`/watch/${video.id}`} key={video.id}>
+							<TrendingCard key={video.id} video={video} />
+						</Link>
+					))}
 			</div>
 		</StyledTrending>
 	);

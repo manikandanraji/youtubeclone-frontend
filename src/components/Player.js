@@ -1,20 +1,22 @@
 import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
-const Player = ({ src, poster }) => {
+const Player = ({ isViewed, src, poster }) => {
 	let videoRef;
 
 	useEffect(() => {
 		const player = videojs(videoRef);
 		player.poster(poster);
 		player.src(src);
+		console.log(isViewed);
 
 		return () => {
-			console.log(player)
+			console.log(player);
 			player.dispose();
-		}
-	}, [src, poster, videoRef]);
+		};
+	}, [src, poster, videoRef, isViewed]);
 
 	return (
 		<div>
@@ -29,4 +31,10 @@ const Player = ({ src, poster }) => {
 	);
 };
 
-export default Player;
+const mapStateToProps = ({ video }) => ({
+	poster: video.thumb,
+	src: video.url,
+	isViewed: video.isViewed
+});
+
+export default connect(mapStateToProps)(Player);
