@@ -11,13 +11,14 @@ import {
 	getRecommendations,
 	clearVideo,
 	getVideo,
-	unsubscribeFromVideo,
-	subscribeFromVideo,
+	unsubscribeChannel,
+	subscribeChannel,
 	likeVideo,
 	dislikeVideo,
 	cancelLike,
 	cancelDislike
 } from "../actions";
+import { SUBSCRIBE_FROM_VIDEO, UNSUBSCRIBE_FROM_VIDEO } from "../actions/types";
 import { timeSince } from "../utils";
 
 const Wrapper = styled.div`
@@ -114,13 +115,14 @@ const Wrapper = styled.div`
 `;
 
 const WatchVideo = ({
+	isFetching,
 	next,
 	video,
 	clearVideo,
 	getVideo,
 	getRecommendations,
-	subscribeFromVideo,
-	unsubscribeFromVideo,
+	subscribeChannel,
+	unsubscribeChannel,
 	likeVideo,
 	cancelLike,
 	dislikeVideo,
@@ -153,10 +155,17 @@ const WatchVideo = ({
 	};
 
 	useEffect(() => {
-		clearVideo();
 		getVideo(videoId);
 		getRecommendations();
+
+		return () => {
+			clearVideo();
+		};
 	}, [videoId, clearVideo, getRecommendations, getVideo]);
+
+	if (isFetching) {
+		return <p>loader</p>;
+	}
 
 	return (
 		<Wrapper
@@ -165,7 +174,7 @@ const WatchVideo = ({
 		>
 			<div className="video-container">
 				<div className="video">
-					<Player src={video?.url} poster={video?.thumbnai} />
+					{!isFetching && <Player src={video?.url} poster={video?.thumbnai} />}
 				</div>
 
 				<div className="video-info">
@@ -212,10 +221,13 @@ const WatchVideo = ({
 						{!video.isVideoMine && !video.isSubscribed && (
 							<Button
 								onClick={() =>
-									subscribeFromVideo({
-										id: video.User.id,
-										avatar: video.User.avatar,
-										username: video.User.username
+									subscribeChannel({
+										channel: {
+											id: video.User.id,
+											avatar: video.User.avatar,
+											username: video.User.username
+										},
+										type: SUBSCRIBE_FROM_VIDEO
 									})
 								}
 							>
@@ -223,7 +235,15 @@ const WatchVideo = ({
 							</Button>
 						)}
 						{!video.isVideoMine && video.isSubscribed && (
-							<Button grey onClick={() => unsubscribeFromVideo(video.userId)}>
+							<Button
+								grey
+								onClick={() =>
+									unsubscribeChannel({
+										type: UNSUBSCRIBE_FROM_VIDEO,
+										channelId: video.userId
+									})
+								}
+							>
 								Subscribed
 							</Button>
 						)}
@@ -236,9 +256,10 @@ const WatchVideo = ({
 
 			<div className="related-videos">
 				<h3 style={{ marginBottom: "1rem" }}>Up Next</h3>
-				{next &&
+				{!isFetching &&
 					next
 						.filter(vid => vid.id !== video.id)
+						.slice(0, 3)
 						.map(video => (
 							<Link key={video.id} to={`/watch/${video.id}`}>
 								<VideoCard key={video.id} hideavatar={true} video={video} />
@@ -249,17 +270,18 @@ const WatchVideo = ({
 	);
 };
 
-const mapStateToProps = state => ({
-	next: state.recommendation,
-	video: state.video
+const mapStateToProps = ({ video, recommendation }) => ({
+	isFetching: video.isFetching || recommendation.isFetching,
+	video,
+	next: recommendation.videos
 });
 
 export default connect(mapStateToProps, {
 	clearVideo,
 	getVideo,
 	getRecommendations,
-	subscribeFromVideo,
-	unsubscribeFromVideo,
+	subscribeChannel,
+	unsubscribeChannel,
 	likeVideo,
 	dislikeVideo,
 	cancelLike,

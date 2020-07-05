@@ -127,14 +127,21 @@ const EditProfileModal = ({
 	const handleEditProfile = () => {
 		const data = {};
 
+		if(!firstname.value.trim()) {
+			return toast.error('firstname should not be empty');
+		}
+
+		if(!lastname.value.trim()) {
+			return toast.error('lastname should not be empty')
+		}
+
 		if (firstname.value) data.firstname = firstname.value;
 		if (lastname.value) data.lastname = lastname.value;
-		if (channelDesc.value) data.channelDescription = channelDesc.value;
 		if (avatar) data.avatar = avatar;
 		if (cover) data.cover = cover;
 
-		updateProfile(data);
-		updateUser(data);
+		updateProfile({ ...data, channelDescription: channelDesc.value });
+		updateUser({ ...data, channelDescription: channelDesc.value });
 		toast.dark("Profile updated");
 		closeModal();
 	};

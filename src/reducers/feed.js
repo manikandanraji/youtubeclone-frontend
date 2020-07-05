@@ -1,6 +1,11 @@
 import { GET_FEED } from "../actions/types";
 
-const feed = (state = [], action) => {
+const initialState = {
+	isFetching: true,
+	videos: []
+};
+
+const feed = (state = initialState, action) => {
 	switch (action.type) {
 		case GET_FEED:
 			return action.payload;

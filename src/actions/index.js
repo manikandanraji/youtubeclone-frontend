@@ -14,15 +14,12 @@ import {
 	CLOSE_SIDEBAR,
 	GET_RECOMMENDATIONS,
 	GET_CHANNEL_RECOMMENDATIONS,
-	SUBSCRIBE_FROM_VIDEO,
-	UNSUBSCRIBE_FROM_VIDEO,
 	LIKE,
 	DISLIKE,
 	CANCEL_LIKE,
 	CANCEL_DISLIKE,
-	SUBSCRIBE_FROM_PROFILE,
-	UNSUBSCRIBE_FROM_PROFILE,
 	GET_SEARCH_RESULTS,
+	CLEAR_SEARCH_RESULTS,
 	GET_TRENDING,
 	ADD_CHANNEL,
 	REMOVE_CHANNEL,
@@ -50,10 +47,11 @@ export const signupUser = (payload, clearForm) => async dispatch => {
 	}
 };
 
-export const loginUser = payload => async dispatch => {
+export const loginUser = (payload, clearForm) => async dispatch => {
 	const user = await authenticate("login", payload);
 
 	if (user) {
+		clearForm();
 		dispatch({ type: LOGIN, payload: user });
 		toast.dark("Login successful");
 	}
@@ -75,7 +73,10 @@ export const getRecommendations = () => async dispatch => {
 
 		dispatch({
 			type: GET_RECOMMENDATIONS,
-			payload: res.data.data
+			payload: {
+				isFetching: false,
+				videos: res.data.data
+			}
 		});
 	} catch (err) {
 		console.error(err.response.data);
@@ -91,7 +92,10 @@ export const getTrending = () => async dispatch => {
 
 		dispatch({
 			type: GET_TRENDING,
-			payload: videos
+			payload: {
+				isFetching: false,
+				videos
+			}
 		});
 	} catch (err) {
 		console.error(err.response);
@@ -104,7 +108,10 @@ export const getChannelRecommendations = data => async dispatch => {
 
 		dispatch({
 			type: GET_CHANNEL_RECOMMENDATIONS,
-			payload: res.data.data
+			payload: {
+				isFetching: false,
+				channels: res.data.data
+			}
 		});
 	} catch (err) {
 		console.error(err.response.data);
@@ -117,7 +124,10 @@ export const getFeed = () => async dispatch => {
 
 		dispatch({
 			type: GET_FEED,
-			payload: res.data.data
+			payload: {
+				isFetching: false,
+				videos: res.data.data
+			}
 		});
 	} catch (err) {
 		console.error(err.response.data);
@@ -130,7 +140,10 @@ export const getVideo = videoId => async dispatch => {
 
 		dispatch({
 			type: GET_VIDEO,
-			payload: res.data.data
+			payload: {
+				isFetching: false,
+				...res.data.data
+			}
 		});
 	} catch (err) {
 		console.error(err.response.data);
@@ -158,10 +171,13 @@ export const getProfile = userId => async dispatch => {
 
 		dispatch({
 			type: GET_PROFILE,
-			payload: res.data.data
+			payload: {
+				isFetching: false,
+				...res.data.data
+			}
 		});
 	} catch (err) {
-		console.error(err);
+		console.error(err.response);
 	}
 };
 
@@ -182,28 +198,27 @@ export const updateProfile = data => async dispatch => {
 
 export const getSearchResults = searchterm => async dispatch => {
 	try {
-		let payload = {};
-
 		const userRes = await api.get(`users/search?searchterm=${searchterm}`);
-
-		payload.users = userRes.data.data;
-
 		const videoRes = await api.get(`videos/search?searchterm=${searchterm}`);
-
-		payload.videos = videoRes.data.data;
 
 		dispatch({
 			type: GET_SEARCH_RESULTS,
-			payload
+			payload: {
+				isFetching: false,
+				users: userRes.data.data,
+				videos: videoRes.data.data
+			}
 		});
 	} catch (err) {
 		console.error(err.response);
 	}
 };
 
-export const subscribeFromVideo = channel => async dispatch => {
+export const clearSearchResults = () => ({ type: CLEAR_SEARCH_RESULTS });
+export const subscribeChannel = ({ channel, type }) => async dispatch => {
 	dispatch({
-		type: SUBSCRIBE_FROM_VIDEO
+		type,
+		payload: channel
 	});
 
 	addChannelLocalSt(channel);
@@ -216,49 +231,20 @@ export const subscribeFromVideo = channel => async dispatch => {
 	await api.get(`users/${channel.id}/togglesubscribe`);
 };
 
-export const unsubscribeFromVideo = userId => async dispatch => {
+export const unsubscribeChannel = ({ channelId, type }) => async dispatch => {
 	dispatch({
-		type: UNSUBSCRIBE_FROM_VIDEO
+		type,
+		payload: channelId
 	});
 
-	removeChannelLocalSt(userId);
-
-	dispatch({
-		type: REMOVE_CHANNEL,
-		payload: userId
-	});
-
-	await api.get(`users/${userId}/togglesubscribe`);
-};
-
-export const subscribeFromProfile = channel => async dispatch => {
-	dispatch({
-		type: SUBSCRIBE_FROM_PROFILE
-	});
-
-	addChannelLocalSt(channel);
-
-	dispatch({
-		type: ADD_CHANNEL,
-		payload: channel
-	});
-
-	await api.get(`users/${channel.id}/togglesubscribe`);
-};
-
-export const unsubscribeFromProfile = userId => async dispatch => {
-	dispatch({
-		type: UNSUBSCRIBE_FROM_PROFILE
-	});
-
-	removeChannelLocalSt(userId);
+	removeChannelLocalSt(channelId);
 
 	dispatch({
 		type: REMOVE_CHANNEL,
-		payload: userId
+		payload: channelId
 	});
 
-	await api.get(`users/${userId}/togglesubscribe`);
+	await api.get(`users/${channelId}/togglesubscribe`);
 };
 
 export const likeVideo = video => async dispatch => {
@@ -309,7 +295,10 @@ export const getLikedVideos = () => async dispatch => {
 
 		dispatch({
 			type: GET_LIKED_VIDEOS,
-			payload: res.data.data
+			payload: {
+				isFetching: false,
+				videos: res.data.data
+			}
 		});
 	} catch (err) {
 		console.error(err.response.data);

@@ -24,6 +24,10 @@ const Wrapper = styled.div`
 `;
 
 const ChannelTabChannels = ({ channels }) => {
+	if(!channels?.length) {
+		return <p>Not subscribed to any channels yet</p>
+	}
+
 	return (
 		<Wrapper>
 			{channels?.map(channel => (

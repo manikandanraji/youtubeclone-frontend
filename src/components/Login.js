@@ -1,5 +1,5 @@
 import React from "react";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { connect } from "react-redux";
 import useInput from "../hooks/useInput";
 import { loginUser } from "../actions";
@@ -12,7 +12,7 @@ const Login = ({ signup, loginUser }) => {
 	const handleLogin = e => {
 		e.preventDefault();
 
-		if(!email.value || !password.value) {
+		if (!email.value || !password.value) {
 			return toast.error("Please fill in all the fields");
 		}
 
@@ -21,10 +21,12 @@ const Login = ({ signup, loginUser }) => {
 			password: password.value
 		};
 
-		loginUser(payload);
+		const clearForm = () => {
+			email.setValue("");
+			password.setValue("");
+		};
 
-		email.setValue('');
-		password.setValue('');
+		loginUser(payload, clearForm);
 	};
 
 	return (

@@ -7,7 +7,7 @@ const Wrapper = styled.div``;
 const ChannelTabAbout = ({ about }) => {
 	return (
 		<Wrapper>
-			<p>{about}</p>
+			<p>{about ? about : 'No description for this channel'}</p>
 		</Wrapper>
 	);
 };

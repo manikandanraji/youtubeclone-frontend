@@ -10,9 +10,13 @@ import Button from "../styles/Button";
 import {
 	clearProfile,
 	getProfile,
-	subscribeFromProfile,
-	unsubscribeFromProfile
+	subscribeChannel,
+	unsubscribeChannel
 } from "../actions";
+import {
+	SUBSCRIBE_FROM_PROFILE,
+	UNSUBSCRIBE_FROM_PROFILE
+} from "../actions/types";
 
 const activeTabStyle = {
 	borderBottom: "2px solid white",
@@ -86,22 +90,28 @@ const Wrapper = styled.div`
 `;
 
 const Channel = ({
+	isFetching,
 	clearProfile,
 	getProfile,
 	profile,
 	loggedInUserId,
-	subscribeFromProfile,
-	unsubscribeFromProfile
+	subscribeChannel,
+	unsubscribeChannel
 }) => {
 	const { userId } = useParams();
-	console.log(userId);
-
 	const [tab, setTab] = useState("VIDEOS");
 
 	useEffect(() => {
-		clearProfile();
 		getProfile(userId || loggedInUserId);
+
+		return () => {
+			clearProfile();
+		};
 	}, [userId, loggedInUserId, clearProfile, getProfile]);
+
+	if (isFetching) {
+		return <p>loader</p>;
+	}
 
 	return (
 		<Wrapper>
@@ -128,7 +138,15 @@ const Channel = ({
 					{profile.isMe && <EditProfile />}
 
 					{!profile.isMe && profile.isSubscribed && (
-						<Button grey onClick={() => unsubscribeFromProfile(profile.id)}>
+						<Button
+							grey
+							onClick={() =>
+								unsubscribeChannel({
+									type: UNSUBSCRIBE_FROM_PROFILE,
+									channelId: profile.id
+								})
+							}
+						>
 							Subscribed
 						</Button>
 					)}
@@ -136,10 +154,13 @@ const Channel = ({
 					{!profile.isMe && !profile.isSubscribed && (
 						<Button
 							onClick={() =>
-								subscribeFromProfile({
-									id: profile.id,
-									avatar: profile.avatar,
-									username: profile.username
+								subscribeChannel({
+									channel: {
+										id: profile.id,
+										avatar: profile.avatar,
+										username: profile.username
+									},
+									type: SUBSCRIBE_FROM_PROFILE
 								})
 							}
 						>
@@ -181,11 +202,14 @@ const Channel = ({
 	);
 };
 
-const mapStateToProps = state => ({ profile: state.profile });
+const mapStateToProps = ({ profile }) => ({
+	isFetching: profile.isFetching,
+	profile
+});
 
 export default connect(mapStateToProps, {
 	clearProfile,
 	getProfile,
-	subscribeFromProfile,
-	unsubscribeFromProfile
+	subscribeChannel,
+	unsubscribeChannel
 })(Channel);

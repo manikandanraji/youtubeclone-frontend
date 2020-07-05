@@ -6,12 +6,16 @@ import {
 	UNSUBSCRIBE_FROM_PROFILE
 } from "../actions/types";
 
-const profile = (state = {}, action) => {
+const initialState = {
+	isFetching: true
+};
+
+const profile = (state = initialState, action) => {
 	switch (action.type) {
 		case GET_PROFILE:
 			return action.payload;
 		case CLEAR_PROFILE:
-			return {};
+			return { isFetching: true }
 		case UPDATE_PROFILE:
 			return {
 				...state,

@@ -19,19 +19,18 @@ export const StyledTrending = styled.div`
 	}
 `;
 
-const Trending = ({ trending, getTrending }) => {
+const Trending = ({ isFetching, videos, getTrending }) => {
 	useEffect(() => {
-		if (!trending.length) {
-			console.log('dispatching...')
+		if (!videos.length) {
 			getTrending();
 		}
-	}, [getTrending, trending]);
+	}, [getTrending, videos.length]);
 
 	return (
 		<StyledTrending>
 			<h2>Trending</h2>
 			<div className="trending">
-				{trending.map(video => (
+				{!isFetching && videos.map(video => (
 					<Link to={`/watch/${video.id}`} key={video.id}>
 						<TrendingCard key={video.id} video={video} />
 					</Link>
@@ -41,6 +40,9 @@ const Trending = ({ trending, getTrending }) => {
 	);
 };
 
-const mapStateToProps = state => ({ trending: state.trending });
+const mapStateToProps = ({ trending }) => ({
+	isFetching: trending.isFetching,
+	videos: trending.videos
+});
 
 export default connect(mapStateToProps, { getTrending })(Trending);

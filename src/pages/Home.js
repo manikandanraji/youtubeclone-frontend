@@ -40,18 +40,18 @@ export const Wrapper = styled.div`
 	}
 `;
 
-const Home = ({ recommendation, getRecommendations }) => {
+const Home = ({ isFetching, videos, getRecommendations }) => {
 	useEffect(() => {
-		if (!recommendation.length) {
+		if (!videos.length) {
 			getRecommendations();
 		}
-	}, [recommendation.length, getRecommendations]);
+	}, [videos.length, getRecommendations]);
 
 	return (
 		<Wrapper>
 			<h2>Recommended</h2>
 			<VideoGrid>
-				{recommendation.map(video => (
+				{!isFetching && videos.map(video => (
 					<Link key={video.id} to={`/watch/${video.id}`}>
 						<VideoCard video={video} />
 					</Link>
@@ -61,6 +61,9 @@ const Home = ({ recommendation, getRecommendations }) => {
 	);
 };
 
-const mapStateToProps = state => ({ recommendation: state.recommendation });
+const mapStateToProps = ({ recommendation }) => ({
+	isFetching: recommendation.isFetching,
+	videos: recommendation.videos
+});
 
 export default connect(mapStateToProps, { getRecommendations })(Home);

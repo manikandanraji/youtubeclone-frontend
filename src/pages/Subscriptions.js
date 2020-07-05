@@ -4,19 +4,28 @@ import { connect } from "react-redux";
 import { Wrapper } from "./Home";
 import VideoCard from "../components/VideoCard";
 import VideoGrid from "../styles/VideoGrid";
+import Suggestions from '../components/Suggestions';
 import { getFeed } from "../actions";
 
-const Subscriptions = ({ feed, getFeed, clearFeed }) => {
+const Subscriptions = ({ isFetching, videos, getFeed }) => {
 	useEffect(() => {
 		getFeed();
 	}, [getFeed]);
 
+	if(isFetching) {
+		return <p>loader</p>
+	}
+
+	if(!isFetching && !videos.length) {
+		return <Suggestions />
+	}
+
 	return (
 		<Wrapper>
 			<VideoGrid>
-				{feed.map(sub => (
-					<Link key={sub.id} to={`/watch/${sub.id}`}>
-						<VideoCard key={sub.id} hideavatar={true} video={sub} />
+				{!isFetching && videos.map(video => (
+					<Link key={video.id} to={`/watch/${video.id}`}>
+						<VideoCard key={video.id} hideavatar={true} video={video} />
 					</Link>
 				))}
 			</VideoGrid>
@@ -24,6 +33,9 @@ const Subscriptions = ({ feed, getFeed, clearFeed }) => {
 	);
 };
 
-const mapStateToProps = state => ({ feed: state.feed });
+const mapStateToProps = ({ feed }) => ({
+	isFetching: feed.isFetching,
+	videos: feed.videos
+});
 
 export default connect(mapStateToProps, { getFeed })(Subscriptions);

@@ -4,14 +4,25 @@ import {
 	REMOVE_FROM_LIKED_VIDEOS
 } from "../actions/types";
 
-const likedVideo = (state = [], action) => {
+const initialState = {
+	isFetching: true,
+	videos: []
+};
+
+const likedVideo = (state = initialState, action) => {
 	switch (action.type) {
 		case GET_LIKED_VIDEOS:
 			return action.payload;
 		case ADD_TO_LIKED_VIDEOS:
-			return [action.payload, ...state];
+			return {
+				...state,
+				videos: [action.payload, ...state.videos]
+			};
 		case REMOVE_FROM_LIKED_VIDEOS:
-			return state.filter(video => video.id !== action.payload);
+			return {
+				...state,
+				videos: state.videos.filter(video => video.id !== action.payload)
+			};
 		default:
 			return state;
 	}

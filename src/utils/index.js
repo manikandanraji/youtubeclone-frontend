@@ -69,14 +69,28 @@ export const upload = async (resourceType, file) => {
 export const authenticate = async (endpoint, data) => {
 	const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
-	try {
-		const tokenRes = await axios.post(`${backendUrl}auth/${endpoint}`, data);
+	let toastId = null;
 
-		const headers = {
+	try {
+		const tokenRes = await axios.post(`${backendUrl}auth/${endpoint}`, data, {
+			onUploadProgress: p => {
+				const progress = p.loaded / p.total;
+
+				if (!toastId) {
+					toastId = toast("Validating...", { progress });
+				} else {
+					toast.update(toastId, { progress });
+				}
+			}
+		});
+
+		toast.dismiss(toastId);
+
+		const config = {
 			headers: { Authorization: `Bearer ${tokenRes.data.data}` }
 		};
 
-		const userRes = await axios.get(`${backendUrl}auth/me`, headers);
+		const userRes = await axios.get(`${backendUrl}auth/me`, config);
 
 		const user = { ...userRes.data.data, token: tokenRes.data.data };
 		api.defaults.headers.common[
@@ -86,7 +100,7 @@ export const authenticate = async (endpoint, data) => {
 
 		return user;
 	} catch (err) {
-		console.error(err.response.data);
+		toast.dismiss();
 		toast.error(err.response.data.message);
 	}
 };

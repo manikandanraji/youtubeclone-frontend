@@ -9,6 +9,11 @@ const Player = ({ src, poster }) => {
 		const player = videojs(videoRef);
 		player.poster(poster);
 		player.src(src);
+
+		return () => {
+			console.log(player)
+			player.dispose();
+		}
 	}, [src, poster, videoRef]);
 
 	return (

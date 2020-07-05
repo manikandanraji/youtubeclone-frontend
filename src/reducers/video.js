@@ -10,12 +10,16 @@ import {
 	CANCEL_DISLIKE
 } from "../actions/types";
 
-const video = (state = {}, action) => {
+const initialState = {
+	isFetching: true
+};
+
+const video = (state = initialState, action) => {
 	switch (action.type) {
 		case GET_VIDEO:
 			return action.payload;
 		case CLEAR_VIDEO:
-			return {};
+			return { isFetching: true };
 		case ADD_COMMENT:
 			return {
 				...state,
@@ -35,7 +39,7 @@ const video = (state = {}, action) => {
 			return {
 				...state,
 				isLiked: !state.isLiked,
-				likesCount: state.likesCount + 1,
+				likesCount: state.likesCount + 1
 			};
 		case DISLIKE:
 			return {
@@ -47,7 +51,7 @@ const video = (state = {}, action) => {
 			return {
 				...state,
 				isLiked: !state.isLiked,
-				likesCount: state.likesCount - 1,
+				likesCount: state.likesCount - 1
 			};
 		case CANCEL_DISLIKE:
 			return {

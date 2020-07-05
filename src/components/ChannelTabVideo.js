@@ -25,15 +25,18 @@ const Wrapper = styled.div`
 `;
 
 const ChannelTabVideo = ({ videos }) => {
+	if(!videos?.length) {
+		return <p>This channel hasn't posted any videos yet</p>
+	}
+
 	return (
 		<Wrapper>
 			<div className="videos">
-				{videos &&
-					videos.map(video => (
-						<Link to={`/watch/${video.id}`} key={video.id}>
-							<VideoCard nousername={true} hideavatar={true} video={video} />
-						</Link>
-					))}
+				{videos?.map(video => (
+					<Link to={`/watch/${video.id}`} key={video.id}>
+						<VideoCard nousername={true} hideavatar={true} video={video} />
+					</Link>
+				))}
 			</div>
 		</Wrapper>
 	);
