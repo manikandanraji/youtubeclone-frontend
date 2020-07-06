@@ -71,7 +71,6 @@ const ChannelInfo = ({
 	subscribeChannel
 }) => {
 	const handleSubscribe = () => {
-		console.log(channel);
 		subscribeChannel({
 			channel: {
 				avatar: channel.avatar,

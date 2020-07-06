@@ -76,8 +76,6 @@ export const authenticate = async (endpoint, data) => {
 			headers: { Authorization: `Bearer ${tokenRes.data.data}` }
 		};
 
-		console.log(config);
-
 		const userRes = await axios.get(`${backendUrl}auth/me`, config);
 
 		const user = { ...userRes.data.data, token: tokenRes.data.data };

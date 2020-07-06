@@ -57,7 +57,6 @@ const Comments = ({ user, comments, addComment, videoId }) => {
 
 	const handleAddComment = e => {
 		if (e.keyCode === 13) {
-			console.log(comment.value);
 			addComment({ videoId, text: comment.value });
 			comment.setValue("");
 		}
