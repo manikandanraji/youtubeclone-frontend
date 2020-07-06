@@ -24,7 +24,7 @@ const Wrapper = styled.div`
 	width: 100%;
 	height: 100%;
 	z-index: 900;
-	background: rgba(0, 0, 0, 0.4);
+	background: rgba(0, 0, 0, 0.7);
 	animation: ${openModal} 0.5s ease-in-out;
 
 	.edit-profile {
@@ -91,6 +91,10 @@ const Wrapper = styled.div`
 			margin: 4rem auto;
 		}
 	}
+
+	@media screen and (max-width: 400px) {
+		background: rgba(0, 0, 0, 0.9);
+	}
 `;
 
 const EditProfileModal = ({
@@ -127,12 +131,12 @@ const EditProfileModal = ({
 	const handleEditProfile = () => {
 		const data = {};
 
-		if(!firstname.value.trim()) {
-			return toast.error('firstname should not be empty');
+		if (!firstname.value.trim()) {
+			return toast.error("firstname should not be empty");
 		}
 
-		if(!lastname.value.trim()) {
-			return toast.error('lastname should not be empty')
+		if (!lastname.value.trim()) {
+			return toast.error("lastname should not be empty");
 		}
 
 		if (firstname.value) data.firstname = firstname.value;
@@ -148,6 +152,7 @@ const EditProfileModal = ({
 
 	return (
 		<Wrapper>
+			<div className="container"></div>
 			<div className="edit-profile">
 				<div className="modal-header">
 					<h3>

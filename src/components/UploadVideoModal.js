@@ -24,7 +24,7 @@ const Wrapper = styled.div`
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
-	background-color: rgba(0, 0, 0, 0.1);
+	background-color: rgba(0, 0, 0, 0.7);
 	animation: ${openModal} 0.5s ease-in-out;
 
 	.modal-content {
@@ -105,6 +105,10 @@ const Wrapper = styled.div`
 		.modal-content {
 			margin-top: 7rem;
 		}
+	}
+
+	@media screen and (max-width: 400px) {
+		background: rgba(0, 0, 0, 0.9);
 	}
 `;
 

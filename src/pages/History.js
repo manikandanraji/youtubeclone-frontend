@@ -21,7 +21,7 @@ const History = ({ isFetching, videos, getHistory }) => {
 
 			{!isFetching && !videos.length && (
 				<p className="secondary">
-					Videos that you have liked will show up here
+					Videos that you have watched will show up here
 				</p>
 			)}
 

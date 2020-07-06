@@ -24,7 +24,7 @@ const Wrapper = styled.div`
 		grid-template-columns: repeat(3, 1fr);
 		grid-gap: 2rem;
 		margin: 0 auto;
-		margin-top: 2.5rem;
+		margin-top: 2rem;
 		width: 80%;
 	}
 

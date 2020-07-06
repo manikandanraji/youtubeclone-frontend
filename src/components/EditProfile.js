@@ -18,6 +18,10 @@ const Wrapper = styled.div`
 		display: flex;
 		align-items: center;
 	}
+
+	@media screen and (max-width: 440px) {
+		margin-top: 1rem;
+	}
 `;
 
 const EditProfile = ({ logoutUser }) => {

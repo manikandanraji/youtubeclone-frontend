@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import EditProfile from "../components/EditProfile";
@@ -19,7 +19,7 @@ import {
 	SUBSCRIBE_FROM_PROFILE,
 	UNSUBSCRIBE_FROM_PROFILE
 } from "../actions/types";
-import Skeleton from '../skeletons/ChannelSkeleton';
+import Skeleton from "../skeletons/ChannelSkeleton";
 
 const activeTabStyle = {
 	borderBottom: "2px solid white",
@@ -85,11 +85,24 @@ const Wrapper = styled.div`
 		}
 	}
 
-	@media screen and (max-width: 450px) {
-		.header {
+	@media screen and (max-width: 470px) {
+		.header,
+		.tabs {
 			width: 100%;
 		}
 	}
+
+	${props =>
+		props.editProfile &&
+		css`
+			@media screen and (max-width: 440px) {
+				.header {
+					flex-direction: column;
+					justify-content: flex-start;
+					align-items: flex-start;
+				}
+			}
+		`}
 `;
 
 const Channel = ({
@@ -125,11 +138,11 @@ const Channel = ({
 	}
 
 	if (isFetching) {
-		return <Skeleton />
+		return <Skeleton />;
 	}
 
 	return (
-		<Wrapper>
+		<Wrapper editProfile={profile.isMe}>
 			<div className="cover">
 				<img src={profile.cover} alt="channel-cover" />
 			</div>
