@@ -76,4 +76,10 @@ export const ChannelInfoSkeleton = styled(SkeletonLine)`
 		width: 100px;
 		height: 100px;
 	}
+
+	@media screen and (max-width: 400px) {
+		width: 50px;
+		height: 50px;
+		position: relative;
+		top: -16px;
 `;

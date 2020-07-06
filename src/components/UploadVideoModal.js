@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Player from './Player';
+import Player from "./Player";
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
 import styled, { keyframes } from "styled-components";
@@ -29,7 +29,7 @@ const Wrapper = styled.div`
 	animation: ${openModal} 0.5s ease-in-out;
 
 	.modal-content {
-		width: 800px;
+		width: 600px;
 		margin: 4rem auto;
 		background: ${props => props.theme.grey};
 		border-radius: 3px;
@@ -43,9 +43,16 @@ const Wrapper = styled.div`
 		padding: 1rem;
 	}
 
-	.modal-header svg {
+	.modal-header-left {
+		display: flex;
+		align-items: center;
+	}
+
+	.modal-header-left svg {
+		margin-right: 1rem;
+		position: relative;
 		fill: ${props => props.theme.red};
-		margin-right: 0;
+		top: -1px;
 	}
 
 	.video-form {
@@ -60,7 +67,8 @@ const Wrapper = styled.div`
 
 	.video-form input,
 	.video-form textarea {
-		width: 66.25%;
+		// width: 66.25%;
+		width: 95%;
 		background: ${props => props.theme.black};
 		border: 1px solid ${props => props.theme.darkGrey};
 		color: ${props => props.theme.primaryColor};
@@ -152,14 +160,18 @@ const UploadVideoModal = ({
 		<Wrapper>
 			<div className="modal-content">
 				<div className="modal-header">
-					<h3>Upload Video</h3>
-					<CloseIcon onClick={() => closeModal()} />
+					<div className="modal-header-left">
+						<CloseIcon onClick={() => closeModal()} />
+						<h3>Upload Video</h3>
+					</div>
+					<div style={{ display: url ? "block" : "none" }}>
+						<Button onClick={handleTab}>{tab === "PREVIEW" ? "Next" : "Upload"}</Button>
+					</div>
 				</div>
 
 				{tab === "PREVIEW" && (
 					<div className="tab video-preview">
-						{console.log(previewVideo)}
-						<Player preview={true} previewUrl={previewVideo} />
+						<Player previewUrl={previewVideo} />
 					</div>
 				)}
 
@@ -179,12 +191,6 @@ const UploadVideoModal = ({
 						/>
 					</div>
 				)}
-
-				<div style={{ display: !url ? "none" : "" }} className="modal-footer">
-					<Button onClick={handleTab}>
-						{tab === "PREVIEW" ? "Next" : "Upload"}
-					</Button>
-				</div>
 			</div>
 		</Wrapper>
 	);

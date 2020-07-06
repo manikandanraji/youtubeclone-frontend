@@ -6,7 +6,6 @@ import { addToHistory } from "../actions";
 
 const Player = ({
 	isViewed,
-	preview,
 	previewUrl,
 	src,
 	poster,
@@ -17,7 +16,7 @@ const Player = ({
 
 	useEffect(() => {
 		const player = videojs(videoRef);
-		if (!preview) {
+		if (!previewUrl) {
 			player.poster(poster);
 			player.src(src);
 		} else {
@@ -25,7 +24,7 @@ const Player = ({
 		}
 
 		player.on("ended", function () {
-			if (!isViewed && !preview) {
+			if (!isViewed && !previewUrl) {
 				addToHistory(video);
 			}
 		});
@@ -33,7 +32,7 @@ const Player = ({
 		return () => {
 			player.dispose();
 		};
-	}, [src, poster, videoRef, isViewed, addToHistory]);
+	}, [src, poster, previewUrl, videoRef, isViewed, addToHistory]);
 
 	return (
 		<div>

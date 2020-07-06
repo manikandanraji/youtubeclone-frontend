@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 	margin-bottom: 1.5rem;
 `;
 
-const HomeSkeleton = ({ title }) => {
+const SuggestionSkeleton = () => {
 	return (
 		<StyledTrending>
 			<SkeletonLine width="350px" height="30px" mt="20px" mb="30px" />
@@ -41,4 +41,4 @@ const HomeSkeleton = ({ title }) => {
 	);
 };
 
-export default HomeSkeleton;
+export default SuggestionSkeleton;
