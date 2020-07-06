@@ -5,11 +5,13 @@ import styled from "styled-components";
 import VideoCard from "../components/VideoCard";
 import VideoGrid from "../styles/VideoGrid";
 import { getRecommendations } from "../actions";
+import Skeleton from '../skeletons/HomeSkeleton';
 
-export const Wrapper = styled.div`
+export const StyledHome = styled.div`
 	padding: 1.3rem;
 	width: 90%;
 	margin: 0 auto;
+	padding-bottom: 2rem;
 
 	h2 {
 		margin-bottom: 1rem;
@@ -45,8 +47,12 @@ const Home = ({ isFetching, videos, getRecommendations }) => {
 		getRecommendations();
 	}, [videos.length, getRecommendations]);
 
+	if (isFetching) {
+		return <Skeleton title={true}/>
+	}
+
 	return (
-		<Wrapper>
+		<StyledHome>
 			<h2>Recommended</h2>
 			<VideoGrid>
 				{!isFetching &&
@@ -56,7 +62,7 @@ const Home = ({ isFetching, videos, getRecommendations }) => {
 						</Link>
 					))}
 			</VideoGrid>
-		</Wrapper>
+		</StyledHome>
 	);
 };
 

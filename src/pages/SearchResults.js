@@ -7,6 +7,7 @@ import { StyledTrending } from "./Trending";
 import TrendingCard from "../components/TrendingCard";
 import NoResults from '../components/NoResults';
 import ChannelInfo from "../components/ChannelInfo";
+import Skeleton from '../skeletons/TrendingSkeleton';
 
 const StyledChannels = styled.div`
 	margin-top: 1rem;
@@ -30,7 +31,7 @@ const SearchResults = ({
 	}, [getSearchResults, searchterm, clearSearchResults]);
 
 	if (isFetching) {
-		return <p>loader</p>;
+		return <Skeleton title="true"/>
 	}
 
 	if(!isFetching && !videos.length && !users.length) {

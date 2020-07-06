@@ -30,7 +30,8 @@ import {
 	ADD_TO_RECOMMENDATIONS,
 	GET_HISTORY,
 	SHOW_NOT_FOUND,
-	CLEAR_NOT_FOUND
+	CLEAR_NOT_FOUND,
+	ADD_TO_HISTORY
 } from "./types";
 
 import api from "../services/api";
@@ -360,7 +361,15 @@ export const getHistory = () => async dispatch => {
 	}
 };
 
-export const clearNotFound = () => ({ type: CLEAR_NOT_FOUND });
+export const addToHistory = video => async dispatch => {
+	dispatch({
+		type: ADD_TO_HISTORY,
+		payload: video
+	});
 
+	await api.get(`videos/${video.id}/view`);
+};
+
+export const clearNotFound = () => ({ type: CLEAR_NOT_FOUND });
 export const openSidebar = () => ({ type: OPEN_SIDEBAR });
 export const closeSidebar = () => ({ type: CLOSE_SIDEBAR });

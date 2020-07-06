@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getChannelRecommendations } from "../actions";
 import ChannelInfo from "./ChannelInfo";
 import { StyledTrending } from "../pages/Trending";
+import Skeleton from '../skeletons/SuggestionSkeleton';
 
 const Suggestions = ({ isFetching, channels, getChannelRecommendations }) => {
 	useEffect(() => {
@@ -10,7 +11,7 @@ const Suggestions = ({ isFetching, channels, getChannelRecommendations }) => {
 	}, [getChannelRecommendations]);
 
 	if (isFetching) {
-		return <p>loader</p>;
+		return <Skeleton />
 	}
 
 	return (

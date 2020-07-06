@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import TrendingCard from "../components/TrendingCard";
 import { getTrending } from "../actions";
+import Skeleton from '../skeletons/TrendingSkeleton';
 
 export const StyledTrending = styled.div`
 	padding: 1rem 1.3rem;
@@ -23,6 +24,10 @@ const Trending = ({ isFetching, videos, getTrending }) => {
 	useEffect(() => {
 		getTrending();
 	}, [getTrending, videos.length]);
+
+	if(isFetching) {
+		return <Skeleton />
+	}
 
 	return (
 		<StyledTrending>

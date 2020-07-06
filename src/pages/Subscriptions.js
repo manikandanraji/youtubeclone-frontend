@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Wrapper } from "./Home";
+import { StyledHome } from "./Home";
 import VideoCard from "../components/VideoCard";
 import VideoGrid from "../styles/VideoGrid";
 import Suggestions from '../components/Suggestions';
 import { getFeed } from "../actions";
+import Skeleton from '../skeletons/HomeSkeleton';
 
 const Subscriptions = ({ isFetching, videos, getFeed }) => {
 	useEffect(() => {
@@ -13,7 +14,7 @@ const Subscriptions = ({ isFetching, videos, getFeed }) => {
 	}, [getFeed]);
 
 	if(isFetching) {
-		return <p>loader</p>
+		return <Skeleton />
 	}
 
 	if(!isFetching && !videos.length) {
@@ -21,7 +22,7 @@ const Subscriptions = ({ isFetching, videos, getFeed }) => {
 	}
 
 	return (
-		<Wrapper>
+		<StyledHome>
 			<VideoGrid>
 				{!isFetching && videos.map(video => (
 					<Link key={video.id} to={`/watch/${video.id}`}>
@@ -29,7 +30,7 @@ const Subscriptions = ({ isFetching, videos, getFeed }) => {
 					</Link>
 				))}
 			</VideoGrid>
-		</Wrapper>
+		</StyledHome>
 	);
 };
 

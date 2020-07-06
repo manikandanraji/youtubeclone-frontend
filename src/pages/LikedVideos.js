@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { StyledTrending } from "./Trending";
 import TrendingCard from "../components/TrendingCard";
 import { getLikedVideos } from "../actions";
+import Skeleton from '../skeletons/TrendingSkeleton';
 
 const LikedVideos = ({ isFetching, videos, getLikedVideos }) => {
 	useEffect(() => {
@@ -11,7 +12,7 @@ const LikedVideos = ({ isFetching, videos, getLikedVideos }) => {
 	}, [videos.length, getLikedVideos]);
 
 	if (isFetching) {
-		return <p>loader</p>;
+		return <Skeleton />
 	}
 
 	return (

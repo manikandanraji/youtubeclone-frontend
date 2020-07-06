@@ -7,6 +7,7 @@ import VideoCard from "../components/VideoCard";
 import Button from "../styles/Button";
 import Player from "../components/Player";
 import NoResults from "../components/NoResults";
+import Skeleton from "../skeletons/WatchVideoSkeleton";
 import { LikeIcon, DislikeIcon } from "../components/Icons";
 import {
 	getRecommendations,
@@ -169,11 +170,16 @@ const WatchVideo = ({
 	}, [videoId, clearVideo, getRecommendations, getVideo, clearNotFound]);
 
 	if (notfound) {
-		return <NoResults title="Page not found" text="The page you are looking for is not found or it may have been removed"/>;
+		return (
+			<NoResults
+				title="Page not found"
+				text="The page you are looking for is not found or it may have been removed"
+			/>
+		);
 	}
 
 	if (isFetching) {
-		return <p>loader</p>;
+		return <Skeleton />
 	}
 
 	return (

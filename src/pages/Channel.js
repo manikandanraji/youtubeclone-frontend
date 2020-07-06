@@ -19,6 +19,7 @@ import {
 	SUBSCRIBE_FROM_PROFILE,
 	UNSUBSCRIBE_FROM_PROFILE
 } from "../actions/types";
+import Skeleton from '../skeletons/ChannelSkeleton';
 
 const activeTabStyle = {
 	borderBottom: "2px solid white",
@@ -124,7 +125,7 @@ const Channel = ({
 	}
 
 	if (isFetching) {
-		return <p>loader</p>;
+		return <Skeleton />
 	}
 
 	return (
