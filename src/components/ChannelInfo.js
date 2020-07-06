@@ -32,9 +32,9 @@ const Wrapper = styled.div`
 	}
 
 	img {
-		width: 134px;
-		height: 134px;
-		border-radius: 67px;
+		width: 120px;
+		height: 120px;
+		border-radius: 60px;
 		object-fit: cover;
 		margin-right: 1.2rem;
 	}
@@ -61,6 +61,21 @@ const Wrapper = styled.div`
 		p.description {
 			display: none;
 		}
+	}
+
+	@media screen and (max-width: 450px) {
+		img {
+			width: 50px;
+			height: 50px;
+			border-radius: 25px;
+		}
+	
+	}
+
+	@media screen and (max-width: 420px) {
+		.to-hide {
+			display: none;
+	  }
 	}
 `;
 
@@ -99,8 +114,8 @@ const ChannelInfo = ({
 				<div className="channel-info-meta">
 					<h3>{channel.username}</h3>
 					<p className="secondary">
-						<span>{channel.subscribersCount} subscribers</span> <span>•</span>{" "}
-						<span>{channel.videosCount} videos</span>
+						<span>{channel.subscribersCount} subscribers</span> <span className="to-hide">•</span>{" "}
+						<span className="to-hide">{channel.videosCount} videos</span>
 					</p>
 					{channel.channelDescription && (
 						<p className="description secondary">
@@ -112,10 +127,11 @@ const ChannelInfo = ({
 				</div>
 			</Link>
 
-			{!channel.isSubscribed && (
+			{!channel.isMe && !channel.isSubscribed && (
 				<Button onClick={handleSubscribe}>Subscribe</Button>
 			)}
-			{channel.isSubscribed && (
+
+			{!channel.isMe && channel.isSubscribed && (
 				<Button grey onClick={handleUnsubscribe}>
 					Subscribed
 				</Button>

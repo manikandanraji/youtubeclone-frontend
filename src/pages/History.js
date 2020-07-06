@@ -6,7 +6,7 @@ import TrendingCard from "../components/TrendingCard";
 import { getHistory } from "../actions";
 import Skeleton from '../skeletons/TrendingSkeleton';
 
-const History = ({ isFetching, videos, getHistory }) => {
+const History = ({ nopad, isFetching, videos, getHistory }) => {
 	useEffect(() => {
 		getHistory();
 	}, [videos.length, getHistory]);
@@ -16,7 +16,7 @@ const History = ({ isFetching, videos, getHistory }) => {
 	}
 
 	return (
-		<StyledTrending>
+		<StyledTrending nopad={nopad}>
 			<h2>History</h2>
 
 			{!isFetching && !videos.length && (
