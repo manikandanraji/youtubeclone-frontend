@@ -8,6 +8,7 @@ import {
 
 // components
 import Navbar from "./components/Navbar";
+import BottomBar from "./components/BottomBar";
 import Sidebar from "./components/Sidebar";
 
 // styles
@@ -29,6 +30,7 @@ const AppRouter = () => (
 	<Router>
 		<Navbar />
 		<Sidebar />
+		<BottomBar />
 		<Container>
 			<Switch>
 				<Route path="/watch/:videoId" component={WatchVideo} />

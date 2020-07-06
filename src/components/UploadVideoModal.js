@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Player from './Player';
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
 import styled, { keyframes } from "styled-components";
@@ -18,7 +19,7 @@ const openModal = keyframes`
 
 const Wrapper = styled.div`
 	position: fixed;
-	z-index: 130;
+	z-index: 330;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -45,9 +46,6 @@ const Wrapper = styled.div`
 	.modal-header svg {
 		fill: ${props => props.theme.red};
 		margin-right: 0;
-	}
-
-	.tab {
 	}
 
 	.video-form {
@@ -93,6 +91,12 @@ const Wrapper = styled.div`
 		width: 100%;
 		height: 340px;
 		object-fit: cover;
+	}
+
+	svg {
+		width: 30px;
+		height: 30px;
+		fill: ${props => props.theme.red};
 	}
 
 	@media screen and (max-width: 835px) {
@@ -154,18 +158,8 @@ const UploadVideoModal = ({
 
 				{tab === "PREVIEW" && (
 					<div className="tab video-preview">
-						<video
-							className="video-js vjs-fill vjs-fluid"
-							controls
-							preload="auto"
-							height="340"
-							width="800"
-							poster="https://res.cloudinary.com/douy56nkf/image/upload/v1593412344/instaclone/rmjfj8kvmqqlkrzmlwnc.jpg"
-							alt="video preview"
-							data-setup="{}"
-						>
-							<source src={previewVideo} type="video/mp4"></source>
-						</video>
+						{console.log(previewVideo)}
+						<Player preview={true} previewUrl={previewVideo} />
 					</div>
 				)}
 

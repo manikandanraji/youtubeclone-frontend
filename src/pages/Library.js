@@ -5,7 +5,7 @@ import History from "./History";
 const Library = ({ isFetching }) => {
 	return (
 		<>
-			<History />
+			<History nopad={true}/>
 			<LikedVideos />
 		</>
 	);

@@ -4,16 +4,28 @@ import videojs from "video.js";
 import "video.js/dist/video-js.css";
 import { addToHistory } from "../actions";
 
-const Player = ({ isViewed, src, poster, video, addToHistory }) => {
+const Player = ({
+	isViewed,
+	preview,
+	previewUrl,
+	src,
+	poster,
+	video,
+	addToHistory
+}) => {
 	let videoRef;
 
 	useEffect(() => {
 		const player = videojs(videoRef);
-		player.poster(poster);
-		player.src(src);
+		if (!preview) {
+			player.poster(poster);
+			player.src(src);
+		} else {
+			player.src({ type: 'video/mp4', src: previewUrl });
+		}
 
 		player.on("ended", function () {
-			if (!isViewed) {
+			if (!isViewed && !preview) {
 				addToHistory(video);
 			}
 		});
@@ -47,9 +59,9 @@ const mapStateToProps = ({ video }) => ({
 		thumbnail: video.thumbnail,
 		views: video.views + 1,
 		User: {
-			id: video.User.id,
-			username: video.User.username,
-			avatar: video.User.avatar
+			id: video.User?.id,
+			username: video.User?.username,
+			avatar: video.User?.avatar
 		}
 	}
 });

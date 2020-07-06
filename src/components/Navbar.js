@@ -68,6 +68,20 @@ const Wrapper = styled.div`
 			width: 280px;
 		}
 	}
+
+	@media screen and (max-width: 500px) {
+		.toggle-navhandler {
+			display: none;
+		}
+
+		li svg {
+			width: 30px;
+			height: 30px;
+			margin-right: 1.7rem;
+			position: relative;
+			top: 0px;
+		}
+	}
 `;
 
 const Navbar = ({ logoutUser, user, open, openSidebar, closeSidebar }) => {

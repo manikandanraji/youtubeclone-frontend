@@ -29,7 +29,7 @@ const activeTabStyle = {
 const Wrapper = styled.div`
 	background: ${props => props.theme.black};
 	min-height: 100vh;
-	padding-bottom: 2rem;
+	padding-bottom: 7rem;
 
 	.cover {
 		height: 170px;

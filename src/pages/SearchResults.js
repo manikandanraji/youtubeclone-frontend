@@ -11,6 +11,7 @@ import Skeleton from '../skeletons/TrendingSkeleton';
 
 const StyledChannels = styled.div`
 	margin-top: 1rem;
+	padding-bottom: 7rem;
 `;
 
 const SearchResults = ({

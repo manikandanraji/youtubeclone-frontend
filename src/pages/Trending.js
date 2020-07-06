@@ -10,6 +10,8 @@ export const StyledTrending = styled.div`
 	padding: 1rem 1.3rem;
 	width: 85%;
 	margin: 0 auto;
+	padding-top: 2rem;
+	padding-bottom: ${props => props.nopad ? '7rem': '0'};
 
 	@media screen and (max-width: 930px) {
 		width: 95%;
@@ -20,7 +22,7 @@ export const StyledTrending = styled.div`
 	}
 `;
 
-const Trending = ({ isFetching, videos, getTrending }) => {
+const Trending = ({ nopad, isFetching, videos, getTrending }) => {
 	useEffect(() => {
 		getTrending();
 	}, [getTrending, videos.length]);
@@ -30,7 +32,7 @@ const Trending = ({ isFetching, videos, getTrending }) => {
 	}
 
 	return (
-		<StyledTrending>
+		<StyledTrending nopad={nopad}>
 			<h2>Trending</h2>
 			<div className="trending">
 				{!isFetching &&

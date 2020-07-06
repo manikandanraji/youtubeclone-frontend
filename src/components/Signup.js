@@ -62,12 +62,12 @@ export const StyledAuth = styled.div`
 `;
 
 const Signup = ({ login, signupUser }) => {
-	const firstname = useInput("John");
-	const lastname = useInput("Wick");
-	const username = useInput("John Wick");
-	const email = useInput("johnwick@gmail.com");
-	const password1 = useInput("123456");
-	const password2 = useInput("123456");
+	const firstname = useInput("");
+	const lastname = useInput("");
+	const username = useInput("");
+	const email = useInput("");
+	const password1 = useInput("");
+	const password2 = useInput("");
 
 	const handleSubmit = e => {
 		e.preventDefault();

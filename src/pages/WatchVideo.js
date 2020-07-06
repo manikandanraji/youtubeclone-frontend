@@ -29,6 +29,7 @@ const Wrapper = styled.div`
 	grid-template-columns: 70% 1fr;
 	grid-gap: 2rem;
 	padding: 1.3rem;
+	padding-bottom: 7rem;
 
 	.video-container .video-info {
 		margin-top: 1rem;
