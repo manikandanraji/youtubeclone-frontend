@@ -47,7 +47,7 @@ export const signupUser = (payload, clearForm) => async dispatch => {
 	if (user) {
 		clearForm();
 		dispatch({ type: SIGNUP, payload: user });
-		toast.dark("Signup successful");
+		window.location = "/";
 	}
 };
 
@@ -57,7 +57,7 @@ export const loginUser = (payload, clearForm) => async dispatch => {
 	if (user) {
 		clearForm();
 		dispatch({ type: LOGIN, payload: user });
-		toast.dark("Login successful");
+		window.location = "/";
 	}
 };
 
@@ -68,7 +68,7 @@ export const logoutUser = () => dispatch => {
 		type: LOGOUT
 	});
 
-	toast.dark("You are logged out");
+	window.location = "/";
 };
 
 export const getRecommendations = () => async dispatch => {
