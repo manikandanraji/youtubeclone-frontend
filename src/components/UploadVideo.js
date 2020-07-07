@@ -16,11 +16,11 @@ const UploadVideo = () => {
 	const handleVideoUpload = async e => {
 		const file = e.target.files[0];
 		if (file) {
-			// const size = file.size / 1000000;
+			const size = file.size / 1000000;
 
-			// if(size > 30) {
-			// 	return toast.error('Sorry, the file should be less than 30MB');
-			// }
+			if(size > 30) {
+				return toast.error('Sorry, the file should be less than 30MB');
+			}
 
 			const url = URL.createObjectURL(file);
 			console.log(url)
