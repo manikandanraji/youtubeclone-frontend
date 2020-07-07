@@ -58,6 +58,10 @@ Then run <code>npm i</code> and <code>npm start</code> to see the youtube clone 
 
 ![Watch](screenshots/video.png)
 
+### Suggestions
+
+![Suggestions](screenshots/suggestions.png)
+
 ### Channel
 
 ![Trending](screenshots/profile.png)

@@ -64,14 +64,7 @@ const VideoCard = ({ nousername, hideavatar, video }) => {
 						<span className="secondary">{video.User.username}</span>
 					)}
 					<p className="secondary">
-						{video.views === 0 && <span>No views</span>}
-						{video.views !== 0 && (
-							<span>
-								{video.views > 1
-									? `${video.views} views`
-									: `${video.views} view`}
-							</span>
-						)}{" "}
+						<span>{video.views || 0} views</span>{" "}
 						<span>•</span> <span>{timeSince(video.createdAt)} ago</span>
 					</p>
 				</div>

@@ -1,5 +1,4 @@
 import styled, { keyframes } from "styled-components";
-
 const pulse = keyframes`
 	0% {
 		background-position: 0% 0%;
@@ -14,9 +13,9 @@ const SkeletonPulse = styled.div`
 	display: block;
 	height: 100%;
 	width: 100%;
-	background: linear-gradient(-90deg, #121212 0%, #191818 50%, #121212 100%);
+	background: linear-gradient(-90deg, #121212 0%, #161616 50%, #121212 100%);
 	background-size: 400% 400%;
-	animation: ${pulse} 1.2s ease-in-out infinite;
+	animation: ${pulse} 1s linear;
 `;
 
 export const SkeletonLine = styled(SkeletonPulse)`

@@ -23,6 +23,7 @@ const Subscriptions = ({ isFetching, videos, getFeed }) => {
 
 	return (
 		<StyledHome>
+			<div style={{ marginTop: "1.5rem" }}></div>
 			<VideoGrid>
 				{!isFetching && videos.map(video => (
 					<Link key={video.id} to={`/watch/${video.id}`}>
