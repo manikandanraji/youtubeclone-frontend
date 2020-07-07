@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { UploadIcon } from "./Icons";
 import UploadVideoModal from "./UploadVideoModal";
 import { upload } from "../utils";
