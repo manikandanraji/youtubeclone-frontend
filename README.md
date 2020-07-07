@@ -1,17 +1,90 @@
 # Youtube Clone Frontend
 
-Youtube clone using PERN stack (Postgres, Express, React, Node). This is the frontend repository, built with React + Redux.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2a2d7c36-4a21-42c1-99d2-f918b6282bbb/deploy-status)](https://app.netlify.com/sites/instaclone2/deploys)
+
+Youtube clone using PERN stack (Postgres, Express, React, Node). 
+
+This is the frontend repository, built with React + Redux. If you are looking for the backend repository, [click here](https://github.com/manikandanraji/youtubeclone-backend)
+
+Check out the [deployed site](https://utubeclone.netlify.app/)
 
 ## Core packages
-1. State Management - Redux
-2. Routing - React Router
+
+1. Redux - State Management
+2. React Router - Routing
 3. Styling - Styled Components
 4. Toast Notifications - React Toastify
+5. Network calls - Axios
+6. Video player - Videojs
 
-## TODO
-1. video player
-2. search user, videos
-3. like/dislike 
-4. subscribe
-5. channel recommendations
-6. loader (skeleton loader)
+## Video uploads
+I am using cloudinary for hosting videos and the thumbnails are generated automatically once we upload the video to cloudinary
+
+## Features
+
+1. Login/Signup
+2. Upload video
+3. Search video by channel name
+4. Search video by title, description
+5. Like/Dislike video
+6. Subscribe/Unsubscribe from channels
+7. Add comment
+8. Edit profile (avatar, cover)
+9. Liked videos
+10. History
+
+## Running locally
+
+At the root of your project create an .env file with the following contents:
+
+```javascript
+REACT_APP_BACKEND_URL=<YOUR_BACKEND_URL>
+REACT_APP_CLOUDINARY_ENDPOINT=https://api.cloudinary.com/v1_1/<YOUR_CLOUD_NAME>
+```
+
+Then run <code>npm i</code> and <code>npm start</code> to see the youtube clone in action
+
+## UI
+
+### Home
+
+![Home](screenshots/home.png)
+
+### Trending
+
+![Trending](screenshots/trending.png)
+
+### Watch
+
+![Watch](screenshots/video.png)
+
+### Channel
+
+![Trending](screenshots/profile.png)
+
+### Edit Profile
+
+![Edit Profile](screenshots/edit_profile.png)
+
+![Trending](screenshots/profile_channels.png)
+
+### Library
+
+![Library](screenshots/library.png)
+
+### Search
+
+![Search](screenshots/search_results.png)
+
+## My Clone Trilogy
+
+With this clone, I am finishing what I call 'my clone trilogy'. If you are interested, you can visit my other clones that are part of this trilogy
+
+1. Twitter
+
+   - [Frontend](https://github.com/manikandanraji/twitter-clone-frontend)
+   - [Backend](https://github.com/manikandanraji/twitter-clone-frontend)
+
+2. Instagram
+   - [Frontend](https://github.com/manikandanraji/instaclone-frontend)
+   - [Backend](https://github.com/manikandanraji/instaclone-backend)
