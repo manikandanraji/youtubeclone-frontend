@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from 'react-toastify';
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { addComment } from "../actions";
@@ -57,6 +58,10 @@ const Comments = ({ user, comments, addComment, videoId }) => {
 
 	const handleAddComment = e => {
 		if (e.keyCode === 13) {
+			if(!comment.value.trim()) {
+				return toast.error('Please write a comment');
+			}
+
 			addComment({ videoId, text: comment.value });
 			comment.setValue("");
 		}
@@ -101,10 +106,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { addComment })(Comments);
-
-// createdAt: "2020-07-02T09:57:26.246Z"
-// id: "60663ee9-3d4e-4848-9e5b-f6e0e2676b8f"
-// text: "building youtube using reactjs"
-// updatedAt: "2020-07-02T09:57:26.246Z"
-// userId: "7f44ec58-9f74-4590-ac82-cd8619100939"
-// videoId: "3e85403d-c2d4-43fe-8a73-c33ca95bec81"
