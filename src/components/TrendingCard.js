@@ -18,10 +18,6 @@ const Wrapper = styled.div`
 		margin-left: 1.2rem;
 	}
 
-	h3 {
-		width: 95%;
-	}
-
 	p {
 		font-size: 0.9rem;
 	}
