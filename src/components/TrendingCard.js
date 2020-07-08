@@ -19,7 +19,7 @@ const Wrapper = styled.div`
 	}
 
 	h3 {
-		width: 90%;
+		width: 95%;
 	}
 
 	p {
