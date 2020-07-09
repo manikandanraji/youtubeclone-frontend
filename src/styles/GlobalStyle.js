@@ -14,9 +14,9 @@ const GlobalStyle = createGlobalStyle`
 
 	body {
 		font-size: 1rem;
-		font-family: ${props => props.theme.font}, sans-serif;
-		color: ${props => props.theme.primaryColor};
-		background-color: ${props => props.theme.bg};
+		font-family: ${(props) => props.theme.font}, sans-serif;
+		color: ${(props) => props.theme.primaryColor};
+		background-color: ${(props) => props.theme.bg};
 		line-height: 1.8;
 	}
 
@@ -30,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	input, textarea {
-		font-family: ${props => props.theme.font}, sans-serif;
+		font-family: ${(props) => props.theme.font}, sans-serif;
 		font-size: 1rem;
 	}
 
@@ -53,7 +53,7 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	.secondary {
-		color: ${props => props.theme.secondaryColor};
+		color: ${(props) => props.theme.secondaryColor};
 	}
 
 	.avatar {
@@ -91,21 +91,21 @@ const GlobalStyle = createGlobalStyle`
 
 	.ruler {
 		height: 1px;
-		background: ${props => props.theme.darkGrey};
+		background: ${(props) => props.theme.darkGrey};
 		margin: 1rem 0;
 	}
 
 	.Toastify__toast {
-		font-family: ${props => props.theme.font}, sans-serif;
+		font-family: ${(props) => props.theme.font}, sans-serif;
 		border-radius: 4px;
 	}
 
 	.Toastify__toast--error {
-		background: ${props => props.theme.darkGrey};
+		background: ${(props) => props.theme.darkGrey};
 	}
 
 	.Toastify__toast--dark, .Toastify__toast--default {
-		background: ${props => props.theme.purple};
+		background: ${(props) => props.theme.purple};
     color: #fff;
 	}
 

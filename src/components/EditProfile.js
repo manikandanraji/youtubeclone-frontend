@@ -7,39 +7,39 @@ import { SignoutIcon } from "./Icons";
 import { logoutUser } from "../actions";
 
 const Wrapper = styled.div`
-	svg {
-		width: 30px;
-		height: 30px;
-		margin-left: 1rem;
-		fill: ${props => props.theme.darkGrey};
-	}
+  svg {
+    width: 30px;
+    height: 30px;
+    margin-left: 1rem;
+    fill: ${(props) => props.theme.darkGrey};
+  }
 
-	div {
-		display: flex;
-		align-items: center;
-	}
+  div {
+    display: flex;
+    align-items: center;
+  }
 
-	@media screen and (max-width: 440px) {
-		margin-top: 1rem;
-	}
+  @media screen and (max-width: 440px) {
+    margin-top: 1rem;
+  }
 `;
 
 const EditProfile = ({ logoutUser }) => {
-	const [showModal, setShowModal] = useState(false);
-	const closeModal = () => setShowModal(false);
+  const [showModal, setShowModal] = useState(false);
+  const closeModal = () => setShowModal(false);
 
-	return (
-		<>
-			<Wrapper>
-				<div>
-					<Button grey onClick={() => setShowModal(true)}>
-						Edit Profile
-					</Button>
-					<SignoutIcon onClick={() => logoutUser()} />
-				</div>
-			</Wrapper>
-			{showModal && <EditProfileModal closeModal={closeModal} />}
-		</>
-	);
+  return (
+    <>
+      <Wrapper>
+        <div>
+          <Button grey onClick={() => setShowModal(true)}>
+            Edit Profile
+          </Button>
+          <SignoutIcon onClick={() => logoutUser()} />
+        </div>
+      </Wrapper>
+      {showModal && <EditProfileModal closeModal={closeModal} />}
+    </>
+  );
 };
 export default connect(null, { logoutUser })(EditProfile);

@@ -3,12 +3,12 @@ import LikedVideos from "./LikedVideos";
 import History from "./History";
 
 const Library = ({ isFetching }) => {
-	return (
-		<>
-			<History nopad={true}/>
-			<LikedVideos />
-		</>
-	);
+  return (
+    <>
+      <History nopad={true} />
+      <LikedVideos />
+    </>
+  );
 };
 
 export default Library;

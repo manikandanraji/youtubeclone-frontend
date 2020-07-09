@@ -4,6 +4,6 @@ import { createStore, applyMiddleware } from "redux";
 import youtubeclone from "./reducers";
 
 export default createStore(
-	youtubeclone,
-	composeWithDevTools(applyMiddleware(thunk))
+  youtubeclone,
+  composeWithDevTools(applyMiddleware(thunk))
 );

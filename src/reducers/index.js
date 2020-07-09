@@ -10,19 +10,19 @@ import searchResult from "./searchResult";
 import trending from "./trending";
 import likedVideo from "./likedVideo";
 import history from "./history";
-import notfound from './notfound';
+import notfound from "./notfound";
 
 export default combineReducers({
-	user,
-	feed,
-	video,
-	profile,
-	sidebar,
-	recommendation,
-	channelRecommendation,
-	searchResult,
-	trending,
-	likedVideo,
-	history,
-	notfound,
+  user,
+  feed,
+  video,
+  profile,
+  sidebar,
+  recommendation,
+  channelRecommendation,
+  searchResult,
+  trending,
+  likedVideo,
+  history,
+  notfound,
 });

@@ -4,52 +4,52 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import TrendingCard from "../components/TrendingCard";
 import { getTrending } from "../actions";
-import Skeleton from '../skeletons/TrendingSkeleton';
+import Skeleton from "../skeletons/TrendingSkeleton";
 
 export const StyledTrending = styled.div`
-	padding: 1rem 1.3rem;
-	width: 85%;
-	margin: 0 auto;
-	padding-top: 2rem;
-	padding-bottom: 7rem;
-	padding-bottom: ${props => props.nopad ? '0.5rem': '7rem'};
+  padding: 1rem 1.3rem;
+  width: 85%;
+  margin: 0 auto;
+  padding-top: 2rem;
+  padding-bottom: 7rem;
+  padding-bottom: ${(props) => (props.nopad ? "0.5rem" : "7rem")};
 
-	@media screen and (max-width: 930px) {
-		width: 95%;
-	}
+  @media screen and (max-width: 930px) {
+    width: 95%;
+  }
 
-	@media screen and (max-width: 800px) {
-		width: 100%;
-	}
+  @media screen and (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 const Trending = ({ isFetching, videos, getTrending }) => {
-	useEffect(() => {
-		getTrending();
-	}, [getTrending, videos.length]);
+  useEffect(() => {
+    getTrending();
+  }, [getTrending, videos.length]);
 
-	if(isFetching) {
-		return <Skeleton />
-	}
+  if (isFetching) {
+    return <Skeleton />;
+  }
 
-	return (
-		<StyledTrending>
-			<h2>Trending</h2>
-			<div className="trending">
-				{!isFetching &&
-					videos.map(video => (
-						<Link to={`/watch/${video.id}`} key={video.id}>
-							<TrendingCard key={video.id} video={video} />
-						</Link>
-					))}
-			</div>
-		</StyledTrending>
-	);
+  return (
+    <StyledTrending>
+      <h2>Trending</h2>
+      <div className="trending">
+        {!isFetching &&
+          videos.map((video) => (
+            <Link to={`/watch/${video.id}`} key={video.id}>
+              <TrendingCard key={video.id} video={video} />
+            </Link>
+          ))}
+      </div>
+    </StyledTrending>
+  );
 };
 
 const mapStateToProps = ({ trending }) => ({
-	isFetching: trending.isFetching,
-	videos: trending.videos
+  isFetching: trending.isFetching,
+  videos: trending.videos,
 });
 
 export default connect(mapStateToProps, { getTrending })(Trending);

@@ -1,9 +1,9 @@
 import React from "react";
 import {
-	BrowserRouter as Router,
-	Route,
-	Redirect,
-	Switch
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch,
 } from "react-router-dom";
 
 // components
@@ -27,26 +27,26 @@ import YourVideos from "./pages/YourVideos";
 import LikedVideos from "./pages/LikedVideos";
 
 const AppRouter = () => (
-	<Router>
-		<Navbar />
-		<Sidebar />
-		<BottomBar />
-		<Container>
-			<Switch>
-				<Route path="/watch/:videoId" component={WatchVideo} />
-				<Route path="/channel/:userId" component={Channel} />
-				<Route path="/results/:searchterm" component={SearchResults} />
-				<Route path="/feed/trending" component={Trending} />
-				<Route path="/feed/subscriptions" component={Subscriptions} />
-				<Route path="/feed/library" component={Library} />
-				<Route path="/feed/history" component={History} />
-				<Route path="/feed/my_videos" component={YourVideos} />
-				<Route path="/feed/liked_videos" component={LikedVideos} />
-				<Route path="/" component={Home} />
-				<Redirect to="/" />
-			</Switch>
-		</Container>
-	</Router>
+  <Router>
+    <Navbar />
+    <Sidebar />
+    <BottomBar />
+    <Container>
+      <Switch>
+        <Route path="/watch/:videoId" component={WatchVideo} />
+        <Route path="/channel/:userId" component={Channel} />
+        <Route path="/results/:searchterm" component={SearchResults} />
+        <Route path="/feed/trending" component={Trending} />
+        <Route path="/feed/subscriptions" component={Subscriptions} />
+        <Route path="/feed/library" component={Library} />
+        <Route path="/feed/history" component={History} />
+        <Route path="/feed/my_videos" component={YourVideos} />
+        <Route path="/feed/liked_videos" component={LikedVideos} />
+        <Route path="/" component={Home} />
+        <Redirect to="/" />
+      </Switch>
+    </Container>
+  </Router>
 );
 
 export default AppRouter;
