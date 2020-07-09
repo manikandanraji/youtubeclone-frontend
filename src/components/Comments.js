@@ -1,5 +1,6 @@
 import React from "react";
-import { toast } from 'react-toastify';
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { addComment } from "../actions";
@@ -48,7 +49,7 @@ const Wrapper = styled.div`
 		height: 40px;
 		border-radius: 20px;
 		position: relative;
-		top: 4px;
+		top: 2px;
 		margin-right: 1rem;
 	}
 `;
@@ -58,8 +59,8 @@ const Comments = ({ user, comments, addComment, videoId }) => {
 
 	const handleAddComment = e => {
 		if (e.keyCode === 13) {
-			if(!comment.value.trim()) {
-				return toast.error('Please write a comment');
+			if (!comment.value.trim()) {
+				return toast.error("Please write a comment");
 			}
 
 			addComment({ videoId, text: comment.value });
@@ -81,20 +82,27 @@ const Comments = ({ user, comments, addComment, videoId }) => {
 				/>
 			</div>
 
-			{comments && comments.map(comment => (
-				<div key={comment.id} className="comment">
-					<img src={comment.User?.avatar} alt="avatar" />
-					<div className="comment-info">
-						<p className="secondary">
-							<span>{comment.User?.username}</span>
-							<span style={{ marginLeft: "0.6rem" }}>
-								{timeSince(comment.createdAt)} ago
-							</span>
-						</p>
-						<p>{comment.text}</p>
+			{comments &&
+				comments.map(comment => (
+					<div key={comment.id} className="comment">
+						<Link to={`/channel/${comment.User?.id}`}>
+							<img src={comment.User?.avatar} alt="avatar" />
+						</Link>
+						<div className="comment-info">
+							<p className="secondary">
+								<span>
+									<Link to={`/channel/${comment.User?.id}`}>
+										{comment.User?.username}
+									</Link>
+								</span>
+								<span style={{ marginLeft: "0.6rem" }}>
+									{timeSince(comment.createdAt)} ago
+								</span>
+							</p>
+							<p>{comment.text}</p>
+						</div>
 					</div>
-				</div>
-			))}
+				))}
 		</Wrapper>
 	);
 };
