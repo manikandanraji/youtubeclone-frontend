@@ -1,7 +1,5 @@
 # Youtube Clone Frontend
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/2a2d7c36-4a21-42c1-99d2-f918b6282bbb/deploy-status)](https://app.netlify.com/sites/instaclone2/deploys)
-
 Youtube clone using PERN stack (Postgres, Express, React, Node). 
 
 This is the frontend repository, built with React + Redux. If you are looking for the backend repository, [click here](https://github.com/manikandanraji/youtubeclone-backend)
