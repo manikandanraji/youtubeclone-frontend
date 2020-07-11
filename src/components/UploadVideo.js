@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import path from 'path';
 import { toast } from "react-toastify";
 import { UploadIcon } from "./Icons";
 import UploadVideoModal from "./UploadVideoModal";
@@ -28,7 +29,9 @@ const UploadVideo = () => {
 
       const data = await upload("video", file);
       setUrl(data);
-      setThumbnail(data.replace(".mp4", ".jpg"));
+
+			const ext = path.extname(data);
+      setThumbnail(data.replace(ext, ".jpg"));
     }
   };
 
