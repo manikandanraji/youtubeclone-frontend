@@ -15,6 +15,7 @@ const UploadVideo = () => {
 
 	const handleVideoUpload = async e => {
 		const file = e.target.files[0];
+
 		if (file) {
 			const size = file.size / 1000000;
 
@@ -26,11 +27,16 @@ const UploadVideo = () => {
 			setPreviewVideo(url);
 			setShowModal(true);
 
-			const data = await upload("video", file);
-			setUrl(data);
+			setTimeout(() => {
+				toast.dark("Video uploads paused, try later");
+				setShowModal(false);
+			}, 5000)
 
-			const ext = path.extname(data);
-			setThumbnail(data.replace(ext, ".jpg"));
+			// const data = await upload("video", file);
+			// setUrl(data);
+
+			// const ext = path.extname(data);
+			// setThumbnail(data.replace(ext, ".jpg"));
 		}
 	};
 
