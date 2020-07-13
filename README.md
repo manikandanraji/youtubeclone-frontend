@@ -42,6 +42,10 @@ REACT_APP_CLOUDINARY_ENDPOINT=https://api.cloudinary.com/v1_1/<YOUR_CLOUD_NAME>
 
 Then run <code>npm i</code> and <code>npm start</code> to see the youtube clone in action
 
+## Watch the Demo
+
+[![Video](screenshots/video.png)](https://youtu.be/wHLurtOnmyM "Youtube Clone Demo")
+
 ## UI
 
 ### Home
