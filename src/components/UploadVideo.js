@@ -27,16 +27,16 @@ const UploadVideo = () => {
 			setPreviewVideo(url);
 			setShowModal(true);
 
-			setTimeout(() => {
-				toast.dark("Video uploads paused, try later");
-				setShowModal(false);
-			}, 5000)
+			// setTimeout(() => {
+			// 	toast.dark("Video uploads paused, try later");
+			// 	setShowModal(false);
+			// }, 5000)
 
-			// const data = await upload("video", file);
-			// setUrl(data);
+			const data = await upload("video", file);
+			setUrl(data);
 
-			// const ext = path.extname(data);
-			// setThumbnail(data.replace(ext, ".jpg"));
+			const ext = path.extname(data);
+			setThumbnail(data.replace(ext, ".jpg"));
 		}
 	};
 
