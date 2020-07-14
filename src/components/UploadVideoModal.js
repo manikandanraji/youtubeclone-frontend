@@ -19,12 +19,12 @@ const openModal = keyframes`
 
 const Wrapper = styled.div`
   position: fixed;
-  z-index: 330;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+	z-index: 900;
+	overflow: auto;
   background-color: rgba(0, 0, 0, 0.7);
   animation: ${openModal} 0.5s ease-in-out;
 

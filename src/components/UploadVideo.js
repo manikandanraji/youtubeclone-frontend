@@ -27,11 +27,6 @@ const UploadVideo = () => {
 			setPreviewVideo(url);
 			setShowModal(true);
 
-			// setTimeout(() => {
-			// 	toast.dark("Video uploads paused, try later");
-			// 	setShowModal(false);
-			// }, 5000)
-
 			const data = await upload("video", file);
 			setUrl(data);
 
