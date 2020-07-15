@@ -23,8 +23,8 @@ const Wrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-	z-index: 900;
-	overflow: auto;
+  z-index: 900;
+  overflow: auto;
   background-color: rgba(0, 0, 0, 0.7);
   animation: ${openModal} 0.5s ease-in-out;
 

@@ -25,7 +25,7 @@ const SidebarWrapper = styled.div`
   overflow: auto;
   padding-bottom: 1.5rem;
   transition: all 0.3s;
-	z-index: 2;
+  z-index: 2;
 
   &::-webkit-scrollbar {
     width: 0;
