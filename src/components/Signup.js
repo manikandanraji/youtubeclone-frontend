@@ -27,7 +27,7 @@ export const StyledAuth = styled.div`
   }
 
   input {
-		overflow: hidden;
+    overflow: hidden;
     border-radius: 3px;
     width: 100%;
     padding: 0.6rem 1.2rem;
