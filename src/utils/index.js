@@ -88,8 +88,7 @@ export const authenticate = async (endpoint, data) => {
 
     return user;
   } catch (err) {
-    toast.dismiss();
-    toast.error(err.response.data.message);
+		console.log(err.response);
   }
 };
 
