@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 // components
+import ScrollToTop from "./components/ScrollToTop";
 import Navbar from "./components/Navbar";
 import BottomBar from "./components/BottomBar";
 import Sidebar from "./components/Sidebar";
@@ -28,6 +29,7 @@ import LikedVideos from "./pages/LikedVideos";
 
 const AppRouter = () => (
   <Router>
+    <ScrollToTop />
     <Navbar />
     <Sidebar />
     <BottomBar />
