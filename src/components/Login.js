@@ -46,7 +46,7 @@ const Login = ({ signup, loginUser }) => {
           onChange={password.onChange}
         />
         <div className="action input-group">
-          <span className="pointer" onClick={() => signup()}>
+          <span className="pointer" onClick={signup}>
             Signup instead
           </span>
           <button>Login</button>
