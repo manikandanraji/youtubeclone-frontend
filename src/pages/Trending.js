@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import TrendingCard from "../components/TrendingCard";
-import { getTrending } from "../actions";
 import Skeleton from "../skeletons/TrendingSkeleton";
+import { getTrending } from "../reducers/trending";
 
 export const StyledTrending = styled.div`
   padding: 1rem 1.3rem;
@@ -23,23 +23,27 @@ export const StyledTrending = styled.div`
   }
 `;
 
-const Trending = ({ isFetching, videos, getTrending }) => {
+const Trending = () => {
+	const dispatch = useDispatch();
+	const { isFetching, videos } = useSelector(state => state.trending);
+
   useEffect(() => {
-    getTrending();
-  }, [getTrending, videos.length]);
+    dispatch(getTrending())
+  }, [dispatch])
 
   if (isFetching) {
-    return <Skeleton />;
+    return <Skeleton />
   }
 
   return (
     <StyledTrending>
       <h2>Trending</h2>
+
       <div className="trending">
         {!isFetching &&
           videos.map((video) => (
             <Link to={`/watch/${video.id}`} key={video.id}>
-              <TrendingCard key={video.id} video={video} />
+              <TrendingCard video={video} />
             </Link>
           ))}
       </div>
@@ -47,9 +51,5 @@ const Trending = ({ isFetching, videos, getTrending }) => {
   );
 };
 
-const mapStateToProps = ({ trending }) => ({
-  isFetching: trending.isFetching,
-  videos: trending.videos,
-});
 
-export default connect(mapStateToProps, { getTrending })(Trending);
+export default Trending;

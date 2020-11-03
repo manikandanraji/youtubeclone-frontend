@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: grid;
@@ -33,14 +33,16 @@ const Wrapper = styled.div`
   }
 `;
 
-const ChannelTabChannels = ({ isFetching, channels }) => {
-  if (!isFetching && !channels.length) {
-    return <p>Not subscribed to any channels yet</p>;
+const ChannelTabChannels = () => {
+	const { channels } = useSelector(state => state.profile.data);
+
+  if (!channels.length) {
+    return <p>Not subscribed to any channels yet</p>
   }
 
   return (
     <Wrapper>
-      {channels?.map((channel) => (
+      {channels.map((channel) => (
         <Link to={`/channel/${channel.id}`} key={channel.id}>
           <div className="channel">
             <img src={channel.avatar} alt="avatar" />
@@ -53,9 +55,4 @@ const ChannelTabChannels = ({ isFetching, channels }) => {
   );
 };
 
-const mapStateToProps = ({ profile }) => ({
-  isFetching: profile.isFetching,
-  channels: profile.channels,
-});
-
-export default connect(mapStateToProps)(ChannelTabChannels);
+export default ChannelTabChannels;

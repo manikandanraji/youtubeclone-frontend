@@ -1,17 +1,24 @@
-import { GET_TRENDING } from "../actions/types";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { client } from "../utils";
 
-const initialState = {
-  isFetching: true,
-  videos: [],
-};
+export const getTrending = createAsyncThunk("trending/getTrending", async () => {
+	const { data } = await client(`${process.env.REACT_APP_BE}/videos`);
+	data.sort((a, b) => b.views - a.views);
+	return data;
+});
 
-const trending = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_TRENDING:
-      return action.payload;
-    default:
-      return state;
-  }
-};
+const trendingSlice = createSlice({
+	name: "trending",
+	initialState: {
+		isFetching: true,
+		videos: []
+	},
+	extraReducers: {
+		[getTrending.fulfilled]: (state, action) => {
+			state.isFetching = false;
+			state.videos = action.payload;
+		}
+	}
+});
 
-export default trending;
+export default trendingSlice.reducer;

@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { connect } from "react-redux";
 import styled from "styled-components";
 import {
   HomeIcon,
@@ -54,7 +53,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const BottomBar = ({ avatar }) => {
+const BottomBar = () => {
   return (
     <Wrapper>
       <div className="icons">
@@ -82,6 +81,4 @@ const BottomBar = ({ avatar }) => {
   );
 };
 
-const mapStateToProps = ({ user }) => ({ avatar: user.avatar });
-
-export default connect(mapStateToProps)(BottomBar);
+export default BottomBar;

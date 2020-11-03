@@ -1,22 +1,23 @@
-import { GET_HISTORY, ADD_TO_HISTORY } from "../actions/types";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { client } from "../utils";
 
-const initialState = {
-  isFetching: true,
-  videos: [],
-};
+export const getHistory = createAsyncThunk("history/getHistory", async () => {
+	const { data } = await client(`${process.env.REACT_APP_BE}/users/history`);
+	return data;
+});
 
-const history = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_HISTORY:
-      return action.payload;
-    case ADD_TO_HISTORY:
-      return {
-        ...state,
-        videos: [action.payload, ...state.videos],
-      };
-    default:
-      return state;
-  }
-};
+const historySlice = createSlice({
+	name: "history",
+	initialState: {
+		isFetching: true,
+		videos: []
+	},
+	extraReducers: {
+		[getHistory.fulfilled]: (state, action) => {
+			state.isFetching = false;
+			state.videos = action.payload;
+		}
+	}
+});
 
-export default history;
+export default historySlice.reducer;

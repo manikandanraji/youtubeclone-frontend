@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
-import { connect } from "react-redux";
-import Button from "../styles/Button";
+import { toast } from "react-toastify";
 import { CloseIcon } from "./Icons";
+import Button from "../styles/Button";
 import useInput from "../hooks/useInput";
-import { upload } from "../utils";
-import { updateUser, updateProfile } from "../actions";
+import { updateUser } from "../reducers/user";
+import { updateProfile } from "../reducers/profile";
+import { client, updateUserLocalSt, upload } from "../utils";
 
 const openModal = keyframes`
 	from {
@@ -98,14 +99,14 @@ const Wrapper = styled.div`
 `;
 
 const EditProfileModal = ({
-  updateUser,
-  updateProfile,
   closeModal,
-  profile,
 }) => {
-  const firstname = useInput(profile?.firstname);
-  const lastname = useInput(profile?.lastname);
-  const channelDesc = useInput(profile?.channelDescription || "");
+	const dispatch = useDispatch();
+	const { data: profile } = useSelector(state => state.profile);
+
+  const firstname = useInput(profile.firstname);
+  const lastname = useInput(profile.lastname);
+  const channelDesc = useInput(profile.channelDescription || "");
 
   // uploaded avatar, cover
   const [cover, setCover] = useState("");
@@ -129,8 +130,6 @@ const EditProfileModal = ({
   };
 
   const handleEditProfile = () => {
-    const data = {};
-
     if (!firstname.value.trim()) {
       return toast.error("firstname should not be empty");
     }
@@ -139,15 +138,24 @@ const EditProfileModal = ({
       return toast.error("lastname should not be empty");
     }
 
-    if (firstname.value) data.firstname = firstname.value;
-    if (lastname.value) data.lastname = lastname.value;
+		const data = {
+			firstname: firstname.value,
+			lastname: lastname.value
+		}
+
     if (avatar) data.avatar = avatar;
     if (cover) data.cover = cover;
 
-    updateProfile({ ...data, channelDescription: channelDesc.value });
-    updateUser({ ...data, channelDescription: channelDesc.value });
-    toast.dark("Profile updated");
-    closeModal();
+		const updates = {...data, channelDescription: channelDesc.value};
+
+    dispatch(updateProfile(updates))
+
+    dispatch(updateUser(updates))
+		client(`${process.env.REACT_APP_BE}/users`, { body: updates, method: "PUT" })
+
+		updateUserLocalSt(updates);
+    toast.dark("Profile updated")
+    closeModal()
   };
 
   return (
@@ -223,8 +231,4 @@ const EditProfileModal = ({
   );
 };
 
-const mapStateToProps = (state) => ({ profile: state.profile });
-
-export default connect(mapStateToProps, { updateProfile, updateUser })(
-  EditProfileModal
-);
+export default EditProfileModal;

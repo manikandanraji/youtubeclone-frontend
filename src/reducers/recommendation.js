@@ -1,22 +1,31 @@
-import { GET_RECOMMENDATIONS, ADD_TO_RECOMMENDATIONS } from "../actions/types";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { client } from '../utils';
 
-const initialState = {
-  isFetching: true,
-  videos: [],
-};
+export const getRecommendation = createAsyncThunk("recommendation/getRecommendation", async () => {
+	const { data } = await client(`${process.env.REACT_APP_BE}/videos`);
+	return data;
+})
 
-const recommendation = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_RECOMMENDATIONS:
-      return action.payload;
-    case ADD_TO_RECOMMENDATIONS:
-      return {
-        ...state,
-        videos: [action.payload, ...state.videos],
-      };
-    default:
-      return state;
-  }
-};
+const recommendationSlice = createSlice({
+	name: "recommendation",
+	initialState: {
+		isFetching: true,
+		videos: [],
+	},
+	reducers: {
+		addToRecommendation(state, action) {
+			console.log(action.payload);
+			state.videos = [action.payload, ...state.videos]
+		}
+	},
+	extraReducers: {
+		[getRecommendation.fulfilled]: (state, action) => {
+			state.isFetching = false;
+			state.videos = action.payload;
+		}
+	},
+})
 
-export default recommendation;
+export const { addToRecommendation } = recommendationSlice.actions;
+
+export default recommendationSlice.reducer;

@@ -1,9 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
 import Subscriptions from "./Subscriptions";
-import { closeSidebar } from "../actions";
 import {
   HomeIcon,
   TrendingIcon,
@@ -13,6 +12,7 @@ import {
   VidIcon,
   LikeIcon,
 } from "./Icons";
+import { closeSidebar } from "../reducers/sidebar";
 
 const SidebarWrapper = styled.div`
   position: fixed;
@@ -70,11 +70,18 @@ const SidebarWrapper = styled.div`
   }
 `;
 
-const Sidebar = ({ open, closeSidebar }) => {
+const Sidebar = () => {
+	const dispatch = useDispatch();
+
+	const { sidebar: open } = useSelector(state => state.sidebar)
+
+	const handleCloseSidebar = () => {
+		dispatch(closeSidebar());
+	}
   return (
     <SidebarWrapper open={open}>
       <NavLink
-        onClick={() => closeSidebar()}
+        onClick={handleCloseSidebar}
         exact
         to="/"
         activeClassName="active"
@@ -86,7 +93,7 @@ const Sidebar = ({ open, closeSidebar }) => {
       </NavLink>
 
       <NavLink
-        onClick={() => closeSidebar()}
+        onClick={handleCloseSidebar}
         to="/feed/trending"
         activeClassName="active"
       >
@@ -97,7 +104,7 @@ const Sidebar = ({ open, closeSidebar }) => {
       </NavLink>
 
       <NavLink
-        onClick={() => closeSidebar()}
+        onClick={handleCloseSidebar}
         to="/feed/subscriptions"
         activeClassName="active"
       >
@@ -110,7 +117,7 @@ const Sidebar = ({ open, closeSidebar }) => {
       <div className="ruler"></div>
 
       <NavLink
-        onClick={() => closeSidebar()}
+        onClick={handleCloseSidebar}
         to="/feed/library"
         activeClassName="active"
       >
@@ -121,7 +128,7 @@ const Sidebar = ({ open, closeSidebar }) => {
       </NavLink>
 
       <NavLink
-        onClick={() => closeSidebar()}
+        onClick={handleCloseSidebar}
         to="/feed/history"
         activeClassName="active"
       >
@@ -132,7 +139,7 @@ const Sidebar = ({ open, closeSidebar }) => {
       </NavLink>
 
       <NavLink
-        onClick={() => closeSidebar()}
+        onClick={handleCloseSidebar}
         to="/feed/my_videos"
         activeClassName="active"
       >
@@ -143,7 +150,7 @@ const Sidebar = ({ open, closeSidebar }) => {
       </NavLink>
 
       <NavLink
-        onClick={() => closeSidebar()}
+        onClick={handleCloseSidebar}
         to="/feed/liked_videos"
         activeClassName="active"
       >
@@ -160,6 +167,4 @@ const Sidebar = ({ open, closeSidebar }) => {
   );
 };
 
-const mapStateToProps = (state) => ({ open: state.sidebar });
-
-export default connect(mapStateToProps, { closeSidebar })(Sidebar);
+export default Sidebar;

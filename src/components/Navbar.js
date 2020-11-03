@@ -1,12 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import Search from "./Search";
 import UploadVideo from "./UploadVideo";
 import Avatar from "../styles/Avatar";
-import Search from "./Search";
 import { HamburgerIcon, NotificationIcon } from "./Icons";
-import { openSidebar, closeSidebar } from "../actions";
+import { openSidebar, closeSidebar } from "../reducers/sidebar";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -84,13 +84,14 @@ const Wrapper = styled.div`
   }
 `;
 
-const Navbar = ({ logoutUser, user, open, openSidebar, closeSidebar }) => {
+const Navbar = () => {
+	const dispatch = useDispatch();
+
+	const { data: user } = useSelector(state => state.user);
+	const { sidebar: open } = useSelector(state => state.sidebar);
+
   const handleToggleSidebar = () => {
-    if (open) {
-      closeSidebar();
-    } else {
-      openSidebar();
-    }
+		open ? dispatch(closeSidebar()) : dispatch(openSidebar());
   };
 
   return (
@@ -101,7 +102,7 @@ const Navbar = ({ logoutUser, user, open, openSidebar, closeSidebar }) => {
           onClick={handleToggleSidebar}
         />
         <span>
-          <Link exact to="/">
+          <Link to="/">
             YouTube Clone
           </Link>
         </span>
@@ -117,7 +118,7 @@ const Navbar = ({ logoutUser, user, open, openSidebar, closeSidebar }) => {
           <NotificationIcon />
         </li>
         <li>
-          <Link to={`/channel/${user.id}`}>
+          <Link to="/feed/my_videos">
             <Avatar className="pointer" src={user.avatar} alt="user-avatar" />
           </Link>
         </li>
@@ -126,6 +127,4 @@ const Navbar = ({ logoutUser, user, open, openSidebar, closeSidebar }) => {
   );
 };
 
-const mapStateToProps = (state) => ({ open: state.sidebar, user: state.user });
-
-export default connect(mapStateToProps, { openSidebar, closeSidebar })(Navbar);
+export default Navbar;

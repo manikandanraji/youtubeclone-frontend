@@ -1,43 +1,69 @@
-import {
-  LOGIN,
-  SIGNUP,
-  LOGOUT,
-  ADD_CHANNEL,
-  REMOVE_CHANNEL,
-  UPDATE_USER,
-} from "../actions/types";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { authenticate } from "../utils";
 
-const localSt = JSON.parse(localStorage.getItem("user"));
-const initialState = localSt ? localSt : {};
+export const login = createAsyncThunk(
+	"user/login",
+	async ({ payload, clearForm }) => {
+		const user = await authenticate("login", payload);
+		clearForm();
+		return user;
+	}
+);
 
-const user = (state = initialState, action) => {
-  switch (action.type) {
-    case SIGNUP:
-      return action.payload;
-    case LOGIN:
-      return action.payload;
-    case ADD_CHANNEL:
-      return {
-        ...state,
-        channels: [action.payload, ...state.channels],
-      };
-    case REMOVE_CHANNEL:
-      return {
-        ...state,
-        channels: state.channels.filter(
-          (channel) => channel.id !== action.payload
-        ),
-      };
-    case UPDATE_USER:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case LOGOUT:
-      return {};
-    default:
-      return state;
-  }
-};
+export const signup = createAsyncThunk(
+	"user/signup",
+	async ({ payload, clearForm }) => {
+		const user = await authenticate("signup", payload);
+		clearForm();
+		return user;
+	}
+);
 
-export default user;
+const userSlice = createSlice({
+	name: "user",
+	initialState: {
+		data: JSON.parse(localStorage.getItem("user")) || {}
+	},
+	reducers: {
+		addChannel(state, action) {
+			state.data = {
+				...state.data,
+				channels: [action.payload, ...state.data.channels]
+			};
+		},
+		removeChannel(state, action) {
+			state.data = {
+				...state.data,
+				channels: state.data.channels.filter(
+					channel => channel.id !== action.payload
+				)
+			};
+		},
+		updateUser(state, action) {
+			state.data = {
+				...state.data,
+				...action.payload
+			};
+		},
+		logout(state, action) {
+			state.data = {};
+		}
+	},
+	extraReducers: {
+		[login.fulfilled]: (state, action) => {
+			state.data = action.payload || {};
+		},
+		[signup.fulfilled]: (state, action) => {
+			state.data = action.payload || {};
+		}
+	}
+});
+
+export const {
+	addChannel,
+	removeChannel,
+	updateUser,
+	logout
+} = userSlice.actions;
+
+export default userSlice.reducer;

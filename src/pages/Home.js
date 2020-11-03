@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import VideoCard from "../components/VideoCard";
-import VideoGrid from "../styles/VideoGrid";
-import { getRecommendations } from "../actions";
 import Skeleton from "../skeletons/HomeSkeleton";
+import VideoGrid from "../styles/VideoGrid";
+import { getRecommendation } from "../reducers/recommendation";
 
 export const StyledHome = styled.div`
   padding: 1.3rem;
@@ -42,18 +42,22 @@ export const StyledHome = styled.div`
   }
 `;
 
-const Home = ({ isFetching, videos, getRecommendations }) => {
+const Home = () => {
+	const dispatch = useDispatch();
+	const { isFetching, videos } = useSelector(state => state.recommendation);
+
   useEffect(() => {
-    getRecommendations();
-  }, [videos.length, getRecommendations]);
+		dispatch(getRecommendation());
+  }, [dispatch]);
 
   if (isFetching) {
-    return <Skeleton title={true} />;
+    return <Skeleton title={true} />
   }
 
   return (
     <StyledHome>
       <h2>Recommended</h2>
+
       <VideoGrid>
         {!isFetching &&
           videos.map((video) => (
@@ -66,9 +70,4 @@ const Home = ({ isFetching, videos, getRecommendations }) => {
   );
 };
 
-const mapStateToProps = ({ recommendation }) => ({
-  isFetching: recommendation.isFetching,
-  videos: recommendation.videos,
-});
-
-export default connect(mapStateToProps, { getRecommendations })(Home);
+export default Home;

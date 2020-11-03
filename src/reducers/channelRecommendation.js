@@ -1,39 +1,39 @@
-import {
-  GET_CHANNEL_RECOMMENDATIONS,
-  SUBSCRIBE_FROM_CHANNEL_RECOMMENDATIONS,
-  UNSUBSCRIBE_FROM_CHANNEL_RECOMMENDATIONS,
-} from "../actions/types";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { client } from "../utils";
 
-const initialState = {
-  isFetching: true,
-  channels: [],
-};
+export const getChannels = createAsyncThunk(
+	"channelRecommendation/getChannels",
+	async () => {
+		const { data } = await client(`${process.env.REACT_APP_BE}/users`);
+		return data;
+	}
+);
 
-const channelRecommendation = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_CHANNEL_RECOMMENDATIONS:
-      return action.payload;
-    case SUBSCRIBE_FROM_CHANNEL_RECOMMENDATIONS:
-      return {
-        ...state,
-        channels: state.channels.map((channel) =>
-          channel.id === action.payload.id
-            ? { ...channel, isSubscribed: !channel.isSubscribed }
-            : channel
-        ),
-      };
-    case UNSUBSCRIBE_FROM_CHANNEL_RECOMMENDATIONS:
-      return {
-        ...state,
-        channels: state.channels.map((channel) =>
-          channel.id === action.payload
-            ? { ...channel, isSubscribed: !channel.isSubscribed }
-            : channel
-        ),
-      };
-    default:
-      return state;
-  }
-};
+const channelRecommendationSlice = createSlice({
+	name: "channelRecommendation",
+	initialState: {
+		isFetching: true,
+		channels: []
+	},
+	reducers: {
+		toggleSubscribeChannelRecommendation(state, action) {
+			state.channels = state.channels.map(channel =>
+				channel.id === action.payload
+					? { ...channel, isSubscribed: !channel.isSubscribed }
+					: channel
+			);
+		}
+	},
+	extraReducers: {
+		[getChannels.fulfilled]: (state, action) => {
+			state.isFetching = false;
+			state.channels = action.payload;
+		}
+	}
+});
 
-export default channelRecommendation;
+export const {
+	toggleSubscribeChannelRecommendation
+} = channelRecommendationSlice.actions;
+
+export default channelRecommendationSlice.reducer;

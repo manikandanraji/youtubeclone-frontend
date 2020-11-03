@@ -1,31 +1,33 @@
-import {
-  GET_LIKED_VIDEOS,
-  ADD_TO_LIKED_VIDEOS,
-  REMOVE_FROM_LIKED_VIDEOS,
-} from "../actions/types";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { client } from "../utils";
 
-const initialState = {
-  isFetching: true,
-  videos: [],
-};
+export const getLikedVideos = createAsyncThunk(
+	"likedVideo/getLikedVideos",
+	async () => {
+		const { data } = await client(
+			`${process.env.REACT_APP_BE}/users/likedVideos`
+		);
+		return data;
+	}
+);
 
-const likedVideo = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_LIKED_VIDEOS:
-      return action.payload;
-    case ADD_TO_LIKED_VIDEOS:
-      return {
-        ...state,
-        videos: [action.payload, ...state.videos],
-      };
-    case REMOVE_FROM_LIKED_VIDEOS:
-      return {
-        ...state,
-        videos: state.videos.filter((video) => video.id !== action.payload),
-      };
-    default:
-      return state;
-  }
-};
+const likedVideoSlice = createSlice({
+	name: "likedVideo",
+	initialState: {
+		isFetching: true,
+		videos: []
+	},
+	extraReducers: {
+		[getLikedVideos.fulfilled]: (state, action) => {
+			state.isFetching = false;
+			state.videos = action.payload;
+		}
+	}
+});
 
-export default likedVideo;
+export const {
+	addToLikedVideos,
+	removeFromLikedVideos
+} = likedVideoSlice.actions;
+
+export default likedVideoSlice.reducer;

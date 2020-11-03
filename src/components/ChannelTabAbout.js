@@ -1,19 +1,12 @@
 import React from "react";
-import { connect } from "react-redux";
-import styled from "styled-components";
+import { useSelector } from 'react-redux';
 
-const Wrapper = styled.div``;
+const ChannelTabAbout = () => {
+	const { channelDescription: about } = useSelector(state => state.profile.data);
 
-const ChannelTabAbout = ({ about }) => {
-  return (
-    <Wrapper>
-      <p>{about ? about : "No description for this channel"}</p>
-    </Wrapper>
-  );
+	return (
+		<p>{about ? about : "No description for this channel"}</p>
+	)
 };
 
-const mapStateToProps = (state) => ({
-  about: state.profile.channelDescription,
-});
-
-export default connect(mapStateToProps)(ChannelTabAbout);
+export default ChannelTabAbout;

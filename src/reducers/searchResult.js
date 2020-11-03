@@ -1,41 +1,55 @@
-import {
-  GET_SEARCH_RESULTS,
-  CLEAR_SEARCH_RESULTS,
-  SUBSCRIBE_FROM_SEARCH_RESULTS,
-  UNSUBSCRIBE_FROM_SEARCH_RESULTS,
-} from "../actions/types";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { client } from "../utils";
 
-const initialState = {
-  isFetching: true,
-};
+export const getSearchResults = createAsyncThunk(
+	"searchResult",
+	async searchTerm => {
+		const { data: users } = await client(
+			`${process.env.REACT_APP_BE}/users/search?searchterm=${searchTerm}`
+		);
 
-const searchResult = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_SEARCH_RESULTS:
-      return action.payload;
-    case SUBSCRIBE_FROM_SEARCH_RESULTS:
-      return {
-        ...state,
-        users: state.users.map((user) =>
-          user.id === action.payload.id
-            ? { ...user, isSubscribed: !user.isSubscribed }
-            : user
-        ),
-      };
-    case UNSUBSCRIBE_FROM_SEARCH_RESULTS:
-      return {
-        ...state,
-        users: state.users.map((user) =>
-          user.id === action.payload
-            ? { ...user, isSubscribed: !user.isSubscribed }
-            : user
-        ),
-      };
-    case CLEAR_SEARCH_RESULTS:
-      return { isFetching: true };
-    default:
-      return state;
-  }
-};
+		const { data: videos } = await client(
+			`${process.env.REACT_APP_BE}/videos/search?searchterm=${searchTerm}`
+		);
 
-export default searchResult;
+		return { users, videos };
+	}
+);
+
+const searchResultSlice = createSlice({
+	name: "searchResult",
+	initialState: {
+		isFetching: true,
+		users: [],
+		videos: []
+	},
+	reducers: {
+		toggleSubscribeSearchResults(state, action) {
+			state.users = state.users.map(user =>
+				action.payload === user.id
+					? { ...user, isSubscribed: !user.isSubscribed }
+					: user
+			);
+		},
+		clearSearchResults(state, action) {
+			state.users = [];
+			state.videos = [];
+			state.isFetching = true;
+		}
+	},
+	extraReducers: {
+		[getSearchResults.fulfilled]: (state, action) => {
+			state.isFetching = false;
+			state.videos = action.payload.videos;
+			state.users = action.payload.users;
+		}
+	}
+});
+
+export const {
+	toggleSubscribeSearchResults,
+	unsubscribeFromSearchResults,
+	clearSearchResults
+} = searchResultSlice.actions;
+
+export default searchResultSlice.reducer;

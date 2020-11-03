@@ -1,18 +1,21 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { StyledTrending } from "./Trending";
 import TrendingCard from "../components/TrendingCard";
-import { getHistory } from "../actions";
+import { StyledTrending } from "./Trending";
 import Skeleton from "../skeletons/TrendingSkeleton";
+import { getHistory } from "../reducers/history";
 
-const History = ({ nopad, isFetching, videos, getHistory }) => {
+const History = ({ nopad }) => {
+	const dispatch = useDispatch();
+	const { isFetching, videos } = useSelector(state => state.history);
+
   useEffect(() => {
-    getHistory();
-  }, [videos.length, getHistory]);
+		dispatch(getHistory())
+  }, [dispatch])
 
   if (isFetching) {
-    return <Skeleton />;
+    return <Skeleton />
   }
 
   return (
@@ -26,7 +29,7 @@ const History = ({ nopad, isFetching, videos, getHistory }) => {
       )}
 
       {videos.map((video) => (
-        <Link to={`/watch/${video.id}`} key={video.id}>
+        <Link key={video.id} to={`/watch/${video.id}`} >
           <TrendingCard video={video} />
         </Link>
       ))}
@@ -34,9 +37,5 @@ const History = ({ nopad, isFetching, videos, getHistory }) => {
   );
 };
 
-const mapStateToProps = ({ history }) => ({
-  isFetching: history.isFetching,
-  videos: history.videos,
-});
+export default History;
 
-export default connect(mapStateToProps, { getHistory })(History);

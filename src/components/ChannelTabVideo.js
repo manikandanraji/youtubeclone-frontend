@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import VideoCard from "./VideoCard";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import VideoCard from "./VideoCard";
 
 const Wrapper = styled.div`
   .videos {
@@ -24,7 +24,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const ChannelTabVideo = ({ videos }) => {
+const ChannelTabVideo = () => {
+	const { videos } = useSelector(state => state.profile.data);
+
   if (!videos?.length) {
     return <p>This channel hasn't posted any videos yet</p>;
   }
@@ -42,6 +44,4 @@ const ChannelTabVideo = ({ videos }) => {
   );
 };
 
-const mapStateToProps = (state) => ({ videos: state.profile.videos });
-
-export default connect(mapStateToProps)(ChannelTabVideo);
+export default ChannelTabVideo;

@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { ToastContainer } from "react-toastify";
 import GlobalStyle from "./styles/GlobalStyle";
@@ -8,8 +8,8 @@ import Router from "./Router";
 import Auth from "./components/Auth";
 import "react-toastify/dist/ReactToastify.css";
 
-const App = ({ user }) => {
-  const loggedIn = user.token;
+const App = () => {
+	const { token } = useSelector(state => state.user.data);
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -19,11 +19,9 @@ const App = ({ user }) => {
         position="top-right"
         closeButton={false}
       />
-      {loggedIn ? <Router /> : <Auth />}
+      {token ? <Router /> : <Auth />}
     </ThemeProvider>
   );
 };
 
-const mapStateToProps = (state) => ({ user: state.user });
-
-export default connect(mapStateToProps)(App);
+export default App;

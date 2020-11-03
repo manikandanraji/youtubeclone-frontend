@@ -1,4 +1,6 @@
 import { combineReducers } from "redux";
+
+// reducers
 import user from "./user";
 import feed from "./feed";
 import video from "./video";
@@ -10,7 +12,7 @@ import searchResult from "./searchResult";
 import trending from "./trending";
 import likedVideo from "./likedVideo";
 import history from "./history";
-import notfound from "./notfound";
+import notFound from "./notFound";
 
 export default combineReducers({
   user,
@@ -24,5 +26,5 @@ export default combineReducers({
   trending,
   likedVideo,
   history,
-  notfound,
+  notFound,
 });

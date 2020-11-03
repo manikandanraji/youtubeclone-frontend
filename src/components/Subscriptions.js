@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { closeSidebar } from "../actions";
+import { Link } from "react-router-dom";
+import { closeSidebar } from "../reducers/sidebar";
 
 const Wrapper = styled.div`
   h4 {
@@ -35,14 +35,18 @@ const Wrapper = styled.div`
   }
 `;
 
-const Subscriptions = ({ channels, closeSidebar }) => {
+const Subscriptions = () => {
+	const dispatch = useDispatch();
+	const { channels } = useSelector(state => state.user.data);
+
   return (
     <Wrapper>
       {channels.length > 0 && <h4>Subscriptions</h4>}
+
       {channels?.map((channel) => (
         <Link
           key={channel.id}
-          onClick={() => closeSidebar()}
+					onClick={() => dispatch(closeSidebar())}
           to={`/channel/${channel.id}`}
         >
           <div className="channel">
@@ -55,6 +59,4 @@ const Subscriptions = ({ channels, closeSidebar }) => {
   );
 };
 
-const mapStateToProps = (state) => ({ channels: state.user.channels });
-
-export default connect(mapStateToProps, { closeSidebar })(Subscriptions);
+export default Subscriptions;

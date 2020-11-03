@@ -1,18 +1,21 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { StyledTrending } from "./Trending";
 import TrendingCard from "../components/TrendingCard";
-import { getLikedVideos } from "../actions";
+import { StyledTrending } from "./Trending";
 import Skeleton from "../skeletons/TrendingSkeleton";
+import { getLikedVideos } from "../reducers/likedVideo";
 
-const LikedVideos = ({ isFetching, videos, getLikedVideos }) => {
+const LikedVideos = () => {
+	const dispatch = useDispatch();
+	const { isFetching, videos } = useSelector(state => state.likedVideo);
+
   useEffect(() => {
-    getLikedVideos();
-  }, [videos.length, getLikedVideos]);
+    dispatch(getLikedVideos())
+  }, [dispatch])
 
   if (isFetching) {
-    return <Skeleton />;
+    return <Skeleton />
   }
 
   return (
@@ -26,7 +29,7 @@ const LikedVideos = ({ isFetching, videos, getLikedVideos }) => {
       )}
 
       {videos.map((video) => (
-        <Link to={`/watch/${video.id}`} key={video.id}>
+        <Link key={video.id} to={`/watch/${video.id}`} >
           <TrendingCard video={video} />
         </Link>
       ))}
@@ -34,9 +37,4 @@ const LikedVideos = ({ isFetching, videos, getLikedVideos }) => {
   );
 };
 
-const mapStateToProps = ({ likedVideo }) => ({
-  isFetching: likedVideo.isFetching,
-  videos: likedVideo.videos,
-});
-
-export default connect(mapStateToProps, { getLikedVideos })(LikedVideos);
+export default LikedVideos;

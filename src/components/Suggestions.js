@@ -1,17 +1,20 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { getChannelRecommendations } from "../actions";
+import { useDispatch, useSelector } from "react-redux";
 import ChannelInfo from "./ChannelInfo";
 import { StyledTrending } from "../pages/Trending";
 import Skeleton from "../skeletons/SuggestionSkeleton";
+import { getChannels } from "../reducers/channelRecommendation";
 
-const Suggestions = ({ isFetching, channels, getChannelRecommendations }) => {
+const Suggestions = () => {
+	const dispatch = useDispatch();
+	const { isFetching, channels } = useSelector(state => state.channelRecommendation);
+
   useEffect(() => {
-    getChannelRecommendations();
-  }, [getChannelRecommendations]);
+    dispatch(getChannels())
+  }, [dispatch]);
 
   if (isFetching) {
-    return <Skeleton />;
+    return <Skeleton />
   }
 
   return (
@@ -24,11 +27,4 @@ const Suggestions = ({ isFetching, channels, getChannelRecommendations }) => {
   );
 };
 
-const mapStateToProps = ({ channelRecommendation }) => ({
-  isFetching: channelRecommendation.isFetching,
-  channels: channelRecommendation.channels,
-});
-
-export default connect(mapStateToProps, { getChannelRecommendations })(
-  Suggestions
-);
+export default Suggestions;

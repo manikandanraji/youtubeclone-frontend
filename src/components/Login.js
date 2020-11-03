@@ -1,11 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { connect } from "react-redux";
-import useInput from "../hooks/useInput";
-import { loginUser } from "../actions";
 import { StyledAuth } from "./Signup";
+import useInput from "../hooks/useInput";
+import { login } from "../reducers/user";
 
 const Login = ({ signup, loginUser }) => {
+	const dispatch = useDispatch();
+
   const email = useInput("");
   const password = useInput("");
 
@@ -26,7 +28,7 @@ const Login = ({ signup, loginUser }) => {
       password.setValue("");
     };
 
-    loginUser(payload, clearForm);
+		dispatch(login({ payload, clearForm }));
   };
 
   return (
@@ -56,4 +58,4 @@ const Login = ({ signup, loginUser }) => {
   );
 };
 
-export default connect(null, { loginUser })(Login);
+export default Login;

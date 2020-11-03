@@ -1,9 +1,9 @@
 import React from "react";
 import { toast } from "react-toastify";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import useInput from "../hooks/useInput";
-import { signupUser } from "../actions";
+import { signup} from "../reducers/user";
 
 export const StyledAuth = styled.div`
   width: 385px;
@@ -62,7 +62,9 @@ export const StyledAuth = styled.div`
   }
 `;
 
-const Signup = ({ login, signupUser }) => {
+const Signup = ({ login }) => {
+	const dispatch = useDispatch();
+
   const firstname = useInput("");
   const lastname = useInput("");
   const username = useInput("");
@@ -114,7 +116,7 @@ const Signup = ({ login, signupUser }) => {
       password2.setValue("");
     };
 
-    signupUser(payload, clearForm);
+    dispatch(signup({ payload, clearForm }))
   };
 
   return (
@@ -172,4 +174,4 @@ const Signup = ({ login, signupUser }) => {
   );
 };
 
-export default connect(null, { signupUser })(Signup);
+export default Signup;

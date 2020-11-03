@@ -1,14 +1,20 @@
-import { OPEN_SIDEBAR, CLOSE_SIDEBAR } from "../actions/types";
+import { createSlice } from "@reduxjs/toolkit";
 
-const sidebar = (state = false, action) => {
-  switch (action.type) {
-    case OPEN_SIDEBAR:
-      return true;
-    case CLOSE_SIDEBAR:
-      return false;
-    default:
-      return state;
-  }
-};
+const sidebarSlice = createSlice({
+	name: "sidebar",
+	initialState: {
+		sidebar: false
+	},
+	reducers: {
+		openSidebar(state, action) {
+			state.sidebar = true;
+		},
+		closeSidebar(state, action) {
+			state.sidebar = false;
+		}
+	}
+});
 
-export default sidebar;
+export const { openSidebar, closeSidebar } = sidebarSlice.actions;
+
+export default sidebarSlice.reducer;

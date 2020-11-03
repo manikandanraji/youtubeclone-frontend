@@ -1,41 +1,61 @@
-import {
-  GET_PROFILE,
-  CLEAR_PROFILE,
-  UPDATE_PROFILE,
-  SUBSCRIBE_FROM_PROFILE,
-  UNSUBSCRIBE_FROM_PROFILE,
-} from "../actions/types";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { client } from "../utils";
 
-const initialState = {
-  isFetching: true,
-};
+export const getProfile = createAsyncThunk(
+	"profile/getProfile",
+	async (userId, thunk) => {
+		const { data } = await client(
+			`${process.env.REACT_APP_BE}/users/${userId}`
+		);
+		return data;
+	}
+);
 
-const profile = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_PROFILE:
-      return action.payload;
-    case CLEAR_PROFILE:
-      return { isFetching: true };
-    case UPDATE_PROFILE:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case SUBSCRIBE_FROM_PROFILE:
-      return {
-        ...state,
-        isSubscribed: !state.isSubscribed,
-        subscribersCount: state.subscribersCount + 1,
-      };
-    case UNSUBSCRIBE_FROM_PROFILE:
-      return {
-        ...state,
-        isSubscribed: !state.isSubscribed,
-        subscribersCount: state.subscribersCount - 1,
-      };
-    default:
-      return state;
-  }
-};
+const profileSlice = createSlice({
+	name: "profile",
+	initialState: {
+		isFetching: true,
+		data: {}
+	},
+	reducers: {
+		updateProfile(state, action) {
+			state.data = {
+				...state.data,
+				...action.payload
+			};
+		},
+		clearProfile(state, action) {
+			state.isFetching = true;
+			state.data = {};
+		},
+		subscribeFromProfile(state, action) {
+			state.data = {
+				...state.data,
+				subscribersCount: state.data.subscribersCount + 1,
+				isSubscribed: !state.data.isSubscribed
+			};
+		},
+		unsubscribeFromProfile(state, action) {
+			state.data = {
+				...state.data,
+				subscribersCount: state.data.subscribersCount - 1,
+				isSubscribed: !state.data.isSubscribed
+			};
+		}
+	},
+	extraReducers: {
+		[getProfile.fulfilled]: (state, action) => {
+			state.isFetching = false;
+			state.data = action.payload;
+		}
+	}
+});
 
-export default profile;
+export const {
+	updateProfile,
+	clearProfile,
+	subscribeFromProfile,
+	unsubscribeFromProfile
+} = profileSlice.actions;
+
+export default profileSlice.reducer;
