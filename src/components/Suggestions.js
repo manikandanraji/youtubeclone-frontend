@@ -6,15 +6,17 @@ import Skeleton from "../skeletons/SuggestionSkeleton";
 import { getChannels } from "../reducers/channelRecommendation";
 
 const Suggestions = () => {
-	const dispatch = useDispatch();
-	const { isFetching, channels } = useSelector(state => state.channelRecommendation);
+  const dispatch = useDispatch();
+  const { isFetching, channels } = useSelector(
+    (state) => state.channelRecommendation
+  );
 
   useEffect(() => {
-    dispatch(getChannels())
+    dispatch(getChannels());
   }, [dispatch]);
 
   if (isFetching) {
-    return <Skeleton />
+    return <Skeleton />;
   }
 
   return (

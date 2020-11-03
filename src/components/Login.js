@@ -6,7 +6,7 @@ import useInput from "../hooks/useInput";
 import { login } from "../reducers/user";
 
 const Login = ({ signup, loginUser }) => {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const email = useInput("");
   const password = useInput("");
@@ -28,7 +28,7 @@ const Login = ({ signup, loginUser }) => {
       password.setValue("");
     };
 
-		dispatch(login({ payload, clearForm }));
+    dispatch(login({ payload, clearForm }));
   };
 
   return (

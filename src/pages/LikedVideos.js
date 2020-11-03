@@ -7,15 +7,15 @@ import Skeleton from "../skeletons/TrendingSkeleton";
 import { getLikedVideos } from "../reducers/likedVideo";
 
 const LikedVideos = () => {
-	const dispatch = useDispatch();
-	const { isFetching, videos } = useSelector(state => state.likedVideo);
+  const dispatch = useDispatch();
+  const { isFetching, videos } = useSelector((state) => state.likedVideo);
 
   useEffect(() => {
-    dispatch(getLikedVideos())
-  }, [dispatch])
+    dispatch(getLikedVideos());
+  }, [dispatch]);
 
   if (isFetching) {
-    return <Skeleton />
+    return <Skeleton />;
   }
 
   return (
@@ -29,7 +29,7 @@ const LikedVideos = () => {
       )}
 
       {videos.map((video) => (
-        <Link key={video.id} to={`/watch/${video.id}`} >
+        <Link key={video.id} to={`/watch/${video.id}`}>
           <TrendingCard video={video} />
         </Link>
       ))}

@@ -85,13 +85,13 @@ const Wrapper = styled.div`
 `;
 
 const Navbar = () => {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	const { data: user } = useSelector(state => state.user);
-	const { sidebar: open } = useSelector(state => state.sidebar);
+  const { data: user } = useSelector((state) => state.user);
+  const { sidebar: open } = useSelector((state) => state.sidebar);
 
   const handleToggleSidebar = () => {
-		open ? dispatch(closeSidebar()) : dispatch(openSidebar());
+    open ? dispatch(closeSidebar()) : dispatch(openSidebar());
   };
 
   return (
@@ -102,9 +102,7 @@ const Navbar = () => {
           onClick={handleToggleSidebar}
         />
         <span>
-          <Link to="/">
-            YouTube Clone
-          </Link>
+          <Link to="/">YouTube Clone</Link>
         </span>
       </div>
 

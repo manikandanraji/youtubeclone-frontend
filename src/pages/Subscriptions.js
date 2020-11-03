@@ -9,19 +9,19 @@ import Skeleton from "../skeletons/HomeSkeleton";
 import { getFeed } from "../reducers/feed";
 
 const Subscriptions = () => {
-	const dispatch = useDispatch();
-	const { isFetching, videos } = useSelector(state => state.feed);
+  const dispatch = useDispatch();
+  const { isFetching, videos } = useSelector((state) => state.feed);
 
   useEffect(() => {
-    dispatch(getFeed())
-  }, [dispatch])
+    dispatch(getFeed());
+  }, [dispatch]);
 
   if (isFetching) {
-    return <Skeleton />
+    return <Skeleton />;
   }
 
   if (!isFetching && !videos.length) {
-    return <Suggestions />
+    return <Suggestions />;
   }
 
   return (

@@ -3,10 +3,10 @@ import LikedVideos from "./LikedVideos";
 import History from "./History";
 
 const Library = () => (
-	<>
-		<History nopad={true} />
-		<LikedVideos />
-	</>
+  <>
+    <History nopad={true} />
+    <LikedVideos />
+  </>
 );
 
 export default Library;

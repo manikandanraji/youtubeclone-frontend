@@ -7,15 +7,15 @@ import Skeleton from "../skeletons/TrendingSkeleton";
 import { getHistory } from "../reducers/history";
 
 const History = ({ nopad }) => {
-	const dispatch = useDispatch();
-	const { isFetching, videos } = useSelector(state => state.history);
+  const dispatch = useDispatch();
+  const { isFetching, videos } = useSelector((state) => state.history);
 
   useEffect(() => {
-		dispatch(getHistory())
-  }, [dispatch])
+    dispatch(getHistory());
+  }, [dispatch]);
 
   if (isFetching) {
-    return <Skeleton />
+    return <Skeleton />;
   }
 
   return (
@@ -29,7 +29,7 @@ const History = ({ nopad }) => {
       )}
 
       {videos.map((video) => (
-        <Link key={video.id} to={`/watch/${video.id}`} >
+        <Link key={video.id} to={`/watch/${video.id}`}>
           <TrendingCard video={video} />
         </Link>
       ))}
@@ -38,4 +38,3 @@ const History = ({ nopad }) => {
 };
 
 export default History;
-

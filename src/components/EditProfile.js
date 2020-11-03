@@ -7,47 +7,47 @@ import { SignoutIcon } from "./Icons";
 import { logout } from "../reducers/user";
 
 const Wrapper = styled.div`
-	svg {
-		width: 30px;
-		height: 30px;
-		margin-left: 1rem;
-		fill: ${props => props.theme.darkGrey};
-	}
+  svg {
+    width: 30px;
+    height: 30px;
+    margin-left: 1rem;
+    fill: ${(props) => props.theme.darkGrey};
+  }
 
-	div {
-		display: flex;
-		align-items: center;
-	}
+  div {
+    display: flex;
+    align-items: center;
+  }
 
-	@media screen and (max-width: 440px) {
-		margin-top: 1rem;
-	}
+  @media screen and (max-width: 440px) {
+    margin-top: 1rem;
+  }
 `;
 
 const EditProfile = () => {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	const [showModal, setShowModal] = useState(false);
-	const closeModal = () => setShowModal(false);
+  const [showModal, setShowModal] = useState(false);
+  const closeModal = () => setShowModal(false);
 
-	const handleLogout = () => {
-		dispatch(logout());
-		localStorage.removeItem("user");
-		window.location = "/";
-	};
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("user");
+    window.location = "/";
+  };
 
-	return (
-		<>
-			<Wrapper>
-				<div>
-					<Button grey onClick={() => setShowModal(true)}>
-						Edit Profile
-					</Button>
-					<SignoutIcon onClick={handleLogout} />
-				</div>
-			</Wrapper>
-			{showModal && <EditProfileModal closeModal={closeModal} />}
-		</>
-	);
+  return (
+    <>
+      <Wrapper>
+        <div>
+          <Button grey onClick={() => setShowModal(true)}>
+            Edit Profile
+          </Button>
+          <SignoutIcon onClick={handleLogout} />
+        </div>
+      </Wrapper>
+      {showModal && <EditProfileModal closeModal={closeModal} />}
+    </>
+  );
 };
 export default EditProfile;

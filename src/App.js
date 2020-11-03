@@ -9,7 +9,7 @@ import Auth from "./components/Auth";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-	const { token } = useSelector(state => state.user.data);
+  const { token } = useSelector((state) => state.user.data);
 
   return (
     <ThemeProvider theme={darkTheme}>

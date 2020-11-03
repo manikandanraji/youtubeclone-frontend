@@ -36,8 +36,8 @@ const Wrapper = styled.div`
 `;
 
 const Subscriptions = () => {
-	const dispatch = useDispatch();
-	const { channels } = useSelector(state => state.user.data);
+  const dispatch = useDispatch();
+  const { channels } = useSelector((state) => state.user.data);
 
   return (
     <Wrapper>
@@ -46,7 +46,7 @@ const Subscriptions = () => {
       {channels?.map((channel) => (
         <Link
           key={channel.id}
-					onClick={() => dispatch(closeSidebar())}
+          onClick={() => dispatch(closeSidebar())}
           to={`/channel/${channel.id}`}
         >
           <div className="channel">

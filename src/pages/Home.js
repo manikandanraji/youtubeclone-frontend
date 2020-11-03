@@ -43,15 +43,15 @@ export const StyledHome = styled.div`
 `;
 
 const Home = () => {
-	const dispatch = useDispatch();
-	const { isFetching, videos } = useSelector(state => state.recommendation);
+  const dispatch = useDispatch();
+  const { isFetching, videos } = useSelector((state) => state.recommendation);
 
   useEffect(() => {
-		dispatch(getRecommendation());
+    dispatch(getRecommendation());
   }, [dispatch]);
 
   if (isFetching) {
-    return <Skeleton title={true} />
+    return <Skeleton title={true} />;
   }
 
   return (

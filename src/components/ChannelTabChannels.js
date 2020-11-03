@@ -34,10 +34,10 @@ const Wrapper = styled.div`
 `;
 
 const ChannelTabChannels = () => {
-	const { channels } = useSelector(state => state.profile.data);
+  const { channels } = useSelector((state) => state.profile.data);
 
   if (!channels.length) {
-    return <p>Not subscribed to any channels yet</p>
+    return <p>Not subscribed to any channels yet</p>;
   }
 
   return (

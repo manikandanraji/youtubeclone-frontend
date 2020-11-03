@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import useInput from "../hooks/useInput";
-import { signup} from "../reducers/user";
+import { signup } from "../reducers/user";
 
 export const StyledAuth = styled.div`
   width: 385px;
@@ -63,7 +63,7 @@ export const StyledAuth = styled.div`
 `;
 
 const Signup = ({ login }) => {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const firstname = useInput("");
   const lastname = useInput("");
@@ -116,7 +116,7 @@ const Signup = ({ login }) => {
       password2.setValue("");
     };
 
-    dispatch(signup({ payload, clearForm }))
+    dispatch(signup({ payload, clearForm }));
   };
 
   return (

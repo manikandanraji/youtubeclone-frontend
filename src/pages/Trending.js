@@ -24,15 +24,15 @@ export const StyledTrending = styled.div`
 `;
 
 const Trending = () => {
-	const dispatch = useDispatch();
-	const { isFetching, videos } = useSelector(state => state.trending);
+  const dispatch = useDispatch();
+  const { isFetching, videos } = useSelector((state) => state.trending);
 
   useEffect(() => {
-    dispatch(getTrending())
-  }, [dispatch])
+    dispatch(getTrending());
+  }, [dispatch]);
 
   if (isFetching) {
-    return <Skeleton />
+    return <Skeleton />;
   }
 
   return (
@@ -50,6 +50,5 @@ const Trending = () => {
     </StyledTrending>
   );
 };
-
 
 export default Trending;

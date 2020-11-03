@@ -98,11 +98,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const EditProfileModal = ({
-  closeModal,
-}) => {
-	const dispatch = useDispatch();
-	const { data: profile } = useSelector(state => state.profile);
+const EditProfileModal = ({ closeModal }) => {
+  const dispatch = useDispatch();
+  const { data: profile } = useSelector((state) => state.profile);
 
   const firstname = useInput(profile.firstname);
   const lastname = useInput(profile.lastname);
@@ -138,24 +136,27 @@ const EditProfileModal = ({
       return toast.error("lastname should not be empty");
     }
 
-		const data = {
-			firstname: firstname.value,
-			lastname: lastname.value
-		}
+    const data = {
+      firstname: firstname.value,
+      lastname: lastname.value,
+    };
 
     if (avatar) data.avatar = avatar;
     if (cover) data.cover = cover;
 
-		const updates = {...data, channelDescription: channelDesc.value};
+    const updates = { ...data, channelDescription: channelDesc.value };
 
-    dispatch(updateProfile(updates))
+    dispatch(updateProfile(updates));
 
-    dispatch(updateUser(updates))
-		client(`${process.env.REACT_APP_BE}/users`, { body: updates, method: "PUT" })
+    dispatch(updateUser(updates));
+    client(`${process.env.REACT_APP_BE}/users`, {
+      body: updates,
+      method: "PUT",
+    });
 
-		updateUserLocalSt(updates);
-    toast.dark("Profile updated")
-    closeModal()
+    updateUserLocalSt(updates);
+    toast.dark("Profile updated");
+    closeModal();
   };
 
   return (

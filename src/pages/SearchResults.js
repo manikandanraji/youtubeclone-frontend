@@ -16,23 +16,25 @@ const StyledChannels = styled.div`
 const SearchResults = () => {
   const { searchterm } = useParams();
 
-	const dispatch = useDispatch();
-	const { isFetching, users, videos } = useSelector(state => state.searchResult);
+  const dispatch = useDispatch();
+  const { isFetching, users, videos } = useSelector(
+    (state) => state.searchResult
+  );
 
   useEffect(() => {
-    dispatch(getSearchResults(searchterm))
+    dispatch(getSearchResults(searchterm));
 
     return () => {
-      dispatch(clearSearchResults())
+      dispatch(clearSearchResults());
     };
   }, [dispatch, searchterm]);
 
   if (isFetching) {
-    return <Skeleton title="true" />
+    return <Skeleton title="true" />;
   }
 
   if (!isFetching && !videos.length && !users.length) {
-    return <NoResults title="No results found" text="Try different keywords" />
+    return <NoResults title="No results found" text="Try different keywords" />;
   }
 
   return (
