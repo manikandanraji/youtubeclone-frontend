@@ -5,8 +5,11 @@ export const login = createAsyncThunk(
   "user/login",
   async ({ payload, clearForm }) => {
     const user = await authenticate("login", payload);
-    clearForm();
-    return user;
+
+    if (user.token) {
+      clearForm();
+      return user;
+    }
   }
 );
 
@@ -14,8 +17,11 @@ export const signup = createAsyncThunk(
   "user/signup",
   async ({ payload, clearForm }) => {
     const user = await authenticate("signup", payload);
-    clearForm();
-    return user;
+
+    if (user.token) {
+      clearForm();
+      return user;
+    }
   }
 );
 

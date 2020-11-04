@@ -26,7 +26,13 @@ export const client = async (endpoint, { body, ...customConfig } = {}) => {
   }
 
   const res = await fetch(endpoint, config);
-  return res.json();
+  const data = await res.json();
+
+  if (res.status === 400) {
+    return toast(data.message);
+  }
+
+  return data;
 };
 
 export const timeSince = (timestamp) => {
@@ -101,11 +107,13 @@ export const authenticate = async (type, data) => {
       body: data,
     });
 
-    const { data: user } = await client(`${backendUrl}/auth/me`, { token });
+    if (token) {
+      const { data: user } = await client(`${backendUrl}/auth/me`, { token });
 
-    localStorage.setItem("user", JSON.stringify({ ...user, token }));
+      localStorage.setItem("user", JSON.stringify({ ...user, token }));
 
-    return { ...user, token };
+      return { ...user, token };
+    }
   } catch (err) {
     console.log(err);
   }

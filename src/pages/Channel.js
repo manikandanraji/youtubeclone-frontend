@@ -20,7 +20,6 @@ import {
   subscribeFromProfile,
   unsubscribeFromProfile,
 } from "../reducers/profile";
-import { clearNotFound } from "../reducers/notFound";
 import { client, addChannelLocalSt, removeChannelLocalSt } from "../utils";
 
 const activeTabStyle = {
@@ -113,7 +112,6 @@ const Channel = () => {
   const dispatch = useDispatch();
   const { id: loggedInUserId } = useSelector((state) => state.user.data);
   const { isFetching, data: profile } = useSelector((state) => state.profile);
-  const { notFound } = useSelector((state) => state.notFound);
 
   const [tab, setTab] = useState("VIDEOS");
 
@@ -138,11 +136,10 @@ const Channel = () => {
 
     return () => {
       dispatch(clearProfile());
-      dispatch(clearNotFound());
     };
   }, [dispatch, profileId]);
 
-  if (notFound) {
+  if (!isFetching && !profile) {
     return (
       <NoResults
         title="Page not found"

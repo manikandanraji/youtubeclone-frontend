@@ -25,7 +25,6 @@ import {
 } from "../reducers/video";
 import { addChannel, removeChannel } from "../reducers/user";
 import { getRecommendation } from "../reducers/recommendation";
-import { clearNotFound } from "../reducers/notFound";
 import {
   addChannelLocalSt,
   removeChannelLocalSt,
@@ -138,7 +137,6 @@ const WatchVideo = () => {
   const { isFetching: recommendationFetching, videos: next } = useSelector(
     (state) => state.recommendation
   );
-  const { notFound } = useSelector((state) => state.notFound);
 
   const handleLike = () => {
     if (video.isLiked) {
@@ -187,7 +185,6 @@ const WatchVideo = () => {
     dispatch(getRecommendation());
 
     return () => {
-      dispatch(clearNotFound());
       dispatch(clearVideo());
     };
   }, [dispatch, videoId]);
@@ -196,7 +193,7 @@ const WatchVideo = () => {
     return <Skeleton />;
   }
 
-  if (notFound) {
+  if (!videoFetching && !video) {
     return (
       <NoResults
         title="Page not found"

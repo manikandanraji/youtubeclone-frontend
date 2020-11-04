@@ -12,7 +12,6 @@ import searchResult from "./searchResult";
 import trending from "./trending";
 import likedVideo from "./likedVideo";
 import history from "./history";
-import notFound from "./notFound";
 
 export default combineReducers({
   user,
@@ -26,5 +25,4 @@ export default combineReducers({
   trending,
   likedVideo,
   history,
-  notFound,
 });

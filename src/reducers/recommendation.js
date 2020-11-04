@@ -17,7 +17,6 @@ const recommendationSlice = createSlice({
   },
   reducers: {
     addToRecommendation(state, action) {
-      console.log(action.payload);
       state.videos = [action.payload, ...state.videos];
     },
   },
