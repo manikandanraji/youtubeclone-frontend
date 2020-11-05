@@ -164,7 +164,7 @@ const Signup = ({ login }) => {
           />
         </div>
         <div className="action input-group">
-          <span className="pointer" onClick={() => login()}>
+          <span className="pointer" onClick={login}>
             Signin instead
           </span>
           <button>Sign Up</button>
