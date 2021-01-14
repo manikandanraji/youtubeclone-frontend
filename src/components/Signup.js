@@ -62,7 +62,7 @@ export const StyledAuth = styled.div`
   }
 `;
 
-const Signup = ({ login }) => {
+const Signup = ({ setAuth }) => {
   const dispatch = useDispatch();
 
   const firstname = useInput("");
@@ -164,7 +164,7 @@ const Signup = ({ login }) => {
           />
         </div>
         <div className="action input-group">
-          <span className="pointer" onClick={() => login()}>
+          <span className="pointer" onClick={() => setAuth("LOGIN")}>
             Signin instead
           </span>
           <button>Sign Up</button>

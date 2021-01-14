@@ -32,7 +32,7 @@ const Wrapper = styled.div`
     width: 580px;
     border-radius: 4px;
     background: ${(props) => props.theme.grey};
-    margin: 4rem auto;
+    margin: 36px auto;
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.4), 0px 0px 4px rgba(0, 0, 0, 0.25);
   }
 

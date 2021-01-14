@@ -5,7 +5,7 @@ import { StyledAuth } from "./Signup";
 import useInput from "../hooks/useInput";
 import { login } from "../reducers/user";
 
-const Login = ({ signup, loginUser }) => {
+const Login = ({ setAuth }) => {
   const dispatch = useDispatch();
 
   const email = useInput("");
@@ -48,7 +48,7 @@ const Login = ({ signup, loginUser }) => {
           onChange={password.onChange}
         />
         <div className="action input-group">
-          <span className="pointer" onClick={() => signup()}>
+          <span className="pointer" onClick={() => setAuth("SIGNUP")}>
             Signup instead
           </span>
           <button>Login</button>

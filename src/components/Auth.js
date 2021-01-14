@@ -5,13 +5,10 @@ import Signup from "./Signup";
 const Auth = () => {
   const [auth, setAuth] = useState("LOGIN");
 
-  const login = () => setAuth("LOGIN");
-  const signup = () => setAuth("SIGNUP");
-
   if (auth === "SIGNUP") {
-    return <Signup login={login} />;
+    return <Signup setAuth={setAuth}/>
   } else {
-    return <Login signup={signup} />;
+    return <Login setAuth={setAuth}/>
   }
 };
 

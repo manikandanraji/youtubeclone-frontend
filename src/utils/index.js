@@ -28,7 +28,7 @@ export const client = async (endpoint, { body, ...customConfig } = {}) => {
   const res = await fetch(endpoint, config);
   const data = await res.json();
 
-  if (res.status === 400) {
+  if (res.status !== 200) {
     return toast(data.message);
   }
 
