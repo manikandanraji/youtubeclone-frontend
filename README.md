@@ -35,8 +35,9 @@ I am using cloudinary for hosting videos and the thumbnails are generated automa
 
 At the root of your project create an .env file with the following contents:
 
-```javascript
-REACT_APP_BACKEND_URL=<YOUR_BACKEND_URL>
+```bash
+# BE stands for Backend Endpoint
+REACT_APP_BE=<YOUR_BACKEND_ENDPOINT> # eg: http://localhost:5000/api/v1
 REACT_APP_CLOUDINARY_ENDPOINT=https://api.cloudinary.com/v1_1/<YOUR_CLOUD_NAME>
 ```
 
